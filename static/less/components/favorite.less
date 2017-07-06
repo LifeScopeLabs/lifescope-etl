@@ -1,0 +1,68 @@
+#favorite {
+	.content {
+		.flexbox;
+		.flex-column;
+
+		max-width: 50%;
+		min-width: 30%;
+
+		@media @mobile {
+			max-width: none;
+		}
+
+		.data {
+			.flexbox;
+			.flex-x-center;
+
+			& > i {
+				font-size: 4em;
+				margin-right: 0.2em;
+				min-width: 1.2em;
+				text-align: center;
+			}
+
+			.text-box {
+				margin: 0;
+			}
+		}
+
+		.label {
+			font-weight: 700;
+			font-size: 1.2em;
+			margin: 1em 0 0.2em 0;
+		}
+
+		.selectors {
+			.flexbox;
+			.flex-column;
+		}
+
+		.buttons {
+			.flexbox;
+			.flex-space-between;
+
+			margin-top: 1.5em;
+
+			@media (max-width: 850px) {
+				.flex-column;
+			}
+
+			& > div {
+				.flexbox;
+
+				@media (max-width: 850px) {
+					.flex-space-between;
+
+					&:last-child {
+						margin-top: 1em;
+					}
+				}
+
+				& > button:first-child {
+					margin-right: 0.5em;
+				}
+			}
+		}
+	}
+
+}

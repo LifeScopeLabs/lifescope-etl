@@ -1,0 +1,47 @@
+<a href="/explore"
+   class="saved-search"
+	data-id="{{ id }}"
+	{% if favorited %}data-favorited="true"{% endif %}
+	{% if iconColor %}data-icon-color="{{ iconColor }}"{% endif %}
+	{% if icon %}data-icon="{{ icon }}"{% endif %}
+	{% if name %}data-name="{{ name }}"{% endif %}>
+
+	<div class="info">
+		<i class="icon {% if favorited and icon %}{{ icon }}{% else %}fa fa-circle-o{% endif %}" style="color: {% if favorited and icon and iconColor %}{{ iconColor }}{% else %}#b6bbbf{% endif %};"></i>
+		<span class="name">{% if favorited %}{{ name }}{% endif %}</span>
+
+		<span class="spacer"></span>
+
+		<span class="last-run">{{ lastRunRelative }}</span>
+
+		{% if favorited %}
+			<i class="favorite-edit fa fa-star subdue"></i>
+		{% else %}
+			<i class="favorite-create fa fa-star-o subdue"></i>
+		{% endif %}
+	</div>
+
+	{% if query or (filters and filters.length) > 0 %}
+		<div class="search">
+			{% if query %}
+				<div class="query">&quot;{{ query }}&quot;</div>
+			{% endif %}
+
+			{% if filters and filters.length > 0 %}
+				<div class="filters">
+					{% for filter in filters %}
+						<div class="filter">{{ filter.name or filter.type|capitalize }}</div>
+					{% endfor %}
+
+					<div class="filter-overflow-count"></div>
+				</div>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	{% if favorited %}
+		<div class="favorite-edit"></div>
+	{% else %}
+		<div class="favorite-create"></div>
+	{% endif %}
+</a>

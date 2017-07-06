@@ -1,0 +1,29 @@
+{
+  "id": "#/searchdsl/fields/contact-interaction-type",
+  "title": "Contact interaction type",
+  "description": "Valid contact interactions types",
+  "type": "object",
+  "properties": {
+    "term": {
+      "type": "object",
+      "properties": {
+        "contact_interaction_type": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^to$"
+            },
+            {
+              "pattern": "^from$"
+            },
+            {
+              "pattern": "^with$"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

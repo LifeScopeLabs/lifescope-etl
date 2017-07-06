@@ -1,0 +1,15 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+
+  "globals": {
+    "window": true,
+    "document": true
+  },
+
+  "extends": "eslint:recommended",
+
+  "rules": {}
+}

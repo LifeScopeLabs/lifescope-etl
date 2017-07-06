@@ -1,0 +1,21 @@
+{
+  "ext": "html js json",
+  "ignore": [
+    "dist/",
+    "fixtures/",
+    "migrations/",
+    "nunjucks/",
+    "scripts/",
+    "static/",
+    "test/",
+    ".gitignore",
+    "eslint.json",
+    "gulpfile.js",
+    "nodemon.json",
+    "package.json",
+    "README.md"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

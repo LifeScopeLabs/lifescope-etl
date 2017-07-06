@@ -1,0 +1,40 @@
+{
+  "id": "#/filters/connector",
+  "title": "Connector filter",
+  "description": "Valid connector filters",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^connection$"
+            },
+            {
+              "pattern": "^provider$"
+            }
+          ]
+        },
+        "provider": {
+          "$ref": "../enums/provider-name.json"
+        },
+        "connection": {
+          "type": "string",
+          "maxLength": 32
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^connector$"
+    }
+  },
+  "additionalProperties": false
+}

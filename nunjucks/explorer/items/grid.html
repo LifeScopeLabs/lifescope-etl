@@ -1,0 +1,37 @@
+<div class="item grid" data-id="{{ object.id }}" {% if thumbnail %} style="background-image: url({{ thumbnail }});"{% endif %}>
+	{% if thumbnail %}
+		<div class="mobile-thumbnail">
+			<img src="{{ thumbnail }}" />
+		</div>
+	{% else %}
+		{% if icon and icon.left %}
+			<i class="type-icon large-grid-icon {{ icon.left }}"></i>
+		{% endif %}
+	{% endif %}
+
+	{% if title or date or (icon and (icon.left or icon.right)) %}
+		<div class="title-bar">
+			{% if icon and icon.left %}
+				<i class="bubble {{ icon.left }}"></i>
+			{% endif %}
+
+			{% if title %}
+				<div class="title">{{ title | safe }}</div>
+			{% elif date %}
+				<div class="title">
+					<div>
+						<i class="fa fa-calendar"></i> <span>{{ date | date('short') }}</span>
+					</div>
+
+					<div>
+						<i class="fa fa-clock-o"></i> <span>{{ date | date('time') }}</span>
+					</div>
+				</div>
+			{% endif %}
+
+			{% if icon and icon.right %}
+				<i class="bubble {{ icon.right }}"></i>
+			{% endif %}
+		</div>
+	{% endif %}
+</div>

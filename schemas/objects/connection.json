@@ -1,0 +1,46 @@
+{
+  "id": "#/objects/connection",
+  "title": "Connection schema",
+  "description": "Valid Connection schema",
+  "type": "object",
+  "properties": {
+    "auth_status": {
+      "type": "object",
+      "properties": {
+        "complete": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "frequency": {
+      "type": "integer",
+      "maximum": 2
+    },
+    "endpoint_data": {
+      "type": "object"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "permissions": {
+      "type": "object"
+    },
+    "auth_data": {
+      "type": "object"
+    },
+    "provider_uid": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

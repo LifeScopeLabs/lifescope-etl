@@ -1,0 +1,50 @@
+{
+  "version": "1.0",
+  "name": "Twitter Login (Live Social Demo Login)",
+  "url": "https://api.twitter.com/1.1",
+
+  "auth": {
+    "type": "oauth1",
+    "version": "1.0a",
+    "signature_method": "HMAC-SHA1",
+    "redirect_url": "***INSERT EBS URL HERE***/complete",
+    "authorization_url": "https://api.twitter.com/oauth/authenticate",
+
+    "request_token": "https://api.twitter.com/oauth/request_token",
+    "access_token": "https://api.twitter.com/oauth/access_token",
+
+    "auth_key": "***INSERT YOUR AUTH KEY HERE***",
+    "auth_secret": "***INSERT YOUR AUTH SECRET HERE***"
+  },
+
+  "meta": {
+    "uniqueness_location": "id",
+
+    "endpoint": {
+      "method": "GET",
+      "route": {
+        "data": "",
+        "path": "/account/verify_credentials.json"
+      },
+
+      "model": {
+        "key": "id",
+        "fields": {
+          "id": {
+            "type": "string",
+            "source": "id_str"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "screen_name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

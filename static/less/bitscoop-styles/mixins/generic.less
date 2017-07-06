@@ -1,0 +1,116 @@
+.active(@color) {
+	&:active,
+	&.active {
+		color: @color;
+	}
+}
+
+.align-center {
+	text-align: center !important;
+}
+
+.block {
+	display: block;
+}
+
+.blockify > * {
+	display: block;
+}
+
+.bold {
+	font-weight: bold !important;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.full-width {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hidden {
+	display: none !important;
+}
+
+.hide-empty {
+	&:empty {
+		display: none !important;
+	}
+}
+
+.hover(@color) {
+	&:hover {
+		color: @color;
+	}
+}
+
+.interactive {
+	.hover(@blue);
+	.active(@orange);
+}
+
+.lock-width(@autocenter: true) {
+	max-width: 1080px !important;
+
+	& when (@autocenter = true) {
+		.position-center;
+	}
+}
+
+.no-select {
+	user-select: none;
+}
+
+.no-wrap {
+	white-space: nowrap;
+}
+
+.paragraph {
+	margin-bottom: 0.5em;
+}
+
+.paragraphed {
+	& > * {
+		margin-bottom: 1em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.padded {
+	.padding;
+}
+
+.padding(@padding: 15px) {
+	padding: @padding;
+}
+
+.pointer {
+	cursor: pointer !important;
+}
+
+.position-center {
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+.table {
+	display: table;
+
+	& > * {
+		display: table-row;
+
+		& > * {
+			display: table-cell;
+		}
+	}
+}
+
+.uppercase {
+	text-transform: uppercase;
+}

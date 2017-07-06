@@ -1,0 +1,33 @@
+<div class="action-bar">
+	{% if share %}
+	<div class="share-action">
+		<i class="fa fa-share"></i>
+	</div>
+	{% endif %}
+	{% if location %}
+	<div class="location-action">
+		<i class="fa fa-globe"></i>
+	</div>
+	{% endif %}
+	{% if action %}
+	<div class="action-action">
+		<i class="fa fa-flask"></i>
+{#		<i class="fa fa-rocket"></i>#}
+	</div>
+	{% endif %}
+	{% if history %}
+	<div class="history-action hidden-beta">
+		<i class="fa fa-clock-o"></i>
+	</div>
+	{% endif %}
+	{% if transaction %}
+	<div class="transaction-action hidden-beta">
+		<i class="fa fa-shopping-bag"></i>
+	</div>
+	{% endif %}
+	{% if edit %}
+	<div class="edit-action hidden-beta">
+		<i class="fa fa-pencil"></i>
+	</div>
+	{% endif %}
+</div>

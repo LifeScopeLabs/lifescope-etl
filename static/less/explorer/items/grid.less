@@ -1,0 +1,102 @@
+.item.grid {
+	.flexbox;
+	.flex-end;
+	.flex-column;
+	.no-select;
+	.pointer;
+
+	word-break: break-all;
+	word-break: break-word;
+
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-clip: content-box;
+
+	box-shadow: 0 0 5px 1px @border-color;
+	border: 3px solid #FFF;
+
+	width: 10em; height: 10em;
+	margin: 0.5em; padding: 0;
+
+	@media @mobile {
+		.flex-row;
+
+		width: 95%; height: 5em;
+		margin: 0.25em 0;
+	}
+
+	&:hover {
+		border-color: @blue;
+	}
+
+	.mobile-thumbnail {
+		height: 100%;
+		display: none;
+
+		img {
+			width: auto; height: auto;
+			max-width: 74px; max-height: 74px;
+		}
+
+		@media @mobile {
+			.flexbox;
+		}
+	}
+
+	.type-icon {
+		margin: auto;
+		font-size: 3em;
+
+		color: fade(darken(@font-color, 10%), 65%);
+
+		@media @mobile {
+			display: none;
+		}
+	}
+
+	.title-bar {
+		.flexbox;
+		.flex-x-center;
+		.flex-space-between;
+
+		font-size: 0.75em;
+		width: 100%;
+		padding: 5px;
+		background-color: fade(darken(@item-background-color, 5%), 85%);
+
+		@media @mobile {
+			font-size: 1.2em;
+		}
+
+		.title {
+			font-weight: bold;
+			text-align: center;
+			margin: auto 5px;
+			max-height: 55px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+
+			@media @mobile {
+				max-height: 70px;
+			}
+		}
+	}
+
+	.bubble {
+		.flexbox;
+		.flex-center;
+		.flex-x-center;
+
+		border-radius: 50%;
+		background-color: darken(@item-background-color, 10%);
+
+		min-width: 28px; min-height: 28px;
+		font-size: 18px;
+
+		@media @mobile {
+			min-width: 38px; min-height: 38px;
+			font-size: 25px;
+		}
+	}
+}

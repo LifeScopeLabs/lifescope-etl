@@ -1,0 +1,31 @@
+{
+  "id": "#/searchdsl/fields/geo-distance",
+  "title": "Geo distance",
+  "description": "Geo distance filter",
+  "type": "object",
+  "properties": {
+    "geo_distance": {
+      "type": "object",
+      "properties": {
+        "distance": {
+          "type": "string",
+          "pattern": "^[0-9]+(.[0-9]+)?km$"
+        },
+        "location.geolocation": {
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number"
+            },
+            "lon": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

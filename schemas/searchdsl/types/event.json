@@ -1,0 +1,258 @@
+{
+  "id": "#/searchdsl/types/event",
+  "title": "Event search filter",
+  "description": "The schema for event filters",
+  "type": "object",
+  "properties": {
+    "bool": {
+      "type": "object",
+      "properties": {
+        "must": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "or": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "and": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "../fields/match-embedded-contact.json"
+                              },
+                              {
+                                "$ref": "../fields/contact-interaction-type.json"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "$ref": "../fields/contact-interaction-type.json"
+                    },
+                    {
+                      "$ref": "../fields/match-embedded-contact.json"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "term": {
+                          "type": "object",
+                          "properties": {
+                            "content.type": {
+                              "$ref": "../../enums/content-type.json"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "$ref": "../fields/geo-distance.json"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "not": {
+                          "$ref": "../fields/geo-distance.json"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "and": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "../fields/location-estimated.json"
+                              },
+                              {
+                                "$ref": "../fields/geo-distance.json"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "and": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "../fields/location-estimated.json"
+                              },
+                              {
+                                "properties": {
+                                  "not": {
+                                    "$ref": "../fields/geo-distance.json"
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "$ref": "../fields/geo-polygon.json"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "not": {
+                          "$ref": "../fields/geo-polygon.json"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "and": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "../fields/location-estimated.json"
+                              },
+                              {
+                                "$ref": "../fields/geo-polygon.json"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "and": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "$ref": "../fields/location-estimated.json"
+                              },
+                              {
+                                "properties": {
+                                  "not": {
+                                    "$ref": "../fields/geo-polygon.json"
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "range": {
+                          "type": "object",
+                          "properties": {
+                            "datetime": {
+                              "$ref": "../../types/datetime.json"
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "or": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "oneOf": [
+                              {
+                                "properties": {
+                                  "range": {
+                                    "type": "object",
+                                    "properties": {
+                                      "datetime": {
+                                        "$ref": "../../types/datetime.json"
+                                      }
+                                    }
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              {
+                                "properties": {
+                                  "range": {
+                                    "type": "object",
+                                    "properties": {
+                                      "created": {
+                                        "$ref": "../../types/datetime.json"
+                                      }
+                                    }
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    {
+                      "$ref": "./provider.json"
+                    },
+                    {
+                      "$ref": "./connection.json"
+                    },
+                    {
+                      "$ref": "./tag.json"
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "must_not": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "should": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

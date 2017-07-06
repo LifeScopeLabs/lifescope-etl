@@ -1,0 +1,83 @@
+{
+  "address": "http://localhost:8081",
+  "objectMaxLimit": 100,
+
+  "domain": "***INSERT EBS URL HERE***",
+
+  "logging": {
+    "severity": "trace",
+    "targets": [
+      {
+        "type": "console",
+        "formatter": "human"
+      }
+    ]
+  },
+
+  "caches": {
+    "jobs": {
+      "address": "redis://localhost:6379/0"
+    }
+  },
+
+  "databases": {
+    "mongo": {
+      "address": "***INSERT MONGO ADDRESS HERE***",
+      "options": {
+        "poolSize": 5
+      }
+    },
+
+    "elastic": {
+      "address": "http://localhost:9200"
+    }
+  },
+
+  "cookieConsent": "cookieconsent",
+
+  "sessions": {
+    "cookieName": "sessionid",
+    "expiration": 1209600
+  },
+
+  "csrf": {
+    "saltLength": 64,
+    "secretLength": 32
+  },
+
+  "staticfiles": {
+    "directories": ["artifacts"],
+    "path": "http://s3.amazonaws.com/***INSERT S3 BUCKET NAME HERE***"
+  },
+
+  "templates": {
+    "directory": "templates"
+  },
+
+  "login": {
+    "github": {
+      "id": "***INSERT GITHUB LOGIN MAP ID HERE***"
+    },
+    "google": {
+      "id": "***INSERT GOOGLE LOGIN MAP ID HERE***"
+    },
+    "twitter": {
+      "id": "***INSERT TWITTER LOGIN MAP ID HERE***"
+    }
+  },
+
+  "api": {
+    "key": "***INSERT BITSCOOP API KEY HERE***",
+    "address": {
+      "protocol": "http",
+      "hostname": "localhost",
+      "port": "8081",
+      "host_header": {
+        "main": "api.bitscoop.com",
+        "subdomain": "provider.api.bitscoop.com"
+      }
+    }
+  },
+
+  "validationSchemas": "schemas/**/*.json"
+}

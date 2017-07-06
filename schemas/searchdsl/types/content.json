@@ -1,0 +1,46 @@
+{
+  "id": "#/searchdsl/types/content",
+  "title": "Content search filter",
+  "description": "The schema for Content filters",
+  "type": "object",
+  "properties": {
+    "bool": {
+      "type": "object",
+      "properties": {
+        "must": {
+          "type": "object",
+          "properties": {
+            "or": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "term": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "$ref": "../../enums/content-type.json"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "must_not": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "should": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

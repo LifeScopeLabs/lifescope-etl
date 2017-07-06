@@ -1,0 +1,17 @@
+{
+  "id": "#/searchdsl/sorts/organization",
+  "title": "Organization sort fields",
+  "description": "Valid Organization sort fields",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^type.raw$"
+    },
+    {
+      "pattern": "^name.raw$"
+    }
+  ]
+}

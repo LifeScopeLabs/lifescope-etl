@@ -1,0 +1,17 @@
+{
+  "id": "#/searchdsl/sorts/contact",
+  "title": "Contact sort fields",
+  "description": "Valid contact sort fields",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^handle.raw$"
+    },
+    {
+      "pattern": "^name.raw$"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "#/searchdsl/types/provider",
+  "title": "Provider filter",
+  "description": "Filtering by provider name",
+  "type": "object",
+  "properties": {
+    "term": {
+      "type": "object",
+      "properties": {
+        "provider_name": {
+          "$ref": "../../enums/provider-name.json"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+<div class="item map">
+	{% for column in columns %}
+		<div>
+			{% if column.type == 'icon' %}
+				<i class="{{ object[column.icon] }}"></i>
+			{% endif %}
+
+			<span>{{ object[column.property] }}</span>
+		</div>
+	{% endfor %}
+</div>

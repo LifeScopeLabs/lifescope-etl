@@ -1,0 +1,36 @@
+{
+  "id": "#/searchdsl/fields/geo-polygon",
+  "title": "Geo polygon",
+  "description": "Geo polygon filter",
+  "type": "object",
+  "properties": {
+    "geo_polygon": {
+      "type": "object",
+      "properties": {
+        "location.geolocation": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lat": {
+                    "type": "number"
+                  },
+                  "lon": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

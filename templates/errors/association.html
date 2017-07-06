@@ -1,0 +1,15 @@
+{% extends 'errors/base.html' %}
+
+
+{% block title %}Association Error &middot; BitScoop{% endblock %}
+
+
+{% block error %}
+	<h3>Account Association Error</h3>
+
+	<p>We ran into an issue connecting your account to BitScoop.</p>
+
+	{% if error.message %}
+		<p>{{ error.message }}</p>
+	{% endif %}
+{% endblock %}

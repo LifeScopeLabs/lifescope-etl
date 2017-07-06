@@ -1,0 +1,4 @@
+<div class="paragraph" class="source-checkbox">
+	<label><input type="checkbox" name="{{ source_name }}"{% if source.enabled_by_default %} checked{% endif %} />{{ source.name }}</label>
+	<div class="tooltip" data-for="">{{ source.description }}</div>
+</div>

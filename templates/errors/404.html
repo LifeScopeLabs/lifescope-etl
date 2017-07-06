@@ -1,0 +1,15 @@
+{% extends 'errors/base.html' %}
+
+
+{% block title %}Page Not Found &middot; BitScoop{% endblock %}
+
+
+{% block error %}
+	<h3>404 (Page Not Found)</h3>
+
+	<p>The requested page could not be found.</p>
+
+	{% if not req.user %}
+		<p>You may need to <a href="{{ req.headers.host }}/login?continue=https://{{ req.headers.host }}{{ req.originalUrl }}">log in</a> to view this page.</p>
+	{% endif %}
+{% endblock %}

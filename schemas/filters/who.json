@@ -1,0 +1,27 @@
+{
+  "id": "#/filters/who",
+  "title": "Who filter",
+  "description": "Valid who filters",
+  "type": "object",
+  "properties": {
+    "data": {
+      "properties": {
+        "contact": {
+          "type": "string"
+        },
+        "interaction": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^who$"
+    }
+  },
+  "additionalProperties": false
+}

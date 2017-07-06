@@ -1,0 +1,30 @@
+{
+  "id": "#/searchdsl/fields/match-contact",
+  "title": "Match contact",
+  "description": "Match a contact's name or handle",
+  "type": "object",
+  "properties": {
+    "or": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "match": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "handle": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

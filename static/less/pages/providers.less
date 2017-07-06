@@ -1,0 +1,201 @@
+body.providers {
+	overflow: hidden;
+
+	&:not(.authenticated) {
+		header nav {
+			.lock-width;
+		}
+	}
+
+	@media @maxwidth768, @mobile {
+		header {
+			.mobile-selector {
+				display: block !important;
+			}
+		}
+
+		aside.filters {
+			.flex-grow-scrollable;
+
+			display: none;
+
+			#filters {
+				.filter {
+					text-align: center;
+					width: 10em;
+					margin-bottom: 1em;
+
+					font-size: 1.2em;
+				}
+			}
+		}
+
+		&.ctl-expand {
+			aside.filters {
+				.flexbox;
+			}
+
+			main {
+				.flex(0);
+			}
+		}
+	}
+
+	header {
+		border-bottom: none;
+
+		.logo {
+			height: 30px;
+		}
+
+		& > nav > :first-child > span {
+			bottom: 11px;
+			left: -20px;
+		}
+
+		#done {
+			width: 100px;
+			align-self: stretch;
+			margin-left: 1em;
+
+			@media @mobile {
+				width: 100%;
+				margin: 0;
+			}
+		}
+
+		.mobile-selector {
+			.no-select;
+
+			display: none;
+			cursor: pointer;
+			margin-top: 0.5em;
+			text-align: center;
+			font-size: 1.5em;
+
+			.placeholder-text {
+				margin-right: 0.5em;
+			}
+		}
+	}
+
+	aside.filters {
+		#filters {
+			.flexbox;
+			.flex-wrap;
+			.flex-center;
+			.flex-x-center;
+
+			& > .filter {
+				.raleway;
+				.no-select;
+				.interactive;
+
+				text-transform: uppercase;
+				padding: 0.25em 0.5em;
+				border-bottom: 2px solid transparent;
+				cursor: pointer;
+			}
+		}
+	}
+
+	main {
+		#provider-grid {
+			@spacing: 10px;
+
+			.align-center;
+
+			margin: 0;
+			padding: @spacing;
+
+			& > div {
+				.align-center;
+				.no-select;
+
+				font-size: 1.8em;
+				display: inline-block;
+				width: 175px;
+				height: 175px;
+				margin: @spacing;
+				cursor: pointer;
+
+				background-color: @background-color;
+				border: 3px solid @border-color;
+
+				&.associated {
+					background-color: @blue;
+					color: #FFF;
+					border: 3px solid lighten(@blue, 15%);
+				}
+
+				&.mix {
+					display: none;
+				}
+
+				&:hover,
+				&:active,
+				&.active {
+					border-color: @orange;
+				}
+
+				& > div {
+					.flexbox;
+					.flex-column;
+					.flex-center;
+
+					position: relative;
+					height: 100%;
+
+					& > span {
+						position: absolute;
+						right: 5px;
+						top: 3px;
+					}
+
+					& > h1 {
+						margin: 0;
+					}
+				}
+			}
+		}
+	}
+
+	.scroller .content {
+		padding: 0 !important;
+
+		#workflow {
+			border: 0;
+			width: 500px;
+
+			@media @mobile {
+				width: 100%;
+			}
+
+			.action {
+				.flexbox;
+				.flex-center;
+
+				margin-top: 1.5em;
+			}
+
+			label {
+				font-size: 1.2em;
+			}
+
+			.tooltip {
+				margin: 0.35em 0 0 3em;
+				color: @font-color-subdue;
+
+				@media @mobile {
+					margin-top: 0em;
+				}
+			}
+
+			.label {
+				font-weight: 700;
+				font-size: 1.2em;
+				margin-bottom: 1em;
+			}
+		}
+	}
+}

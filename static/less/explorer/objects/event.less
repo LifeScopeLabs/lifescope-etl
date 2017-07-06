@@ -1,0 +1,156 @@
+.object.event {
+	.flexbox;
+
+	@media @mobile {
+		.flex-column;
+	}
+
+	& > *:not(:last-child) {
+		padding-right: 1em;
+		margin-right: 1em;
+		border-right: 1px solid @border-color;
+
+		@media @mobile {
+			padding: 0 0 1em 0;
+			margin: 0 0 1em 0;
+			border-right: none;
+			border-bottom: 1px solid @border-color;
+		}
+	}
+
+	& > .details {
+		.flexbox;
+		.flex-column;
+
+		text-align: left;
+		white-space: nowrap;
+
+		i:first-child {
+			width: 1.2em;
+			text-align: center;
+			margin-right: 0.2em;
+			color: @font-color-subdue;
+		}
+
+		.type {
+			.flexbox;
+			.flex-x-center;
+
+			text-transform: uppercase;
+			margin-bottom: 1.5em;
+			color: @font-color-subdue;
+
+			@media @mobile {
+				.flex-center;
+
+				text-align: center;
+				margin-bottom: 0.75em;
+			}
+
+			span {
+				font-size: 0.85em;
+
+				@media @mobile {
+					font-size: 1em;
+				}
+			}
+		}
+
+		.provider {
+			margin-bottom: 0.5em;
+			text-transform: capitalize;
+		}
+
+		.estimation {
+			margin-top: -0.35em;
+			color: @font-color-subdue;
+
+			i {
+				color: transparent;
+			}
+
+			span {
+				font-size: 0.85em;
+			}
+		}
+
+		& > .date {
+			.flexbox;
+			.flex-x-center;
+
+			& > :first-child {
+				& > :not(:last-child) {
+					margin-bottom: 0.5em;
+				}
+			}
+		}
+
+		.action-bar {
+			.flex-grow;
+
+			margin-left: 1em;
+			color: @blue;
+
+			& > *:not(:last-child) {
+				margin-right: 0.2em;
+			}
+		}
+	}
+
+	& > .content {
+		.flexbox;
+		.flex-column;
+
+		& > *:not(:last-child) {
+			margin-bottom: 1em;
+			padding-bottom: 1em;
+			border-bottom: 1px solid @border-color;
+		}
+
+		.object.content {
+			.provider {
+				display: none;
+			}
+		}
+
+		.tagging {
+			display: none;
+		}
+	}
+
+	& > .interactions {
+		word-break: break-all;
+		min-width: 150px;
+
+		.object.contact {
+			margin: 0.25em 0;
+
+			.tagging {
+				display: none;
+			}
+
+			.provider {
+				display: none;
+			}
+		}
+
+		.expand {
+			display: block;
+			cursor: pointer;
+			width: 50px;
+			margin: 0.5em auto 0 auto;
+			padding: 0.2em;
+			text-transform: uppercase;
+			font-size: 0.85em;
+			background-color: @border-color-light;
+
+			&:hover {
+				color: @blue;
+			}
+		}
+	}
+}
+
+.modal .object.event .interactions .expand {
+	display: none !important;
+}

@@ -1,0 +1,37 @@
+.modal .actions {
+	.title {
+		text-align: center;
+		margin-bottom: 0.5em;
+		word-break: break-word;
+	}
+
+	.preview {
+		.flexbox;
+		.flex-center;
+
+		margin-bottom: 1em;
+	}
+
+	.share-action {
+		text-align: center;
+
+		.share-menu {
+			.flexbox;
+			.flex-row;
+			.flex-center;
+			.flex-x-center;
+
+			.sms {
+				display: none;
+
+				@media @mobile {
+					display: inherit;
+				}
+			}
+
+			& > *:not(:last-child) {
+				margin-right: 0.35em;
+			}
+		}
+	}
+}

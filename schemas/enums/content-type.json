@@ -1,0 +1,44 @@
+{
+  "id": "#/enums/content-type",
+  "title": "Content Types",
+  "description": "Valid Content types",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^achievement$"
+    },
+    {
+      "pattern": "^audio$"
+    },
+    {
+      "pattern": "^code$"
+    },
+    {
+      "pattern": "^file$"
+    },
+    {
+      "pattern": "^game$"
+    },
+    {
+      "pattern": "^image$"
+    },
+    {
+      "pattern": "^other$"
+    },
+    {
+      "pattern": "^receipt$"
+    },
+    {
+      "pattern": "^software$"
+    },
+    {
+      "pattern": "^text$"
+    },
+    {
+      "pattern": "^video$"
+    },
+    {
+      "pattern": "^web-page$"
+    }
+  ]
+}

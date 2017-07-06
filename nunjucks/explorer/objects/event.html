@@ -1,0 +1,68 @@
+<div class="object event" id="{{ id }}">
+	<aside class="details">
+		<div class="type">
+			<i class="{{ type.icon }}"></i>
+
+			<span>
+				{% if context %}
+					{{ context }}
+				{% else %}
+					{{ type.name }}
+				{% endif %}
+			</span>
+
+			<aside class="action-bar">
+				<span>Tag</span><i class="fa fa-hashtag"></i>
+			</aside>
+		</div>
+
+		<div class="provider">
+			<i class="{{ provider.icon }}"></i>
+			<span>{{ connection.name|truncate(30, True) }}</span>
+		</div>
+
+		{% if date %}
+			<div class="date">
+				<div>
+					<div>
+						<i class="fa fa-calendar"></i> <span>{{ date | date('date') }}</span>
+					</div>
+
+					{% if date.estimated %}
+						<div class="estimation">
+							<i class="fa fa-flask"></i> <span>Estimated</span>
+						</div>
+					{% endif %}
+
+					{% if not date.estimated %}
+						<div>
+							<i class="fa fa-clock-o"></i> <span>{{ date | date('time') }}</span>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="tagging">
+			<div class="tags">
+				{% for tag in sumTags %}
+					<span>#{{ tag }}</span>
+				{% endfor %}
+			</div>
+		</div>
+	</aside>
+
+	{% if content and content.length > 0 %}
+		<section class="content"></section>
+	{% endif %}
+
+	{% if (contacts and contacts.length > 0) or (people and people.length > 0) or (organizations and organizations.length > 0) %}
+		<aside class="interactions">
+			{% if content_interaction_type %}
+				<div>{{ content_interaction_type }}</div>
+			{% endif %}
+			<div class="objects"></div>
+			<div class="expand">More</div>
+		</aside>
+	{% endif %}
+</div>

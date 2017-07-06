@@ -1,0 +1,137 @@
+{% extends 'settings/base.html' %}
+
+
+{% block static %}
+	{{ super() }}
+
+	<script type="text/javascript">
+		require(['connection-settings']);
+	</script>
+{% endblock %}
+
+
+{% block settings %}
+	{% for connection in connections|sort(connections, false, false, 'provider.name.lower') %}
+		<div class="connection boxed-group" data-id="{{ connection.id }}" data-provider-id="{{ connection.provider.id }}">
+			<div class="flexbox flex-x-center title">
+				<div class="icon-name">
+					<i class="fa fa-{{ connection.provider.name|lower }}"></i>
+					<div class="flex-grow name">{{ connection.name }}</div>
+					<div class="disabled"></div>
+				</div>
+				<div class="last-run">
+					{% if connection.last_run %}
+						<div class="updates">
+							{% if connection.last_run|is_before %}Updated {% else %} Updating {% endif %}{{ connection.last_run|relative_time }}
+						</div>
+					{% else %}
+						<div class="updates">
+							<div>Initial update pending</div>
+							<span></span>
+							<i class="fa fa-spinner spinner"></i>
+						</div>
+					{% endif %}
+				</div>
+
+				<i class="fa fa-caret-down expand-indicator"></i>
+			</div>
+
+			<form class="auto" action="/settings/connections/{{ connection.id }}">
+				<div class="padded paragraphed">
+					<div>
+						<div class="flexbox flex-x-center label">
+							<div>Name</div>
+							<i class="fa fa-check-circle flex-grow success-icon" data-for="name" data-namespace="{{ connection.id }}"></i>
+						</div>
+						<div class="text-box shrink">
+							<input name="name" type="text" value="{{ connection.name }}" />
+						</div>
+					</div>
+
+					<div>
+						<div class="label">What would you like?</div>
+						<div>
+							{% for permission in connection.permissions|sort(connection.permissions, false, false, 'name.lower') %}
+								<div class="paragraph">
+									<div class="flexbox flex-x-center">
+										<label><input class="flag" type="checkbox" name="{{ permission.name }}"{% if permission.enabled %} checked{% endif %} />{{ permission.source.name }}</label>
+										<i class="fa fa-check-circle flex-grow success-icon" data-for="{{ permission.name }}" data-namespace="{{ connection.id }}"></i>
+									</div>
+									<div class="tooltip" data-for="">{{ permission.source.description }}</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+					<input class="hidden" type="submit" />
+
+					{% if connection.provider.auth.type == 'oauth2' %}
+					<div class="reauthorize {% if connection.auth.status.authorized %}hidden {% endif %}">
+							<button class="primary">Reauthorize</button>
+							<div>The changes you have made require you to re-authorize this connection to {{ connection.provider.name }}.</div>
+							<div>Retrieval of your data may not work properly until you re-authorize.</div>
+						</div>
+					{% endif %}
+
+					<div class="delete-disable">
+						{% if connection.enabled %}
+							<button class="danger disable">Disable</button>
+						{% else %}
+							<button class="primary enable">Enable</button>
+						{% endif %}
+						<span class="flex-grow"></span>
+						<button class="danger delete">Delete</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	{% endfor %}
+
+	<a id="big-add" class="flexbox flex-center" href="https://live.bitscoop.com/providers">
+		<i class="fa fa-plus"></i>
+	</a>
+
+	<aside id="disable-modal" class="modal modal-close">
+		<div class="container">
+			<div class="scroller">
+				<div class="content">
+					<i class="modal-close close-button"></i>
+
+					<div class="body">
+						<div class="paragraph" style="margin-bottom: 15px;">
+							<h3>Disable <span class="name"></span>?</h3>
+							<p>Are you sure you'd like to disable this connection?</p>
+							<p>We'll stop collecting data for this connection while it's disabled.</p>
+							<p>You can re-enable the connection at any time and it'll pick up where it left off.</p>
+						</div>
+
+						<button style="margin-right: 15px;">No, Cancel</button>
+						<button class="danger confirm">Yes, Disable</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+
+	<aside id="delete-modal" class="modal modal-close">
+		<div class="container">
+			<div class="scroller">
+				<div class="content">
+					<i class="modal-close close-button"></i>
+
+					<div class="body">
+						<div class="paragraph" style="margin-bottom: 15px;">
+							<h3>Delete <span class="name"></span>?</h3>
+							<p>Are you sure you'd like to delete this connection?</p>
+							<p>We'll delete all stored data for this connection so if you want it back you'll have to re-add it later.</p>
+							<p>Note that deleting a connection only to add it back later will drastically decrease the accuracy of estimated event times.</p>
+						</div>
+
+						<button style="margin-right: 15px;">No, Cancel</button>
+						<button class="danger confirm">Yolo, Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+{% endblock %}

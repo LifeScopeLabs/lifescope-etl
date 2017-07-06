@@ -1,0 +1,20 @@
+{
+  "id": "#/searchdsl/sorts/content",
+  "title": "Content sort fields",
+  "description": "Valid content sort fields",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^connection$"
+    },
+    {
+      "pattern": "^title.raw$"
+    },
+    {
+      "pattern": "^type.raw$"
+    }
+  ]
+}

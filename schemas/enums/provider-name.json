@@ -1,0 +1,35 @@
+{
+  "id": "#/enums/provider-name",
+  "title": "Provider Name",
+  "description": "Valid Provider names",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^$"
+    },
+    {
+      "pattern": "^dropbox$"
+    },
+    {
+      "pattern": "^instagram$"
+    },
+    {
+      "pattern": "^github$"
+    },
+    {
+      "pattern": "^google$"
+    },
+    {
+      "pattern": "^reddit$"
+    },
+    {
+      "pattern": "^spotify$"
+    },
+    {
+      "pattern": "^steam$"
+    },
+    {
+      "pattern": "^twitter$"
+    }
+  ]
+}

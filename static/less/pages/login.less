@@ -1,0 +1,29 @@
+body.login, body.password_reset {
+	overflow: visible;
+
+	@media @mobile {
+		padding: 0.45em 0.35em 0 0.35em;
+	}
+
+	main {
+		.flex-column;
+		.flex-center;
+		.flex-x-center;
+		.align-center;
+
+		overflow: visible;
+
+		& > form {
+			width: 300px;
+			margin-bottom: 1em;
+
+			@media @mobile {
+				width: 100%;
+			}
+
+			.text-box {
+				min-width: 250px;
+			}
+		}
+	}
+}

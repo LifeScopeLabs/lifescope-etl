@@ -1,0 +1,23 @@
+{% extends 'components/scroller.html' %}
+
+{% block scrollable %}
+	<div id="list"></div>
+
+	<aside id="details" class="modal modal-close">
+		<div class="container">
+			<div class="scroller">
+				<div class="content">
+					<i class="modal-close close-button"></i>
+					<aside class="prev subdue">
+						<i class="fa fa-chevron-left"></i>
+					</aside>
+					<aside class="next subdue">
+						<i class="fa fa-chevron-right"></i>
+					</aside>
+
+					<div class="body"></div>
+				</div>
+			</div>
+		</div>
+	</aside>
+{% endblock %}

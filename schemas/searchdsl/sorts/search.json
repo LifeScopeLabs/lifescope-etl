@@ -1,0 +1,17 @@
+{
+  "id": "#/searchdsl/sorts/search",
+  "title": "Search order types",
+  "description": "The different ways in which searches can be filtered and ordered during a GET",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^favorites$"
+    },
+    {
+      "pattern": "^recent$"
+    },
+    {
+      "pattern": "^top$"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+body.connections.connect {
+	main {
+		.flex-grow-scrollable(false);
+
+		#content {
+			.flexbox;
+			.flex-column;
+			.flex-x-center;
+
+			@media @mobile {
+				.flex-x-stretch;
+			}
+
+			& > * {
+				&:not(:last-child) {
+					margin-bottom: 1em;
+				}
+			}
+		}
+
+		#wrapper {
+			margin: 3em 1em 1em 1em;
+
+			@media @mobile {
+				margin: 0.45em 0.35em;
+			}
+		}
+
+		#workflow {
+			width: 500px;
+
+			@media @mobile {
+				width: 100%;
+			}
+
+			.action {
+				.flexbox;
+				.flex-center;
+
+				margin-top: 1.5em;
+			}
+
+			label {
+				font-size: 1.2em;
+			}
+
+			.tooltip {
+				margin: 0.35em 0 0 3em;
+				color: @font-color-subdue;
+
+				@media @mobile {
+					margin-top: 0em;
+				}
+			}
+
+			.label {
+				font-weight: 700;
+				font-size: 1.2em;
+				margin-bottom: 1em;
+			}
+		}
+
+		#manage {
+			.flexbox;
+			.flex-center;
+		}
+	}
+
+	footer {
+		display: none;
+	}
+}

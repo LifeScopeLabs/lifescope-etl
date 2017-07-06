@@ -1,0 +1,25 @@
+body.start {
+	main {
+		.scroller {
+			& > div {
+				.flexbox;
+				.flex-column;
+				.flex-center;
+				.flex-x-center;
+
+				max-width: 600px;
+				margin: 1em auto;
+
+				@media @mobile {
+					margin: 1em;
+				}
+
+				a {
+					&:first-child {
+						margin-bottom: 1em;
+					}
+				}
+			}
+		}
+	}
+}

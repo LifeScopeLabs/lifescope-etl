@@ -1,0 +1,20 @@
+<div class="object organization">
+	{% if thumbnail %}
+		<img src="{{ thumbnail }}" />
+	{% else %}
+		<i class="fa fa-building"></i>
+	{% endif %}
+
+	<div>
+		{% if url %}
+			<a href="{{ url }}" target="_blank">{{ name }}</a>
+		{% else %}
+			<span>{{ name }}</span>
+		{% endif %}
+	</div>
+
+	<div>
+		<i class="{{ type.icon }}"></i>
+		<span>{{ type.name }}</span>
+	</div>
+</div>

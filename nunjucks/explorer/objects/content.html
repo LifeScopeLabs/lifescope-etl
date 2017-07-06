@@ -1,0 +1,63 @@
+<div class="object content" id="{{ id }}">
+	<div class="header">
+		<div class="type">
+			<i class="{{ type.icon }}"></i> {{ type.name }}
+		</div>
+
+		<div class="provider">
+			<i class="{{ provider.icon }}"></i> {{ connection.name|truncate(30, True) }}
+		</div>
+
+		<aside class="action-bar">
+			<span>Tag</span><i class="fa fa-hashtag"></i>
+			<span>Share</span><i class="fa fa-share"></i>
+		</aside>
+	</div>
+
+	<div class="content-embed" data-type="content" data-id="{{ id }}"></div>
+
+	{% if embed_thumbnail %}
+		<div class="thumbnail">
+			{% if not title %}
+				<img src="{{ embed_thumbnail }}"/>
+			{% else %}
+				<a href="{{ url }}" target="_blank">
+					<img src="{{ embed_thumbnail }}"/>
+				</a>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<div class="title">
+		{% if url %}
+			<a href="{{ url }}" target="_blank">{{ title | safe }}</a>
+		{% else %}
+			<span>{{ title | safe }}</span>
+		{% endif %}
+	</div>
+
+	<div class="text">
+		{% if text %}
+			{% if url and not title %}
+				{% if text_truncated %}
+					<a class="truncated" href="{{ url }}" target="_blank">{{ text_truncated | safe }}</a>
+				{% endif %}
+				<a class="full" href="{{ url }}" target="_blank">{{ text | safe }}</a>
+			{% else %}
+				{% if text_truncated %}
+					<pre class="truncated">{{ text_truncated | safe }}</pre>
+				{% endif %}
+				<pre class="full">{{ text | safe }}</pre>
+			{% endif %}
+			<div class="expand">More</div>
+		{% endif %}
+	</div>
+
+	<div class="tagging">
+		<div class="tags">
+			{% for tag in tags %}
+				<span>#{{ tag }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+{
+  "id": "#/searchdsl/fields/match-embedded-contact",
+  "title": "Match Embedded contact",
+  "description": "Match contacts.name or contacts.handle on an embedded contact",
+  "type": "object",
+  "properties": {
+    "or": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "match": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "contacts.name": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "contacts.handle": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

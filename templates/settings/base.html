@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block static %}
+	{{ super() }}
+
+	<script type="text/javascript">
+		require(['search']);
+	</script>
+{% endblock %}
+
+
+{% block main %}
+	<section>
+		<section id="settings">
+			{% block settings %}{% endblock %}
+		</section>
+	</section>
+{% endblock %}

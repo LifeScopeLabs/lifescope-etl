@@ -1,0 +1,53 @@
+{
+  "id": "#/searchdsl/sorts/event",
+  "title": "Event sort fields",
+  "description": "Valid event sort fields",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^datetime$"
+    },
+    {
+      "pattern": "^connection$"
+    },
+    {
+      "pattern": "^type.raw$"
+    },
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^contacts.handle.raw$"
+    },
+    {
+      "pattern": "^contacts.name.raw$"
+    },
+    {
+      "pattern": "^content.title.raw$"
+    },
+    {
+      "pattern": "^content.type.raw$"
+    },
+    {
+      "pattern": "^organization.name.raw$"
+    },
+    {
+      "pattern": "^organization.type.raw$"
+    },
+    {
+      "pattern": "^place.name.raw$"
+    },
+    {
+      "pattern": "^place.reverse_geolocation.raw$"
+    },
+    {
+      "pattern": "^place.type.raw$"
+    },
+    {
+      "pattern": "^things.title.raw$"
+    },
+    {
+      "pattern": "^things.type.raw$"
+    }
+  ]
+}

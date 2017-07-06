@@ -1,0 +1,63 @@
+{
+  "id": "#/filters/what",
+  "title": "What filter",
+  "description": "Valid what filters",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^$"
+            },
+            {
+              "pattern": "^achievement$"
+            },
+            {
+              "pattern": "^audio$"
+            },
+            {
+              "pattern": "^code$"
+            },
+            {
+              "pattern": "^file$"
+            },
+            {
+              "pattern": "^game$"
+            },
+            {
+              "pattern": "^image$"
+            },
+            {
+              "pattern": "^receipt$"
+            },
+            {
+              "pattern": "^software$"
+            },
+            {
+              "pattern": "^text$"
+            },
+            {
+              "pattern": "^video$"
+            },
+            {
+              "pattern": "^web-page$"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^what$"
+    }
+  },
+  "additionalProperties": false
+}

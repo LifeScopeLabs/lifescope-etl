@@ -1,0 +1,20 @@
+{
+  "id": "#/searchdsl/sorts/place",
+  "title": "Place sort fields",
+  "description": "Valid Place sort fields",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^type.raw$"
+    },
+    {
+      "pattern": "^name.raw$"
+    },
+    {
+      "pattern": "^reverse_geolocation.raw$"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "#/searchdsl/fields/location-estimated",
+  "title": "Location estimated",
+  "description": "Location.estimated is true",
+  "type": "object",
+  "properties": {
+    "term": {
+      "type": "object",
+      "properties": {
+        "location.estimated": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

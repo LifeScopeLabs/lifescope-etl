@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+
+{% block static %}
+	{{ super() }}
+
+	<script type="text/javascript">
+		require(['providers']);
+	</script>
+{% endblock %}
+
+
+{% block header %}
+	{% if user %}
+		{% include 'components/header.html'%}
+	{% else %}
+		{{ super() }}
+	{% endif %}
+
+	<div class="mobile-selector">
+		<span class="placeholder-text">All</span>
+		<i class="fa fa-caret-down"></i>
+	</div>
+{% endblock %}
+
+
+{% block aside %}
+	<aside class="filters">
+		<div class="scroller">
+			<div id="filters">
+				<div class="filter" data-filter="all">All</div>
+				<div class="filter" data-filter=".collaboration">Collaboration</div>
+				<div class="filter" data-filter=".development">Development</div>
+				<div class="filter" data-filter=".finance">Finance</div>
+				<div class="filter" data-filter=".fitness">Fitness</div>
+				<div class="filter" data-filter=".gaming">Gaming</div>
+				<div class="filter" data-filter=".health">Health</div>
+				<div class="filter" data-filter=".media">Media</div>
+				<div class="filter" data-filter=".music">Music</div>
+				<div class="filter" data-filter=".productivity">Productivity</div>
+				<div class="filter" data-filter=".social">Social</div>
+				<div class="filter" data-filter=".video">Video</div>
+			</div>
+		</div>
+	</aside>
+{% endblock %}
+
+
+{% block main %}
+	<div class="scroller">
+		<div id="provider-grid">
+			{% for provider in providers %}
+			<div class="mix {% for tag in provider.tags %}{{ tag }} {% endfor %}{% if provider.assoc_count > 0 %}associated{% endif %}" data-id="{{ provider._id | hex }}" data-assoc-count="{{ provider.assoc_count }}">
+				<div>
+					{% if provider.assoc_count > 1 %}
+						<span>{{ provider.assoc_count }}</span>
+					{% endif %}
+					<h1><i class="fa fa-{{ provider.name | lower }}"></i></h1>
+					<p>{{ provider.name }}</p>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	<aside id="connection-modal" class="modal modal-close">
+		<div class="container">
+			<div class="scroller">
+				<div class="content">
+					<div id="workflow" class="boxed-group" data-provider-id="">
+						<div class="align-center">
+							<div class="flexbox flex-x-center">
+								<i class=""></i>
+								<div class="header flex-grow"></div>
+								<i class="" style="color: transparent;"></i>
+							</div>
+						</div>
+
+						<div class="padded paragraphed">
+							<form action="/connections" method="POST">
+								<input type="hidden" name="csrftoken" value="{{ csrf_token }}" />
+								<input type="hidden" name="provider_id" />
+
+								<div class="align-center">
+									<input class="line-entry align-center" type="text" name="name" placeholder="" style="padding-top: 0;" autofocus />
+								</div>
+
+								<div class="source-container" style="margin-top: 25px;">
+									<div class="label">What would you like?</div>
+									<div class="sources"></div>
+								</div>
+
+								<div class="action">
+									<button class="primary" type="submit">Connect to</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div id="manage">
+						{% if current_count == 1 %}
+							<a class="primary" href="https://account.bitscoop.com/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connection</a>
+						{% elif current_count > 1 %}
+							<a class="primary" href="https://account.bitscoop.com/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connections</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+{% endblock %}
+
+
+{% block outer_footer %}{% endblock %}

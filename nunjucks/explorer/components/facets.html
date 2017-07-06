@@ -1,0 +1,7 @@
+{% if types and types.length > 0 %}
+	{% for type in types %}
+		<a data-type="{{ type.mapping }}">
+			{{ type.name }}
+		</a>
+	{% endfor %}
+{% endif %}

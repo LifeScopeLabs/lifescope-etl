@@ -1,0 +1,63 @@
+{
+  "id": "#/searchdsl/types/tag",
+  "title": "Tag filter",
+  "description": "Filtering by a tag on the event or any related objects",
+  "type": "object",
+  "properties": {
+    "or": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "term": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "tags.slugified": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "contacts.tags.slugified": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "content.tags.slugified": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "location.tags.slugified": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              {
+                "properties": {
+                  "things.tags.slugified": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{% extends 'errors/base.html' %}
+
+
+{% block title %}Unauthorized &middot; BitScoop{% endblock %}
+
+
+{% block error %}
+	<h3>401 (Unauthorized)</h3>
+
+	<p>You are not permitted to access this resource.</p>
+
+	{% if not req.user %}
+		<p>You may need to <a href="{{ req.headers.host }}/login?continue=https://{{ req.headers.host }}{{ req.originalUrl }}">log in</a> to view this page.</p>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8"/>
+
+		<title>{% if title %}{{ title }} &middot; {% endif %}BitScoop</title>
+
+		{% include 'components/metatags.html' %}
+
+		{% block description %}
+			<meta name="description" content="Connect with your information across platforms. Search your photos, videos, games, music, documents, fitbit, github, reddit, email, purchases, social media." />
+		{% endblock %}
+
+		{% block static %}
+			<script type="text/javascript">
+				window.staticUrl = "{% static '' %}";
+				window.csrftoken = "{{ csrf_token }}";
+			</script>
+
+			<!-- RequireJS configuration -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.20/require.min.js"></script>
+			<script type="text/javascript" src="{% static 'lib/requirejs/config/paths.min.js' %}"></script>
+
+			<!-- External fonts -->
+			<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:300,400,700|PT+Sans:400,400italic,700,700italic|Quicksand:400,300|Raleway:400|Roboto:300,400,700|Source+Sans+Pro:300,400,700" />
+			<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+			<!-- Styles -->
+			<link rel="stylesheet" type="text/css" href="{% static 'css/site.min.css' %}" />
+
+			<script type="text/javascript">
+				require(['menu', 'site']);
+			</script>
+		{% endblock %}
+	</head>
+
+	<body class="{% if req.user %}authenticated {% endif %}{{ page_name }}">
+		{% block outer_header %}
+			<header>
+				{% block header %}
+					{% include 'components/header.html' %}
+				{% endblock %}
+			</header>
+		{% endblock %}
+
+		{% block outer_menu %}
+			<aside id="menu">
+				<section class="scroller">
+					<div class="menu">
+						{% block menu %}
+							{% include 'components/menu.html' %}
+						{% endblock %}
+					</div>
+				</section>
+			</aside>
+		{% endblock %}
+
+		{% block aside %}{% endblock %}
+
+		{% block outer_main %}
+			<main>
+				{% block main %}
+					<section id="content" class="scroller">
+						{% block content %}{% endblock %}
+					</section>
+				{% endblock %}
+			</main>
+		{% endblock %}
+
+		{% if not req.cookies.cookieconsent %}
+			{% include 'components/cookie-consent.html' %}
+		{% endif %}
+
+		{% block outer_footer %}
+			<footer>
+				{% block footer %}
+					{% include 'components/copyright.html' %}
+					{% include 'components/footer-links.html' %}
+				{% endblock %}
+			</footer>
+		{% endblock %}
+	</body>
+</html>

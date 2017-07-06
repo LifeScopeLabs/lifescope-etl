@@ -1,0 +1,9 @@
+{
+  "id": "#/types/string-array",
+  "title": "String Array",
+  "description": "An array of plain strings.",
+  "type": "array",
+  "items": {
+    "type": "string"
+  }
+}

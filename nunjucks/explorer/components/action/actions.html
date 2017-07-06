@@ -1,0 +1,30 @@
+<div class="action-menu">
+	{% if wolfram_calc_href %}
+	<div class="wolfram_calc">
+		<a href="{{ wolfram_calc_href }}" target="_blank" title="Wolfram Calculate">
+			<i class="fa fa-calculator"></i>
+		</a>
+	</div>
+	{% endif %}
+	{% if cisi_href %}
+	<div class="cisi">
+		<a href="{{ cisi_href }}" target="_blank" title="Can I Stream It?">
+			<i class="fa fa-tasks"></i>
+		</a>
+	</div>
+	{% endif %}
+	{% if amazon_href %}
+	<div class="amazon">
+		<a href="{{ amazon_href }}" target="_blank" title="Shop Amazon">
+			<i class="fa fa-amazon"></i>
+		</a>
+	</div>
+	{% endif %}
+	{% if wikipedia_href %}
+	<div class="wikipedia">
+		<a href="{{ wikipedia_href }}" target="_blank" title="Wikipedia Lookup">
+			<i class="fa fa-wikipedia-w"></i>
+		</a>
+	</div>
+	{% endif %}
+</div>

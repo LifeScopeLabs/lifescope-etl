@@ -1,0 +1,91 @@
+{
+  "id": "#/filters/when",
+  "title": "When filter",
+  "description": "Valid when filters",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "estimated": {
+          "type": "string"
+        },
+        "interaction": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^exact$"
+            },
+            {
+              "pattern": "^relative$"
+            }
+          ]
+        },
+        "from": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+            },
+            {
+              "type": "string",
+              "maxLength": 0
+            }
+          ]
+        },
+        "to": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2}"
+            },
+            {
+              "type": "string",
+              "maxLength": 0
+            }
+          ]
+        },
+        "since-exactly": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^since$"
+            },
+            {
+              "pattern": "^exactly$"
+            }
+          ]
+        },
+        "relative-number": {
+          "type": "string"
+        },
+        "units": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^days$"
+            },
+            {
+              "pattern": "^weeks$"
+            },
+            {
+              "pattern": "^months$"
+            },
+            {
+              "pattern": "^years$"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^when$"
+    }
+  },
+  "additionalProperties": false
+}

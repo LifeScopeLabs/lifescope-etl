@@ -1,0 +1,71 @@
+{
+  "id": "#/filters/where",
+  "title": "Where filter",
+  "description": "Valid where filters",
+  "type": "object",
+  "properties": {
+    "data": {
+      "properties": {
+        "estimated": {
+          "type": "string"
+        },
+        "inside-outside": {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^inside$"
+            },
+            {
+              "pattern": "^outside$"
+            }
+          ]
+        },
+        "coordinates": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "lat": {
+                    "type": "string"
+                  },
+                  "lon": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "minProperties": 2
+              }
+            },
+            {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "string"
+                },
+                "lon": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "minProperties": 2
+            }
+          ]
+        },
+        "radius": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "pattern": "^where$"
+    }
+  },
+  "additionalProperties": false
+}

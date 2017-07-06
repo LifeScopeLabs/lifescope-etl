@@ -1,0 +1,26 @@
+#waiting {
+	.flexbox;
+	.flex-column;
+	.flex-center;
+	.flex-x-center;
+
+	height: 100%;
+	background-color: @item-background-color;
+
+	& > div {
+		.flexbox;
+		.flex-column;
+		.flex-center;
+		.flex-x-center;
+
+		& > img {
+			width: 10em;
+		}
+
+		& > .text {
+			font-size: 2em;
+			text-transform: uppercase;
+			margin-top: 0.2em;
+		}
+	}
+}

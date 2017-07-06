@@ -1,0 +1,38 @@
+<div class="object contact" id="{{ id }}">
+	<div>
+		<div class="user-avatar">
+			{% if avatar_url %}
+			<img class="avatar" src="{{ avatar_url }}" />
+			{% else %}
+			<i class="fa fa-user"></i>
+			{% endif %}
+		</div>
+
+		<div class="details flex-grow">
+			{% if name %}
+			<div>{{ name }}</div>
+			{% endif %}
+
+			{% if handle %}
+			<div>{{ handle }}</div>
+			{% endif %}
+
+		</div>
+
+		<div class="provider">
+			<i class="{{ provider.icon }}"></i>
+			<span>{{ connection.name|truncate(30, True) }}</span>
+		</div>
+
+		<aside class="action-bar"></aside>
+	</div>
+	<div>
+		<div class="tagging">
+			<div class="tags">
+				{% for tag in tags %}
+					<span>#{{ tag }}</span>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

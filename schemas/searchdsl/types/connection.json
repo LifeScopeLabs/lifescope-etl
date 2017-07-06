@@ -1,0 +1,26 @@
+{
+  "id": "#/searchdsl/types/connection",
+  "title": "Connection filter",
+  "description": "Filtering by connection ID",
+  "type": "object",
+  "properties": {
+    "term": {
+      "type": "object",
+      "properties": {
+        "connection": {
+          "oneOf": [
+            {
+              "$ref": "../../types/uuid4.json"
+            },
+            {
+              "type": "string",
+              "maxLength": 0
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

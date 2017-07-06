@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+{% block static %}
+	{{ super() }}
+
+	<script type="text/javascript">
+		require(['start']);
+	</script>
+{% endblock %}
+
+
+{% block header %}
+	{% if req.user %}
+		{% include 'components/header.html'%}
+	{% else %}
+		{{ super() }}
+	{% endif %}
+{% endblock %}
+
+
+{% block main %}
+	<div class="scroller">
+		<div>
+			{% if req.user %}
+			<a href="/providers">
+					<button class="primary">Get Started</button>
+				</a>
+			{% else %}
+				<a href="/">
+					<button class="primary">Request Invite</button>
+				</a>
+			{% endif %}
+
+			<div class="video">
+			</div>
+
+			<h2>Organize your Digital Life</h2>
+			<p>
+				BitScoop searches and explores the internet of you.
+				Simplify your life by automatically curating data across your apps.
+				Search your history and instantly see...
+			</p>
+			<ul>
+				<li>Your movies, music, and TV</li>
+				<li>Conversations with family across social networks</li>
+				<li>An overview of last week’s social media</li>
+				<li>Your online purchases</li>
+				<li>Correspondence and documents with your client</li>
+				<li>Everywhere you went last summer</li>
+				<li>Your favorite music across Spotify and YouTube</li>
+				<li>The latest source code updates from your dev team</li>
+				<li>A trophy case of your gaming achievements</li>
+				<li>A time capsule of any date</li>
+			</ul>
+			<p>And countless more possibilities...</p>
+
+			{% if req.user %}
+				<a href="/providers">
+					<button class="primary">Get Started</button>
+				</a>
+			{% else %}
+				<a href="/">
+					<button class="primary">Request Invite</button>
+				</a>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block outer_footer %}
+	{% if not req.user %}
+		<footer>
+			{% block footer %}
+				<div class="copyright">&copy; 2016 BitScoop Labs, Inc.</div>
+				<div class="footer-links">
+					<a href="https://account.bitscoop.com/login?continue=https://live.bitscoop.com">Log In</a>
+					<span class="spacer"> | </span>
+					<a href="https://account.bitscoop.com/signup?continue=https://live.bitscoop.com/start">Sign Up</a>
+					<span class="spacer"> | </span>
+					<a href="/start">Info</a>
+					<span class="spacer"> | </span>
+					<a class="support-link" target="_blank" href="https://bitscoop.com/support">Support</a>
+					<span class="spacer"> | </span>
+					<a class="privacy-policy" href="https://bitscoop.com/privacy">Privacy</a>
+					<span class="spacer"> | </span>
+					<a class="terms-of-use" href="https://bitscoop.com/terms">Terms</a>
+				</div>
+			{% endblock %}
+		</footer>
+	{% endif %}
+{% endblock %}

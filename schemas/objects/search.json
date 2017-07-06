@@ -1,0 +1,241 @@
+{
+  "id": "#/objects/search",
+  "title": "Contact schema",
+  "description": "Valid Contact schema",
+  "type": "object",
+  "properties": {
+    "count": {
+      "type": "integer"
+    },
+    "favorited": {
+      "type": "boolean"
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "../filters/connector.json"
+          },
+          {
+            "$ref": "../filters/what.json"
+          },
+          {
+            "$ref": "../filters/when.json"
+          },
+          {
+            "$ref": "../filters/where.json"
+          },
+          {
+            "$ref": "../filters/who.json"
+          }
+        ]
+      }
+    },
+    "hash": {
+      "type": "string"
+    },
+    "icon": {
+      "oneOf": [
+        {
+          "type": "string",
+          "oneOf": [
+            {
+              "pattern": "^none$"
+            },
+            {
+              "pattern": "^fa fa-circle-o$"
+            },
+            {
+              "pattern": "^fa fa-tag$"
+            },
+            {
+              "pattern": "^fa fa-square$"
+            },
+            {
+              "pattern": "^fa fa-circle$"
+            },
+            {
+              "pattern": "^fa fa-star$"
+            },
+            {
+              "pattern": "^fa fa-certificate$"
+            },
+            {
+              "pattern": "^fa fa-check$"
+            },
+            {
+              "pattern": "^fa fa-user$"
+            },
+            {
+              "pattern": "^fa fa-users$"
+            },
+            {
+              "pattern": "^fa fa-at$"
+            },
+            {
+              "pattern": "^fa fa-bar-chart$"
+            },
+            {
+              "pattern": "^fa fa-bell$"
+            },
+            {
+              "pattern": "^fa fa-briefcase$"
+            },
+            {
+              "pattern": "^fa fa-calendar$"
+            },
+            {
+              "pattern": "^fa fa-camera-retro$"
+            },
+            {
+              "pattern": "^fa fa-code$"
+            },
+            {
+              "pattern": "^fa fa-copy$"
+            },
+            {
+              "pattern": "^fa fa-cutlery$"
+            },
+            {
+              "pattern": "^fa fa-desktop$"
+            },
+            {
+              "pattern": "^fa fa-file-code-o$"
+            },
+            {
+              "pattern": "^fa fa-file-image-o$"
+            },
+            {
+              "pattern": "^fa fa-file-text-o$"
+            },
+            {
+              "pattern": "^fa fa-files-o$"
+            },
+            {
+              "pattern": "^fa fa-film$"
+            },
+            {
+              "pattern": "^fa fa-filter$"
+            },
+            {
+              "pattern": "^fa fa-gamepad$"
+            },
+            {
+              "pattern": "^fa fa-glass$"
+            },
+            {
+              "pattern": "^fa fa-globe$"
+            },
+            {
+              "pattern": "^fa fa-hashtag$"
+            },
+            {
+              "pattern": "^fa fa-headphones$"
+            },
+            {
+              "pattern": "^fa fa-heart$"
+            },
+            {
+              "pattern": "^fa fa-heartbeat$"
+            },
+            {
+              "pattern": "^fa fa-history$"
+            },
+            {
+              "pattern": "^fa fa-home$"
+            },
+            {
+              "pattern": "^fa fa-image$"
+            },
+            {
+              "pattern": "^fa fa-inbox$"
+            },
+            {
+              "pattern": "^fa fa-map-marker$"
+            },
+            {
+              "pattern": "^fa fa-usd$"
+            },
+            {
+              "pattern": "^fa fa-music$"
+            },
+            {
+              "pattern": "^fa fa-paw$"
+            },
+            {
+              "pattern": "^fa fa-phone$"
+            },
+            {
+              "pattern": "^fa fa-puzzle-piece$"
+            },
+            {
+              "pattern": "^fa fa-smile-o$"
+            },
+            {
+              "pattern": "^fa fa-soccer-ball-o$"
+            },
+            {
+              "pattern": "^fa fa-commenting-o$"
+            },
+            {
+              "pattern": "^fa fa-thumbs-o-up$"
+            },
+            {
+              "pattern": "^fa fa-tree$"
+            },
+            {
+              "pattern": "^fa fa-trophy$"
+            },
+            {
+              "pattern": "^fa fa-tv$"
+            },
+            {
+              "pattern": "^fa fa-video-camera$"
+            },
+            {
+              "pattern": "^fa fa-wrench$"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "icon_color": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_run": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string"
+    },
+    "query": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

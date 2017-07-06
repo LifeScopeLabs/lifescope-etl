@@ -1,0 +1,36 @@
+<div class="actions" data-id="{{ object.id }}">
+	<div class="title">
+		{{ title }}
+	</div>
+
+	<div class="preview">
+
+	</div>
+
+	{% if shareable %}
+		<div class="share-action">
+			<span>Share</span>
+		</div>
+	{% endif %}
+
+	{% if taggable %}
+		<div class="tagging">
+			<form>
+				<div>Tag</div>
+				<div class="add-tag">
+					<span>#</span>
+					<input type="text" placeholder="Add a tag">
+					<input type="submit" value="+">
+				</div>
+				<div class="tags">
+					{% for tag in object.tags %}
+					<div>
+						<span>#{{ tag }}</span>
+						<i class="delete fa fa-times"></i>
+					</div>
+					{% endfor %}
+				</div>
+			</form>
+		</div>
+	{% endif %}
+</div>

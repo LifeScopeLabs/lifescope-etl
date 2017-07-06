@@ -1,0 +1,10 @@
+<div class="item list" data-id="{{ object.id }}" >
+	{% for column in columns %}
+		<div class="{% if column.type == 'icon' %}icon-column {% endif %}{% if column.mobileHide %} mobile-hide {% endif%}">
+			{% if column.type == 'icon' %}
+				<i class="{{ object | get(column.icon) }}"></i>
+			{% endif %}
+			<span class="{% if column.type == 'icon' %}mobile-hide {% endif %}{{ column.property }}">{{ object | get(column.property) | date('shortdate') if column.property == 'date' else object | get(column.property) | truncate(30, True) }}</span>
+		</div>
+	{% endfor %}
+</div>

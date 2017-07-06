@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8"/>
+
+		<title>Social Login Demo &middot; powered by BitScoop</title>
+
+		<meta name="description" content="Social login demo" />
+
+		<!-- RequireJS configuration -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.3/require.min.js"></script>
+
+		<!-- External fonts -->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Quicksand:400|Roboto:300,400,700|Open+Sans:200,300,400,700|Source+Sans+Pro:300,400,700" />
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
+		<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/***INSERT S3 BUCKET NAME HERE***/static/css/site.min.css" />
+
+        <script src="/static/js/aws-cognito-sdk.min.js"></script>
+        <script src="/static/js/amazon-cognito-identity.min.js"></script>
+        <!-- optional: only if you use other AWS services -->
+        <script src="/static/js/aws-sdk.js"></script>
+	</head>
+
+	<body>
+		<div class="header flexbox flex-column flex-x-center">
+			<h1>BitScoop Social Login Demo</h1>
+			{% if user %}
+				<h3>You're logged in!</h3>
+
+				{% if user.githubId %}
+					<div class="github-id">GitHub ID: {{ user.githubId }}</div>
+				{% endif %}
+
+				{% if user.googleId %}
+					<div class="github-id">Google ID: {{ user.googleId }}</div>
+				{% endif %}
+
+				{% if user.twitterId %}
+					<div class="twitter-id">Twitter ID: {{ user.twitterId }}</div>
+				{% endif %}
+
+				<div class="username">Username: {% if user.username %}{{ user.username }}{% else %}&lt;None Found&gt;{% endif %}</div>
+				<div class="name">Name: {% if user.firstName or user.lastName %}{{ user.firstName }} {{ user.lastName }}{% else %}&lt;None Found&gt;{% endif %}</div>
+				<div class="email">Email: {% if user.email %}{{ user.email }}{% else %}&lt;None Found&gt;{% endif %}</div>
+
+				<div class="logout">
+					<a href="/dev/logout"><button><i class="fa fa-sign-out"></i> <span>Log out</span></button></a>
+				</div>
+			{% else %}
+				<h3>You're not logged in. Sign up or log in below.</h3>
+
+				<div class="flexbox logins">
+					<div class="flexbox flex-column flex-x-center">
+						<div class="title">Log In</div>
+						<a href="/dev/login?service=facebook"><button><i class="fa fa-facebook"></i> <span>Log In with Facebook</span></button></a>
+						<a href="/dev/login?service=github"><button><i class="fa fa-github"></i> <span>Log In with GitHub</span></button></a>
+						<a href="/dev/login?service=google"><button><i class="fa fa-google"></i> <span>Log In with Google</span></button></a>
+						<a href="/dev/login?service=twitter"><button><i class="fa fa-twitter"></i> <span>Log In with Twitter</span></button></a>
+					</div>
+
+					<div class="flexbox flex-column flex-x-center">
+						<div class="title">Sign Up</div>
+						<a href="/dev/signup?service=facebook"><button><i class="fa fa-facebook"></i> <span>Sign Up with Facebook</span></button></a>
+						<a href="/dev/signup?service=github"><button><i class="fa fa-github"></i> <span>Sign Up with GitHub</span></button></a>
+						<a href="/dev/signup?service=google"><button><i class="fa fa-google"></i> <span>Sign Up with Google</span></button></a>
+						<a href="/dev/signup?service=twitter"><button><i class="fa fa-twitter"></i> <span>Sign Up with Twitter</span></button></a>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</body>
+</html>

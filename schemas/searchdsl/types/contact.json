@@ -1,0 +1,35 @@
+{
+  "id": "#/searchdsl/types/contact",
+  "title": "Contact search filter",
+  "description": "The schema for Contact filters",
+  "type": "object",
+  "properties": {
+    "bool": {
+      "type": "object",
+      "properties": {
+        "must": {
+          "type": "object",
+          "properties": {
+            "or": {
+              "type": "array",
+              "items": {
+                "$ref": "../fields/match-contact.json"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "must_not": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "should": {
+          "type": "array",
+          "maxItems": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

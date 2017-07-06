@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+
+  "name": "Google Login (Live Social Demo Login)",
+  "url": "https://www.googleapis.com",
+
+  "auth": {
+    "type": "oauth2",
+    "redirect_url": "***INSERT EBS URL HERE***/complete",
+    "authorization_url": "https://accounts.google.com/o/oauth2/auth?access_type=offline",
+    "access_token": "https://accounts.google.com/o/oauth2/token",
+
+    "signature": "parameter",
+
+    "auth_key": "***INSERT YOUR AUTH KEY HERE***",
+    "auth_secret": "***INSERT YOUR AUTH SECRET HERE***"
+  },
+
+  "meta": {
+    "uniqueness_location": "id",
+
+    "endpoint": {
+      "scopes": ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"],
+
+      "route": {
+        "path": "https://people.googleapis.com/v1/people/me?requestMask.includeField=person.email_addresses,person.names"
+      },
+
+      "model": {
+        "key": "id",
+        "fields": {
+          "id": {
+            "type": "string",
+            "source": "resourceName"
+          },
+          "names": {
+            "type": "embedded",
+            "many": true,
+            "fields": {
+              "first_name": {
+                "type": "string",
+                "source": "givenName"
+              },
+              "last_name": {
+                "type": "string",
+                "source": "familyName"
+              }
+            }
+          },
+          "emails": {
+            "type": "embedded",
+            "many": true,
+            "fields": {
+              "address": {
+                "type": "string",
+                "source": "value"
+              }
+            },
+            "source": "emailAddresses"
+          }
+        }
+      }
+    }
+  }
+}

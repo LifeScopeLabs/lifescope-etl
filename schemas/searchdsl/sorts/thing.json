@@ -1,0 +1,17 @@
+{
+  "id": "#/searchdsl/sorts/thing",
+  "title": "Thing order types",
+  "description": "The different ways in which things can be filtered and ordered during a GET",
+  "type": "string",
+  "oneOf": [
+    {
+      "pattern": "^_score$"
+    },
+    {
+      "pattern": "^title.raw$"
+    },
+    {
+      "pattern": "^type.raw$"
+    }
+  ]
+}
