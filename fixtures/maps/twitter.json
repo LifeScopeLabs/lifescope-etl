@@ -269,9 +269,6 @@
     },
     "User": {
       "method": "GET",
-      "except": [
-        404
-      ],
       "parameters": {
         "user_id": {
           "description": "The user's ID",

@@ -5,8 +5,8 @@ require('jquery-mixitup');
 require('templates');
 
 
-var protocol = 'http';
-var domain = '***INSERT EBS URL HERE***';
+var protocol = 'https';
+var domain = 'lifescope.com';
 
 
 function flipIcon() {

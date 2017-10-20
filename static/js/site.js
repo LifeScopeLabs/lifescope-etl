@@ -6,7 +6,7 @@ require('jquery-regexp-selector');
 require('templates');
 
 
-var domain = '***INSERT EBS URL HERE***';
+var domain = 'lifescope.com';
 
 
 $(document).ready(function() {

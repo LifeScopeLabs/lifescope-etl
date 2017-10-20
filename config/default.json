@@ -2,7 +2,7 @@
   "address": "http://localhost:8081",
   "objectMaxLimit": 100,
 
-  "domain": "***INSERT EBS URL HERE***",
+  "domain": "lifescope.com",
 
   "logging": {
     "severity": "trace",
@@ -22,7 +22,7 @@
 
   "databases": {
     "mongo": {
-      "address": "***INSERT MONGO ADDRESS HERE***",
+      "address": "mongodb://127.0.1.1",
       "options": {
         "poolSize": 5
       }
@@ -46,8 +46,11 @@
   },
 
   "staticfiles": {
-    "directories": ["artifacts"],
-    "path": "http://s3.amazonaws.com/***INSERT S3 BUCKET NAME HERE***"
+    "directories": [
+      "artifacts",
+      "static"
+    ],
+    "path": "/static"
   },
 
   "templates": {

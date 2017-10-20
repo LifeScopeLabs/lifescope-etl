@@ -14,7 +14,7 @@ exports.handler = function(event, context, callback) {
 
 	return Promise.all([
 		new Promise(function(resolve, reject) {
-			let address = process.env.MONGO_ADDRESS;
+			let address = 'mongodb://127.0.1.1';
 			let options = {
 				poolSize: 5
 			};
@@ -36,7 +36,6 @@ exports.handler = function(event, context, callback) {
 			let [, files] = result;
 
 			return Promise.all([
-
 				// `associations` Collection
 				db.db('live').collection('association_sessions').createIndex({
 					token: 1

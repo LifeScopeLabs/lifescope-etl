@@ -16,8 +16,8 @@ var providers = {};
 
 var taggedSubtypes = ['contacts', 'content', 'location', 'things'];
 
-var protocol = 'http';
-var domain = '***INSERT EBS URL HERE***';
+var protocol = 'https';
+var domain = 'lifescope.com';
 
 
 var connectionPromise = new Promise(function(resolve, reject) {

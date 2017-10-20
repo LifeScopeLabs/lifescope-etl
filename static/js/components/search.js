@@ -28,8 +28,8 @@ var exports;
 var settings = {};
 var queryChanged = false;
 
-var protocol = 'http';
-var domain = '***INSERT EBS URL HERE***';
+var protocol = 'https';
+var domain = 'lifescope.com';
 
 /**
  * A constructor that abstracts serializing search filters.

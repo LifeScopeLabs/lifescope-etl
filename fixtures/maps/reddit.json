@@ -443,9 +443,6 @@
     "OEmbed": {
       "GET": {
         "method": "GET",
-        "except": [
-          404
-        ],
         "parameters": {
           "url": {
             "description": "URL of reddit object",

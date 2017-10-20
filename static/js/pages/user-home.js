@@ -26,8 +26,8 @@ var currentResultCount = 0;
 var totalResultCount = 0;
 var cursor = {};
 
-var protocol = 'http';
-var domain = '***INSERT EBS URL HERE***';
+var protocol = 'https';
+var domain = 'lifescope.com';
 
 
 function getSearches(tab) {

@@ -84,9 +84,6 @@
     },
     "Achievements": {
       "method": "GET",
-      "except": [
-        400
-      ],
       "parameters": {
         "steamid": {
           "description": "Steam user ID",

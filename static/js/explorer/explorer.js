@@ -112,8 +112,8 @@ var views = {
 };
 
 
-var protocol = 'http';
-var domain = '***INSERT EBS URL HERE***';
+var protocol = 'https';
+var domain = 'lifescope.com';
 
 
 // TODO: Remove this when API v2 is complete and we can query all object types separately.
