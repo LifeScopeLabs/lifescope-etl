@@ -8,6 +8,10 @@ Install Mongo
 
 `brew install mongodb --with-openssl`
 
+Install NGINX
+
+`brew install nginx`
+
 Install node
 
 `brew install node`
@@ -32,6 +36,13 @@ to install all of the project-wide dependencies, then go to each sub-directory i
 `yarn install`
 
 to install the dependencies for each Lambda function that we will be setting up shortly.
+
+`sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout devel.key -out devel.crt`
+
+Run NGINX
+
+`sudo nginx -p . -c nginx.conf`
+
 
 ### Migrations
 
