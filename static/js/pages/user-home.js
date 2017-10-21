@@ -27,7 +27,7 @@ var totalResultCount = 0;
 var cursor = {};
 
 var protocol = 'https';
-var domain = 'lifescope.com';
+var domain = 'lifescope.io';
 
 
 function getSearches(tab) {
