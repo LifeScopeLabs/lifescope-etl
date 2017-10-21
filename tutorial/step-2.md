@@ -21,7 +21,7 @@ Install yarn
 `npm install yarn`
 
 Edit your host file:
-127.0.0.1               lifescope.io www.lifescope.io
+127.0.0.1               app.lifescope.io www.app.lifescope.io
 
 create a local.json and production.json copy of config/default.json 
 Do not commit the production keys to GitHub under penalty of death!

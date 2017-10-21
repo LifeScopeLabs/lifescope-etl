@@ -6,7 +6,7 @@ require('templates');
 
 
 var protocol = 'https';
-var domain = 'lifescope.io';
+var domain = 'app.lifescope.io';
 
 
 function flipIcon() {

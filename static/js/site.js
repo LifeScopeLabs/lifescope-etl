@@ -6,7 +6,7 @@ require('jquery-regexp-selector');
 require('templates');
 
 
-var domain = 'lifescope.io';
+var domain = 'app.lifescope.io';
 
 
 $(document).ready(function() {

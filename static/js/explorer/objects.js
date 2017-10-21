@@ -17,7 +17,7 @@ var providers = {};
 var taggedSubtypes = ['contacts', 'content', 'location', 'things'];
 
 var protocol = 'https';
-var domain = 'lifescope.io';
+var domain = 'app.lifescope.io';
 
 
 var connectionPromise = new Promise(function(resolve, reject) {

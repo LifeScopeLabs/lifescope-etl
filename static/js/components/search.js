@@ -29,7 +29,7 @@ var settings = {};
 var queryChanged = false;
 
 var protocol = 'https';
-var domain = 'lifescope.io';
+var domain = 'app.lifescope.io';
 
 /**
  * A constructor that abstracts serializing search filters.
