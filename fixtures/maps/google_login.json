@@ -6,7 +6,7 @@
 
   "auth": {
     "type": "oauth2",
-    "redirect_url": "***INSERT EBS URL HERE***/complete",
+    "redirect_url": "https://app.lifescope.io/connections/complete",
     "authorization_url": "https://accounts.google.com/o/oauth2/auth?access_type=offline",
     "access_token": "https://accounts.google.com/o/oauth2/token",
 

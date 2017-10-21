@@ -7,7 +7,7 @@
     "type": "oauth1",
     "version": "1.0a",
     "signature_method": "HMAC-SHA1",
-    "redirect_url": "***INSERT EBS URL HERE***/complete",
+    "redirect_url": "https://app.lifescope.io/connections/complete",
     "authorization_url": "https://api.twitter.com/oauth/authenticate",
 
     "request_token": "https://api.twitter.com/oauth/request_token",

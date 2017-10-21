@@ -9,7 +9,7 @@
   ],
   "auth": {
     "type": "oauth2",
-    "redirect_url": "http://***INSERT EBS URL HERE***/connections/complete",
+    "redirect_url": "https://app.lifescope.io/connections/complete",
     "authorization_url": "https://accounts.spotify.com/authorize",
     "access_token": "https://accounts.spotify.com/api/token",
     "signature": "header",
