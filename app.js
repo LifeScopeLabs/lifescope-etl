@@ -1,11 +1,9 @@
 'use strict';
 
-const Deferred = require('deferred-ap');
 const Promise = require('bluebird');
 const URL = require('url-parse');
 const bristolConf = require('bristol-config');
 const config = require('config');
-const elasticsearch = require('elasticsearch');
 const express = require('express');
 const mongodb = require('mongodb');
 const nunjucks = require('nunjucks');

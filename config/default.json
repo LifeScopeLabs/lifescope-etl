@@ -2,7 +2,7 @@
   "address": "http://localhost:8081",
   "objectMaxLimit": 100,
 
-  "domain": "lifescope.com",
+  "domain": "lifescope.io",
 
   "logging": {
     "severity": "trace",
@@ -22,7 +22,7 @@
 
   "databases": {
     "mongo": {
-      "address": "mongodb://127.0.1.1",
+      "address": "mongodb://127.0.0.1",
       "options": {
         "poolSize": 5
       }
