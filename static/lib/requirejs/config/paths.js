@@ -69,7 +69,7 @@ requirejs.config({
 		'mapbox-directions': 'https://api.tiles.mapbox.com/mapbox.js/plugins/mapbox-directions.js/v0.1.0/mapbox.directions', // https://github.com/mapbox/mapbox-directions.js
 		minimodal: 'https://cdn.bitscoop.com/minimodal/0.1.3/minimodal-0.1.3.min',  // https://github.com/sjberry/minimodal
 		moment: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min', //http://momentjs.com/
-		nunjucks: 'https://cdn.bitscoop.com/nunjucks/2.4.1/nunjucks-2.4.1.min',  // https://github.com/mozilla/nunjucks
+		nunjucks: 'https://cdnjs.cloudflare.com/ajax/libs/nunjucks/3.0.1/nunjucks.min',  // https://github.com/mozilla/nunjucks
 		throttle: 'https://cdn.bitscoop.com/throttle/0.1.0/throttle-0.1.0.min',  // https://bitbucket.org/bitscooplabs/throttle
 		twemoji: 'https://twemoji.maxcdn.com/twemoji.min',  // https://github.com/twitter/twemoji
 		viewstate: 'https://cdn.bitscoop.com/viewstate/0.1.0/viewstate-0.1.0.min',  // https://bitbucket.org/bitscooplabs/viewstate
