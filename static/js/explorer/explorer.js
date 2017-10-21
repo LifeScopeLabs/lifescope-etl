@@ -113,7 +113,7 @@ var views = {
 
 
 var protocol = 'https';
-var domain = 'lifescope.com';
+var domain = 'lifescope.io';
 
 
 // TODO: Remove this when API v2 is complete and we can query all object types separately.
