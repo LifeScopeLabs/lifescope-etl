@@ -14,8 +14,8 @@ require('templates');
  */
 var URL_TEMPLATES = {
 	defaults: {
-		url: 'https://live.bitscoop.com',  // the url you'd like to share.
-		title: 'Shared via BitScoop',  // title to be shared alongside your link
+		url: 'https://lifescope.io',  // the url you'd like to share.
+		title: 'Shared via LifeScope',  // title to be shared alongside your link
 		description: 'Search & Explore the Internet of You',  // text to be shared alongside your link
 		imageURL: 'https://s3.amazonaws.com/bitscoop-live/images/logo/logo.png',  // image to be shared
 		hashtags: 'BitScoop'
