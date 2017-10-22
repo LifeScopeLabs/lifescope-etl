@@ -47,7 +47,7 @@
             "value": 20
           },
           "min_id": {
-            "description": "Most recent item that was saved in Bitscoop",
+            "description": "Most recent item that was saved in LifeScope",
             "value": "{{ parameters.min_id }}"
           },
           "max_id": {

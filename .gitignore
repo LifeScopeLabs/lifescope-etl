@@ -5,6 +5,6 @@ node_modules/
 fixtures/mongo/explorer/providers/keys/
 config/production.*
 config/local.*
-static/lib/bitscoop-styles
+static/lib/lifescope-styles
 
 

@@ -90,7 +90,7 @@ function postLocation() {
 	};
 
 	$.ajax({
-		url: 'https://p.bitscoop.com/locations',
+		url: 'https://app.lifescope.io/locations',
 		type: 'POST',
 		data: locationPost,
 		dataType: 'text',
@@ -209,7 +209,7 @@ function trackPosition(user_ID, tDelta, maxAccurateAgeInput, maxAccurateDistance
 
 function estimate() {
 	$.ajax({
-		url: 'https://p.bitscoop.com/estimate',
+		url: 'https://app.lifescope.io/estimate',
 		type: 'GET',
 		dataType: 'text',
 		headers: {

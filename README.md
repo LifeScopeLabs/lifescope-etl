@@ -1,4 +1,4 @@
-# BitScoop Live Social App Demo
+# LifeScope
 
 You can build with any API on the BitScoop platform which makes being a software developer more interesting than ever.
 In our “Built with BitScoop” series, we show very specific use cases for the BitScoop platform to give you ideas and foundations for new projects.
@@ -53,15 +53,15 @@ Building this BitScoop powered Alexa skill is comprised of four steps.
 
 1. [Create accounts, add API maps to BitScoop, and set up authorization](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-1.md)
 
-2. [Download the “BitScoop Social App Demo” project from GitHub](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-2.md)
+2. [Download LifeScope project from GitHub](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-2.md)
 
 3. [Deploy the code into Amazon Lambda and S3](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-3.md)
 
-4. [How to use the Social App Demo](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-4.md)
+4. [How to use LifeScope](https://github.com/bitscooplabs/bitscoop-social-app-demo/tutorial/step-4.md)
 
 ## Learn More
 
-### Social App Overview
+### LifeScope Overview
 https://bitscoop.squarespace.com/live
 
 ### Detailed Documentation

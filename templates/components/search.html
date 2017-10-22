@@ -23,7 +23,7 @@
 						<i class="fa fa-plug"></i>
 					</div>
 
-					<div class="control disabled" data-type="where">
+					<div class="control" data-type="where">
 						<i class="fa fa-globe"></i>
 					</div>
 				</div>
@@ -36,31 +36,18 @@
 					</div>
 
 					<form class="who">
-						<div>
-							Interaction:
-						</div>
-
 						<div class="input-container">
 							<label class="radio active" for="who-type-1"><input id="who-type-1" type="radio" name="interaction" value="" checked /><span>Any</span></label>
 							<label class="radio" for="who-type-2"><input id="who-type-2" type="radio" name="interaction" value="to" /><span>To</span></label>
 							<label class="radio" for="who-type-3"><input id="who-type-3" type="radio" name="interaction" value="from" /><span>From</span></label>
 							<label class="radio" for="who-type-4"><input id="who-type-4" type="radio" name="interaction" value="with" /><span>With</span></label>
 						</div>
-
-						<div>
-							Contact:
-						</div>
-
 						<div class="text-box">
-							<input type="text" name="contact"/>
+							<input type="text" name="contact" placeholder="Contact Name"/>
 						</div>
 					</form>
 
 					<form class="what">
-						<div>
-							Type:
-						</div>
-
 						<div class="input-container">
 							<select name="type">
 								<option></option>
@@ -70,11 +57,11 @@
 								<option value="file">File</option>
 								<option value="game">Game</option>
 								<option value="image">Image</option>
-								<!--<option value="receipt">Receipt</option>-->
+								<option value="receipt">Receipt</option>
 								<option value="software">Software</option>
 								<option value="text">Text</option>
 								<option value="video">Video</option>
-								<!--<option value="web-page">Web Page</option>-->
+								<option value="web-page">Web Page</option>
 							</select>
 						</div>
 					</form>
@@ -130,7 +117,7 @@
 						<div class="estimated">
 							<label>
 								<input type="checkbox" name="estimated" />
-								<span>Return estimated results?</span>
+								<span>Return Estimated Results</span>
 							</label>
 						</div>
 					</form>
@@ -142,10 +129,6 @@
 						</div>
 
 						<div class="provider">
-							<div>
-								Connection type:
-							</div>
-
 							<div class="input-container">
 								<select name="provider">
 									<option></option>
@@ -154,10 +137,6 @@
 						</div>
 
 						<div class="connection hidden">
-							<div>
-								Connection:
-							</div>
-
 							<div class="input-container">
 								<select name="connection">
 									<option></option>
@@ -167,13 +146,13 @@
 					</form>
 
 					<form class="where">
-						<!--<div>
+						<div>
 							Distance:
 						</div>
 
 						<div class="text-box">
 							<input type="text" name="distance" />
-						</div>-->
+						</div>
 
 						<div>
 							Area:
@@ -187,14 +166,14 @@
 						<div class="estimated">
 							<label>
 								<input type="checkbox" name="estimated" />
-								<span>Return estimated results?</span>
+								<span>Return Estimated Results</span>
 							</label>
 						</div>
 					</form>
 				</div>
 
 				<div id="filter-done">
-					<button class="primary">Done</button>
+					<button class="primary">Add Filter</button>
 				</div>
 			</div>
 

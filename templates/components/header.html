@@ -1,10 +1,10 @@
 {% if mode == 'app' or mode == 'home' %}
 	<nav>
 		{% if mode == 'app' %}
-			<a id="home" href="/"><img class="logo" src="{% static 'images/logo/logo.png' %}" /></a>
+			<a id="home" href="/"><img class="logo" src="{% static 'images/logo.png' %}" /></a>
 			{% include 'components/search.html' %}
 		{% else %}
-			<a id="home" href="/"><img class="logo" src="{% static 'images/logo/logo.png' %}" /></a>
+			<a id="home" href="/"><img class="logo" src="{% static 'images/logo.png' %}" /></a>
 			{% set parameters = {'hide_favorite_start': True} %}
 			{% include 'components/search.html' %}
 		{% endif %}

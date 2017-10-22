@@ -99,9 +99,9 @@
 
 					<div id="manage">
 						{% if current_count == 1 %}
-							<a class="primary" href="https://account.bitscoop.com/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connection</a>
+							<a class="primary" href="https://app.lifescope.io/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connection</a>
 						{% elif current_count > 1 %}
-							<a class="primary" href="https://account.bitscoop.com/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connections</a>
+							<a class="primary" href="https://app.lifescope.io/settings/connections?provider={{ provider._id | hex }}">Manage {{ current_count }} {{ provider.name }} Connections</a>
 						{% endif %}
 					</div>
 				</div>

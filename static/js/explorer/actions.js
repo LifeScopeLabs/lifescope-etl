@@ -17,9 +17,9 @@ var URL_TEMPLATES = {
 		url: 'https://app.lifescope.io',  // the url you'd like to share.
 		title: 'Shared via LifeScope',  // title to be shared alongside your link
 		description: 'Search & Explore the Internet of You',  // text to be shared alongside your link
-		imageURL: 'https://s3.amazonaws.com/bitscoop-live/images/logo/logo.png',  // image to be shared
-		hashtags: 'BitScoop'
-		//via: 'BitScoopLabs'
+		imageURL: 'https://s3.amazonaws.com/bitscoop-live/images/logo.png',  // image to be shared
+		hashtags: 'LifeScope'
+		//via: 'LifeScope'
 	},
 	urls: {
 		share: {
@@ -306,7 +306,7 @@ var actions = {
 		}
 		return nunjucks.render('explorer/components/action/share.html', {
 			facebook_href: facebookHref,
-			twitter_href: _hydrateShareURL(URL_TEMPLATES.urls.share.twitter.href, url, title.replace(' - Shared via BitScoop', '').slice(0, 60) + ' (via @BitScoopLabs)', description, imageURL),
+			twitter_href: _hydrateShareURL(URL_TEMPLATES.urls.share.twitter.href, url, title.replace(' - Shared via LifeScope', '').slice(0, 60) + ' (via @LifeScope)', description, imageURL),
 			googlePlus_href: googlePlusHref,
 			tumblr_href: _hydrateShareURL(URL_TEMPLATES.urls.share.tumblr.href, url, title, description, imageURL),
 			pinterest_href: _hydrateShareURL(URL_TEMPLATES.urls.share.pinterest.href, url, title, description, imageURL),

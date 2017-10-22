@@ -15,7 +15,7 @@
 		<div class="connection boxed-group" data-id="{{ connection.id }}" data-provider-id="{{ connection.provider.id }}">
 			<div class="flexbox flex-x-center title">
 				<div class="icon-name">
-					<i class="fa fa-{{ connection.provider.name|lower }}"></i>
+					<i class="fa fa-{{ connection.provider.name|lower }} fa-2x"></i>
 					<div class="flex-grow name">{{ connection.name }}</div>
 					<div class="disabled"></div>
 				</div>
@@ -28,7 +28,7 @@
 						<div class="updates">
 							<div>Initial update pending</div>
 							<span></span>
-							<i class="fa fa-spinner spinner"></i>
+							<i class="fa fa-spinner fa-spin fa-2x"></i>
 						</div>
 					{% endif %}
 				</div>

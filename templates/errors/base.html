@@ -16,19 +16,19 @@
 		{% if not req.user %}
 			<header>
 				<a href="{{ req.headers.host }}/login?continue=https://{{ req.headers.host }}{{ req.originalUrl }}"><button>Login</button></a>
-				<a href="{{ req.headers.host }}/signup?continue=https://bitscoop.com"><button>Sign Up</button></a>
+				<a href="{{ req.headers.host }}/signup?continue=https://lifescope.io"><button>Sign Up</button></a>
 			</header>
 		{% endif %}
 
 		<main>
 			<div id="splash">
 				{% if code != 500 and req.originalUrl == '/' %}
-					<a href="https://bitscoop.com"><img src="https://d233zlhvpze22y.cloudfront.net/1457056861/images/error-page-bitscoop-logo.png" /></a>
+					<a href="https://lifescope.io"><img src="https://d233zlhvpze22y.cloudfront.net/1457056861/images/error-page-bitscoop-logo.png" /></a>
 				{% else %}
 					<a href="https://{{ req.headers.host }}"><img src="https://d233zlhvpze22y.cloudfront.net/1457056861/images/error-page-bitscoop-logo.png" /></a>
 				{% endif %}
 
-				<h1>bitScoops...</h1>
+				<h1>Oops...</h1>
 			</div>
 
 			{% block main %}
@@ -36,7 +36,7 @@
 					{% block error %}{% endblock %}
 
 					{% if code != 500 and req.originalUrl == '/' %}
-						<p>Back to <a href="https://bitscoop.com">bitscoop.com</a>.</p>
+						<p>Back to <a href="https://lifescope.io">lifescope.io</a>.</p>
 					{% else %}
 						<p>Back to <a href="https://{{ req.headers.host }}">{{ req.headers.host }}</a>.</p>
 					{% endif %}
@@ -46,7 +46,7 @@
 
 		<footer>
 			{% block footer %}
-				<div class="copyright">&copy; 2016 BitScoop Labs, Inc.</div>
+				<div class="copyright">&copy; 2017 BitScoop Labs, Inc.</div>
 				<div class="footer-links">
 					{% if not req.user %}
 						<a href="{{ req.headers.host }}/login?continue=https://{{ req.headers.host }}{{ req.originalUrl }}">Log In</a>

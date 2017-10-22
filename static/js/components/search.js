@@ -1224,7 +1224,7 @@ $(document).ready(function() {
 		});
 	});
 
-	// Queries for the user's connections and BitScoop's providers to populate the connector and provider filter DDL's.
+	// Queries for the user's connections and LifeScope's providers to populate the connector and provider filter DDL's.
 	// Only providers used by the user's connections are shown.
 	Promise.all([
 		objects.connectionPromise,
