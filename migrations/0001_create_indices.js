@@ -8,7 +8,7 @@ const mongodb = require('mongodb');
 	let db;
 
 	new Promise(function(resolve, reject) {
-		let address = '***INSERT MONGODB CONNECTION STRING HERE***';
+		let address = 'mongodb://0.0.0.0:27017';
 		let options = {
 			poolSize: 5
 		};

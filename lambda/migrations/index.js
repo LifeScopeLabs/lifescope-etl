@@ -11,10 +11,10 @@ const gid = require('./util/gid');
 
 exports.handler = function(event, context, callback) {
 	let db;
-
+	
 	return Promise.all([
 		new Promise(function(resolve, reject) {
-			let address = 'mongodb://127.0.1.1';
+			let address = "mongodb://0.0.0.0:27017";
 			let options = {
 				poolSize: 5
 			};

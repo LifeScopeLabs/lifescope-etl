@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lifescope generator lambda function.
+
+Resources:
+
+  generator:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: generator/index.handler
+      Runtime: nodejs6.10
+      Events:
+        generator:
+          Type: Api
+          Properties:
+            Path: /generator
+            Method: any

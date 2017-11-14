@@ -14,7 +14,7 @@ const gid = require('../lib/util/gid');
 
 	Promise.all([
 		new Promise(function(resolve, reject) {
-			let address = '***INSERT MONGODB CONNECTION STRING HERE***';
+			let address = 'mongodb://0.0.0.0:27017';
 			let options = {
 				poolSize: 5
 			};

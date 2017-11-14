@@ -22,7 +22,7 @@
 
   "databases": {
     "mongo": {
-      "address": "mongodb://127.0.1.1",
+      "address": "mongodb://127.0.0.1",
       "options": {
         "poolSize": 5
       }
