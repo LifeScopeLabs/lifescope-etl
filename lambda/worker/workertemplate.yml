@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lifescope worker lambda function.
+
+Resources:
+
+  worker:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: worker/index.handler
+      Runtime: nodejs6.10
+      Events:
+        worker:
+          Type: Api
+          Properties:
+            Path: /worker
+            Method: any

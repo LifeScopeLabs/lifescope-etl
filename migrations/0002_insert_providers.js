@@ -14,7 +14,11 @@ const gid = require('../lib/util/gid');
 
 	Promise.all([
 		new Promise(function(resolve, reject) {
+<<<<<<< HEAD
 			let address = 'mongodb://localhost:27017';
+=======
+			let address = 'mongodb://0.0.0.0:27017';
+>>>>>>> SAM added, lambda configs added, included SQS in tutorial, Docker required
 			let options = {
 				poolSize: 5
 			};
