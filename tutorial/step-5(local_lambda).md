@@ -3,7 +3,7 @@
 This tutorial assumes a unix based system, and is written on an OSX system
 Install docker
 
-go to https://docs.docker.com/engine/installation/ and install docker on your system. 
+go to https://docs.docker.com/engine/installation/ and install docker on your system.
 
 
 # 2. Install AWS SAM local
@@ -11,7 +11,7 @@ go to https://docs.docker.com/engine/installation/ and install docker on your sy
 Note: this will install SAM local globaly on your system
 `npm install -g aws-sam-local`
 
-Check the install using 
+Check the install using
 `sam --version`
 
 The template file and the environment variables file are locate in the lambda/local folder of the project.
@@ -24,7 +24,7 @@ place the JAR file in the SQS folder of the project
 # 4.Run the SQS server
 
 in a new shell run the following at the top level of the project
-`java -Dconfig.file=SQS/sqs_config/lifescopeSQS.conf -jar SQS/elasticmq-server-0.13.8.jar`
+`java -D config.file=SQS/sqs_config/lifescopeSQS.conf -jar SQS/elasticmq-server-0.13.8.jar`
 
 # 4. Running SAM local
 
@@ -37,6 +37,3 @@ you will then be shown the urls to your lambda functions along with their port n
 
 # Thank You
 ADAMW ElasticMQ - https://github.com/adamw/elasticmq
-
-
-
