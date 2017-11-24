@@ -208,10 +208,6 @@ body.settings {
 				position: relative;
 				cursor: pointer;
 
-				@media @mobile-portrait {
-					.flex-column;
-				}
-
 				& > :not(:first-child) {
 					padding-left: 5px;
 				}
@@ -223,8 +219,8 @@ body.settings {
 				}
 
 				.last-run {
-					@media @mobile-landscape {
-						margin-right: 1em;
+					@media @mobile {
+						margin: 0.5em;
 					}
 				}
 
