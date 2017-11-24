@@ -1,18 +1,18 @@
 {
     "consumer": {
-      "MONGO_ADDRESS": "mongodb://0.0.0.0:27017",
+      "MONGO_ADDRESS": "mongodb://127.0.0.3:27017",
       "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
       "WORKER_FUNCTION_ARN": "http://127.0.0.1:3000/worker"
     },
     "generator": {
-      "MONGO_ADDRESS": "mmongodb://0.0.0.0:27017",
+      "MONGO_ADDRESS": "mmongodb://127.0.0.3:27017",
       "QUEUE_URL": "http://localhost:9324/queues/live-jobs"
     },
     "migrations": {
-        "MONGO_ADDRESS": "mongodb://0.0.0.0:27017"
+        "MONGO_ADDRESS": "mongodb://127.0.0.3:27017"
     },
     "worker": {
-        "MONGO_ADDRESS": "mongodb://0.0.0.0:27017",
+        "MONGO_ADDRESS": "mongodb://127.0.0.3:27017",
         "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
         "BITSCOOP_API_KEY": "06EE09993ABF4784A531CFBB5539BDE3",
         "DEAD_LETTER_QUEUE_URL": "http://localhost:9324/queues/live-jobs-dead-letter"
