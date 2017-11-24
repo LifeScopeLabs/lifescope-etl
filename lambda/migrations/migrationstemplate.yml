@@ -3,7 +3,11 @@ Transform: AWS::Serverless-2016-10-31
 Description: Lifescope migrations lambda function.
 
 Resources:
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 46ff5d673b10ba2cf43595e9b575085d9592a558
   migrations:
     Type: AWS::Serverless::Function
     Properties:
@@ -13,5 +17,10 @@ Resources:
         migrations:
           Type: Api
           Properties:
+<<<<<<< HEAD
             Path: /
             Method: post
+=======
+            Path: /migrations
+            Method: any
+>>>>>>> 46ff5d673b10ba2cf43595e9b575085d9592a558
