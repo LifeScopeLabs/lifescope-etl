@@ -4,7 +4,7 @@ You will need to obtain developer accounts and/or API keys for each of the servi
 For each API, you will add an API Map to your BitScoop account using the “Add to BitScoop” buttons. You can either enter any required API keys and User information when you create the map or edit the source of that map later.
 
 You need to create a BitScoop account via (https://bitscoop.com/signup) as well as an AWS account.
-For the sake of brevity we will not cover the specifics here.
+For the sake of brevity we will not cover the specifics here. Learn BitScoop (especially connections) and AWS. 
 
 ## Add API Maps to BitScoop
 
@@ -14,15 +14,12 @@ Make sure to substitute the values for the API keys, client IDs, and client secr
 | API Map   | File Name       |                                                                                                                                                                                                                                    |
 |----------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | GitHub | github.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/github.json) |
-| GitHub Login | github_login.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/github_login.json) |
 | Google | google.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/google.json) |
-| Google Login | google_login.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/google_login.json) |
 | Instagram | instagram.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/instagram.json) |
 | reddit | reddit.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/reddit.json) |
 | Spotify | spotify.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/spotify.json) |
 | Steam | steam.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/steam.json) |
 | Twitter | twitter.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/twitter.json) |
-| Twitter Login | twitter_login.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/twitter_login.json) |
 
 
 # GitHub
@@ -106,3 +103,9 @@ Click on the 'Keys and Access Tokens' tab and copy the Consumer Key and Consumer
 
 Repeat the above steps starting with creating a new app to make a separate application and Map for Twitter Login.
 Twitter does not allow for multiple callback URLs on the same application, so for simplicity we're using one Map for Login and another Map for retrieving data.
+
+
+# Download Tools
+
+- Atom Editor with Teletype
+- Mongo Compass  - Mongo Atlas reccomended

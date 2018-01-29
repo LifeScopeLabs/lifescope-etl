@@ -14,23 +14,24 @@ Install NGINX
 
 Install node
 
-`brew install node`
+https://nodejs.org/en/download/
 
 Install yarn
 
-`npm install yarn`
+`brew install yarn`
 
 Edit your host file:\
 
 `sudo nano /etc/hosts`
 
-`127.0.0.1               lifescope.io www.lifescope.io app.lifescope.io`]
+`127.0.0.1               lifescope.io www.lifescope.io app.lifescope.io`
 
-create a local.json and production.json copy of config/default.json 
+Navigate to the Lifescope-Core directory, and in the config folder
+create a local.json and production.json copy of config/default.json
 Do not commit the production keys to GitHub under penalty of death!
 
 
-From the top level of this directory run
+From the top level of the Lifescope-Core directory run:
 
 `yarn install`
 
