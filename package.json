@@ -1,6 +1,6 @@
 {
-  "name": "live",
-  "version": "0.10.1",
+  "name": "lifescope",
+  "version": "0.10.2",
   "private": true,
   "author": "BitScoop Labs, Inc.",
   "dependencies": {
@@ -37,7 +37,7 @@
     "string-format": "^0.5.0",
     "type-detect": "^2.0.2",
     "url-parse": "^1.2.0",
-    "useragent": "^2.2.0",
+    "useragent": "^2.3.0",
     "uuid": "^2.0.2"
   },
   "devDependencies": {

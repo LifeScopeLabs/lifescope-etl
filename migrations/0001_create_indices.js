@@ -2,17 +2,15 @@
 
 const _ = require('lodash');
 const mongodb = require('mongodb');
+const config = require('config');
 
 
 (function() {
 	let db;
 
 	new Promise(function(resolve, reject) {
-=======
-		let address = 'mongodb://0.0.0.0:27017';
-		let options = {
-			poolSize: 5
-		};
+		let address = config.databases.mongo.address;
+		let options = config.databases.mongo.options;
 
 		mongodb.MongoClient.connect(address, options, function(err, database) {
 			if (err) {

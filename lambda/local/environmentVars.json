@@ -1,40 +1,20 @@
 {
-    "consumer": {
-<<<<<<< HEAD
-      "MONGO_ADDRESS": "mongodb://127.0.0.3:27017",
-      "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
-      "WORKER_FUNCTION_ARN": "http://127.0.0.1:3000/worker"
-    },
-    "generator": {
-      "MONGO_ADDRESS": "mmongodb://127.0.0.3:27017",
-      "QUEUE_URL": "http://localhost:9324/queues/live-jobs"
-    },
-    "migrations": {
-        "MONGO_ADDRESS": "mongodb://127.0.0.3:27017"
-    },
-    "worker": {
-        "MONGO_ADDRESS": "mongodb://127.0.0.3:27017",
-=======
-      "MONGO_ADDRESS": "mongodb://127.0.0.1:27017",
-      "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
-      "WORKER_FUNCTION_ARN": "http://127.0.0.1:3000/lambda/worker"
-    },
-    "generator": {
-      "MONGO_ADDRESS": "mmongodb://127.0.0.1:27017",
-      "QUEUE_URL": "http://localhost:9324/queues/live-jobs"
-    },
-    "migrations": {
-        "MONGO_ADDRESS": "mongodb://127.0.0.1:27017"
-    },
-    "worker": {
-        "MONGO_ADDRESS": "mongodb://127.0.0.1:27017",
->>>>>>> 46ff5d673b10ba2cf43595e9b575085d9592a558
-        "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
-        "BITSCOOP_API_KEY": "06EE09993ABF4784A531CFBB5539BDE3",
-        "DEAD_LETTER_QUEUE_URL": "http://localhost:9324/queues/live-jobs-dead-letter"
-    }
-<<<<<<< HEAD
+  "consumer": {
+    "MONGO_ADDRESS": "mongodb://127.0.0.3:27017",
+    "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
+    "WORKER_FUNCTION_ARN": "http://127.0.0.1:3000/worker"
+  },
+  "generator": {
+    "MONGO_ADDRESS": "mmongodb://127.0.0.1:27017",
+    "QUEUE_URL": "http://localhost:9324/queues/live-jobs"
+  },
+  "migrations": {
+    "MONGO_ADDRESS": "mongodb://127.0.0.1:27017"
+  },
+  "worker": {
+    "MONGO_ADDRESS": "mongodb://127.0.0.1:27017",
+    "QUEUE_URL": "http://localhost:9324/queues/live-jobs",
+    "BITSCOOP_API_KEY": "06EE09993ABF4784A531CFBB5539BDE3",
+    "DEAD_LETTER_QUEUE_URL": "http://localhost:9324/queues/live-jobs-dead-letter"
   }
-=======
-  }
->>>>>>> 46ff5d673b10ba2cf43595e9b575085d9592a558
+}

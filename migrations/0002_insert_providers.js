@@ -4,6 +4,7 @@ const path = require('path');
 
 const _ = require('lodash');
 const mongodb = require('mongodb');
+const config = require('config');
 
 const fs = require('../lib/util/fs');
 const gid = require('../lib/util/gid');
@@ -14,10 +15,8 @@ const gid = require('../lib/util/gid');
 
 	Promise.all([
 		new Promise(function(resolve, reject) {
-			let address = 'mongodb://localhost:27017';
-			let options = {
-				poolSize: 5
-			};
+			let address = config.databases.mongo.address;
+			let options = config.databases.mongo.options;
 
 			mongodb.MongoClient.connect(address, options, function(err, database) {
 				if (err) {
