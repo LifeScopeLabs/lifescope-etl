@@ -57,18 +57,6 @@
     "directory": "templates"
   },
 
-  "login": {
-    "github": {
-      "id": "***INSERT GITHUB LOGIN MAP ID HERE***"
-    },
-    "google": {
-      "id": "***INSERT GOOGLE LOGIN MAP ID HERE***"
-    },
-    "twitter": {
-      "id": "***INSERT TWITTER LOGIN MAP ID HERE***"
-    }
-  },
-
   "api": {
     "key": "***INSERT BITSCOOP API KEY HERE***",
     "address": {

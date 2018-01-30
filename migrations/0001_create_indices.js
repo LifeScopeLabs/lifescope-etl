@@ -8,7 +8,8 @@ const mongodb = require('mongodb');
 	let db;
 
 	new Promise(function(resolve, reject) {
-		let address = 'mongodb://localhost:27017';
+=======
+		let address = 'mongodb://0.0.0.0:27017';
 		let options = {
 			poolSize: 5
 		};
