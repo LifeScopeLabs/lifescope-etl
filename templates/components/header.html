@@ -46,19 +46,21 @@
 		</div>
 	{% endif %}
 {% else %}
-	<nav>
-		<a id="home" href="/"><img class="logo" src="{% static 'images/logo.png' %}" /></a>
+    <nav>
+        <a id="home" href="/"><img class="logo" src="{% static 'images/logo.png' %}" /></a>
 
-		<span class="flex-grow"></span>
+        <span class="flex-grow"></span>
 
-		{% if mode == 'provider' %}
-			<div class="flexbox flex-x-center">
-				<button id="done" class="primary">Done</button>
-			</div>
-		{% endif %}
+        {% if user != undefined %}
+            {% if mode == 'provider' %}
+                <div class="flexbox flex-x-center">
+                    <button id="done" class="primary">Done</button>
+                </div>
+            {% endif %}
 
-		<div id="menu-button">
-			<div class="fa fa-bars"></div>
-		</div>
-	</nav>
+            <div id="menu-button">
+                <div class="fa fa-bars"></div>
+            </div>
+        {% endif %}
+    </nav>
 {% endif %}

@@ -12,8 +12,27 @@
 
 {% block main %}
 	<section>
-		<section id="settings">
-			{% block settings %}{% endblock %}
+		<aside id="left">
+			<div class="boxed-group settings-menu">
+				<div>Settings</div>
+
+				<div>
+					<a href="/settings/account">Account</a>
+				</div>
+
+				<div>
+					<a href="/settings/connections">Connections</a>
+				</div>
+			</div>
+		</aside>
+
+		<section class="flexbox flex-column flex-grow">
+			<section id="account">
+				{% block account %}{% endblock %}
+			</section>
+			<section id="settings">
+				{% block settings %}{% endblock %}
+			</section>
 		</section>
 	</section>
 {% endblock %}

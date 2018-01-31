@@ -1,0 +1,49 @@
+{% extends 'settings/base.html' %}
+
+
+{% block static %}
+	{{ super() }}
+
+	<script type="text/javascript">
+		require(['account-settings']);
+	</script>
+{% endblock %}
+
+
+{% block account %}
+	<div class="boxed-group">
+		<div class="title">Delete Account</div>
+
+		<div class="padded paragraphed">
+			<p>
+				You can easily delete your LifeScope account if you no longer need it.
+				Once you delete your account you will lose access to all the data you've stored with us.
+			</p>
+
+			<div>
+				<button id="delete" class="danger">Delete Account</button>
+			</div>
+		</div>
+	</div>
+
+	<aside id="delete-modal" class="modal modal-close">
+		<div class="container">
+			<div class="scroller">
+				<div class="content">
+					<i class="modal-close close-button"></i>
+
+					<div class="body">
+						<div class="paragraph">
+							<h3>Delete Your LifeScope Account</h3>
+							<p>Are you sure you'd like to delete your LifeScope account?</p>
+							<p>Once you delete your account you will lose access to all the data you've stored with us.</p>
+						</div>
+
+						<button>No, Cancel</button>
+						<button class="danger confirm">Yolo, Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+{% endblock %}
