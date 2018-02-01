@@ -1339,7 +1339,6 @@ $(document).ready(function() {
 						$items = $items.find('aside.details');
 					}
 
-					objects.cache[collectionMappings[type]][id].tags = tags;
 					objects.cache[collectionMappings[type]][id].tagMasks = tagMasks;
 
 					if (newTag) {
