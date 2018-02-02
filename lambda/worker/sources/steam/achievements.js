@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const mongoTools = require('../../util/mongo-tools');
+const mongoTools = require('../../../util/mongo-tools');
 
 
 module.exports = function(data, db) {

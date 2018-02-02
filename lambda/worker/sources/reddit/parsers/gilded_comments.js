@@ -2,7 +2,8 @@
 
 const _ = require('lodash');
 
-const mongoTools = require('../../util/mongo-tools');
+const mongoTools = require('../../../util/mongo-tools');
+
 
 let tagRegex = /#[^#\s]+/g;
 
@@ -30,7 +31,9 @@ module.exports = function(data, db) {
 				connection: this.connection._id,
 				user_id: this.connection.user_id,
 				type: 'text',
-				remote_id: item.data.name
+				text: item.data.body,
+				remote_id: item.data.name,
+				title: item.data.link_title
 			};
 
 			if (item.data.body) {
@@ -145,10 +148,10 @@ module.exports = function(data, db) {
 
 			let newEvent = {
 				type: 'commented',
-				context: 'Saved comment',
+				context: 'Gilded',
 				provider_name: 'reddit',
 				identifier: this.connection._id.toString('hex') + ':::commented:::reddit:::' + item.data.name,
-				content: localContent,
+				content: [newMessage],
 				contacts: [objectCache.contacts[newContact.identifier]],
 				connection: this.connection._id,
 				user_id: this.connection.user_id

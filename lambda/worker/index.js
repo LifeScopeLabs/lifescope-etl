@@ -58,6 +58,7 @@ exports.handler = function(event, context, callback) {
 						return Promise.reject(new Error('No connection with ID ' + connectionId.toString('hex')))
 					}
 
+					console.log('Calling Connection ' + connection.remote_connection_id.toString('hex'));
 					return bitscoop.getConnection(connection.remote_connection_id.toString('hex'))
 						.then(function(remoteConnection) {
 							remoteConnection = _.omit(remoteConnection, ['id', 'auth', 'provider_id']);
@@ -114,15 +115,11 @@ exports.handler = function(event, context, callback) {
 						if (permission.enabled) {
 							let source = new sources.Source(connection.provider.sources[name], connection, api);
 
-							source.parse = require('./sources/' + connection.provider_name.toLowerCase() + '/' + name.toLowerCase());
+							console.log(name);
+							source.parse = require('./sources/' + connection.provider_name.toLowerCase() + '/parsers/' + name.toLowerCase());
+							source.paginate = require('./sources/' + connection.provider_name.toLowerCase() + '/paginators/' + name.toLowerCase());
 
-							return source.call(connection.remote_connection_id.toString('hex'))
-								.catch(function(err) {
-									console.log('ERROR WITH CALL:');
-									console.log(err);
-
-									return Promise.reject(err);
-								})
+							return source.paginate(connection)
 								.then(function(data) {
 									return source.parse(data, db)
 										.catch(function(err) {

@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const moment = require('moment');
 
-const mongoTools = require('../../util/mongo-tools');
+const mongoTools = require('../../../util/mongo-tools');
 
 
 module.exports = function(data, db) {

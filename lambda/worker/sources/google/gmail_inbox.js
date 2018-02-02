@@ -4,7 +4,7 @@ const _ = require('lodash');
 const emailParse = require('email-addresses');
 const moment = require('moment');
 
-const mongoTools = require('../../util/mongo-tools');
+const mongoTools = require('../../../util/mongo-tools');
 
 
 let tagRegex = /#[^#\s]+/g;

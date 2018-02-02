@@ -1,9 +1,9 @@
 'use strict';
 
 const _ = require('lodash');
+const moment = require('moment');
 
-const mongoTools = require('../../util/mongo-tools');
-
+const mongoTools = require('../../../util/mongo-tools');
 
 let tagRegex = /#[^#\s]+/g;
 
@@ -25,20 +25,19 @@ module.exports = function(data, db) {
 		for (let i = 0; i < data.length; i++) {
 			let item = data[i];
 
-			let newThread = {
+			let newMessage = {
 				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.name,
-				connection: this.connection._id,
-				user_id: this.connection.user_id,
 				type: 'text',
-				text: item.data.selftext,
-				url: 'https://www.reddit.com' + item.data.permalink,
-				remote_id: item.data.id,
-				title: item.data.title
+				text: item.data.body,
+				remote_id: item.data.name,
+				title: item.data.subject,
+				connection: this.connection._id,
+				user_id: this.connection.user_id
 			};
 
 
 			let newTags = [];
-			let titleTags = newThread.title.match(tagRegex);
+			let titleTags = newMessage.title.match(tagRegex);
 
 			if (titleTags != null) {
 				for (let j = 0; j < titleTags.length; j++) {
@@ -61,8 +60,8 @@ module.exports = function(data, db) {
 				}
 			}
 
-			if (newThread.text) {
-				let messageTags = newThread.text.match(tagRegex);
+			if (newMessage.text) {
+				let messageTags = newMessage.text.match(tagRegex);
 
 				if (messageTags != null) {
 					for (let j = 0; j < messageTags.length; j++) {
@@ -84,36 +83,39 @@ module.exports = function(data, db) {
 					}
 				}
 
-				newThread['tagMasks.source'] = newTags;
+				newMessage['tagMasks.source'] = newTags;
 			}
 
-			content[i] = newThread;
+			content[i] = newMessage;
 
 			let newEvent = {
-				type: 'commented',
-				context: 'Downvoted',
+				type: 'messaged',
+				context: 'Received private message',
 				provider_name: 'reddit',
-				identifier: this.connection._id.toString('hex') + ':::downvoted:::reddit:::' + item.data.name,
-				content: [newThread],
+				identifier: this.connection._id.toString('hex') + ':::received:::reddit:::' + item.data.name,
+				datetime: moment(item.data.created_utc * 1000).utc().toDate(),
+				content: [newMessage],
 				connection: this.connection._id,
 				user_id: this.connection.user_id
 			};
 
-			if (item.data.author !== this.connection.metadata.name) {
-				let newContact = {
-					identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.author,
-					connection: this.connection._id,
-					user_id: this.connection.user_id,
-					handle: item.data.author
-				};
+			let newContact = {};
 
-				if (!_.has(objectCache.contacts, newContact.identifier)) {
-					objectCache.contacts[newContact.identifier] = newContact;
-					contacts.push(objectCache.contacts[newContact.identifier]);
-				}
+			newContact = {
+				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.author,
+				connection: this.connection._id,
+				user_id: this.connection.user_id,
+				handle: item.data.author
+			};
 
-				newEvent.contacts = [objectCache.contacts[newContact.identifier]];
+			newEvent.contact_interaction_type = 'from';
+
+			if (!_.has(objectCache.contacts, newContact.identifier)) {
+				objectCache.contacts[newContact.identifier] = newContact;
+				contacts.push(objectCache.contacts[newContact.identifier]);
 			}
+
+			newEvent.contacts = [objectCache.contacts[newContact.identifier]];
 
 			events[i] = newEvent;
 		}

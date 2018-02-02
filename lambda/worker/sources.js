@@ -25,19 +25,20 @@ class Source {
 		this.api = api;
 	}
 
-	call(connectionId) {
+	call(connectionId, parameters, headers) {
 		let self = this;
 
-		let headers = {
-			'X-Connection-Id': connectionId
-		};
+		let outgoingHeaders = headers || {};
+
+		outgoingHeaders['X-Connection-Id'] = connectionId;
 
 		if (this.population != null) {
-			headers['X-Populate'] = this.population;
+			outgoingHeaders['X-Populate'] = this.population;
 		}
 
 		return this.api.endpoint(this.mapping)({
-			headers: headers
+			headers: outgoingHeaders,
+			parameters: parameters
 		})
 			.then(function(result) {
 				let [data, response] = result;

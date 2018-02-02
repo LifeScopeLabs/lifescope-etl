@@ -8,7 +8,7 @@ go to https://docs.docker.com/engine/installation/ and install docker on your sy
 
 # 2. Install AWS SAM local
 
-Note: this will install SAM local globaly on your system
+Note: this will install SAM local globally on your system
 `npm install -g aws-sam-local`
 
 Check the install using
@@ -18,15 +18,13 @@ The template file and the environment variables file are locate in the lambda/lo
 
 # 3. Install ElasticMQ as mock SQS
 
-You can download file distribution here: https://s3/.../elasticmq-server-0.13.8.jar
+You can download file distribution here: https://s3-eu-west-1.amazonaws.com/softwaremill-public/elasticmq-server-0.13.8.jar
 place the JAR file in the SQS folder of the project
 
 # 4.Run the SQS server
 
 in a new shell run the following at the top level of the project
-<<<<<<< HEAD
-`java -D config.file=SQS/sqs_config/lifescopeSQS.conf -jar SQS/elasticmq-server-0.13.8.jar`
-=======
+
 `java -Dconfig.file=SQS/sqs_config/lifescopeSQS.conf -jar SQS/elasticmq-server-0.13.8.jar`
 
 # 4. Running SAM local

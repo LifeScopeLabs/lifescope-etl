@@ -3,11 +3,11 @@
 const _ = require('lodash');
 const moment = require('moment');
 
-const mongoTools = require('../../util/mongo-tools');
+const mongoTools = require('../../../util/mongo-tools');
 
 
 module.exports = function(data, db) {
-	var contacts, content, events, locations, objectCache, tags;
+	var contacts, content, events, objectCache, tags;
 
 	objectCache = {
 		contacts: {},
@@ -17,7 +17,6 @@ module.exports = function(data, db) {
 
 	contacts = [];
 	content = [];
-	locations = [];
 	tags = [];
 	events = new Array(data.length);
 
@@ -55,8 +54,7 @@ module.exports = function(data, db) {
 				remote_id: item.id_str,
 				'tagMasks.source': newTags,
 				text: item.text,
-				type: 'text',
-				url: 'https://twitter.com/' + this.connection.metadata.id_str + '/status/' + item.id_str
+				type: 'text'
 			};
 
 			content.push(newMessage);
@@ -70,10 +68,10 @@ module.exports = function(data, db) {
 					let newMedia = {
 						identifier: this.connection._id.toString('hex') + ':::twitter:::' + mediaItem.id_str,
 						connection: this.connection._id,
+						user_id: this.connection.user_id,
 						remote_id: mediaItem.id_str,
 						'tagMasks.source': newTags,
-						url: mediaItem.expanded_url,
-						user_id: this.connection.user_id
+						url: mediaItem.expanded_url
 					};
 
 					if (mediaItem.type === 'photo') {
@@ -100,7 +98,7 @@ module.exports = function(data, db) {
 
 			let newEvent = {
 				type: 'messaged',
-				context: 'Tweeted',
+				context: 'Sent direct message',
 				provider_name: 'twitter',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id_str,
 				datetime: moment(new Date(item.created_at)).utc().toDate(),
@@ -109,44 +107,25 @@ module.exports = function(data, db) {
 				user_id: this.connection.user_id
 			};
 
-			if (item.in_reply_to_user_id_str) {
-				let newContact = {
-					avatar_url: item.user[0].profile_image_url_https,
-					identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.in_reply_to_user_id_str,
-					connection: this.connection._id,
-					user_id: this.connection.user_id,
-					remote_id: item.in_reply_to_user_id_str,
-					handle: item.in_reply_to_screen_name
-				};
+			let newContact = {
+				identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.recipient.id_str,
+				connection: this.connection._id,
+				user_id: this.connection.user_id,
+				avatar_url: item.recipient.profile_image_url_https,
+				remote_id: item.recipient.id_str,
+				handle: item.recipient.screen_name,
+				name: item.recipient.name
+			};
 
-				newEvent.contact_interaction_type = 'to';
+			newEvent.contact_interaction_type = 'to';
 
-				if (!_.has(objectCache.contacts, newContact.identifier)) {
-					objectCache.contacts[newContact.identifier] = newContact;
+			if (!_.has(objectCache.contacts, newContact.identifier)) {
+				objectCache.contacts[newContact.identifier] = newContact;
 
-					contacts.push(objectCache.contacts[newContact.identifier]);
-				}
-
-				newEvent.contacts = [objectCache.contacts[newContact.identifier]];
+				contacts.push(objectCache.contacts[newContact.identifier]);
 			}
 
-			if (item.coordinates && item.coordinates.coordinates) {
-				let datetime = moment(new Date(item.created_at)).utc().toDate();
-
-				let newLocation = {
-					identifier: this.connection._id.toString('hex') + ':::twitter:::' + datetime,
-					datetime: datetime,
-					estimated: false,
-					geo_format: 'lat_lng',
-					geolocation: item.coordinates.coordinates,
-					connection: this.connection._id,
-					user_id: this.connection.user_id
-				};
-
-				locations.push(newLocation);
-
-				newEvent.location = newLocation;
-			}
+			newEvent.contacts = [objectCache.contacts[newContact.identifier]];
 
 			events[i] = newEvent;
 		}
@@ -155,7 +134,6 @@ module.exports = function(data, db) {
 			contacts: contacts,
 			content: content,
 			events: events,
-			locations: locations,
 			tags: tags
 		}, db);
 	}
