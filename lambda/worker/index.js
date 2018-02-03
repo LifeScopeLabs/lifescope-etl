@@ -115,11 +115,10 @@ exports.handler = function(event, context, callback) {
 						if (permission.enabled) {
 							let source = new sources.Source(connection.provider.sources[name], connection, api);
 
-							console.log(name);
 							source.parse = require('./sources/' + connection.provider_name.toLowerCase() + '/parsers/' + name.toLowerCase());
 							source.paginate = require('./sources/' + connection.provider_name.toLowerCase() + '/paginators/' + name.toLowerCase());
 
-							return source.paginate(connection)
+							return source.paginate(connection, {}, {}, [], db)
 								.then(function(data) {
 									return source.parse(data, db)
 										.catch(function(err) {

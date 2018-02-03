@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 
-const perPage = 100;
+const perPage = 2;
 
 
 function call(connection, parameters, headers, results, db) {
@@ -12,16 +12,13 @@ function call(connection, parameters, headers, results, db) {
 	let outgoingParameters = parameters || {};
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
-	outgoingParameters.count = outgoingParameters.count || perPage;
 
 	if (this.population != null) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	if (_.get(connection, 'endpoint_data.direct_messages_sent.since_id') != null) {
-		outgoingParameters.since_id = connection.endpoint_data.direct_messages_sent.since_id;
-	}
-
+	console.log(outgoingHeaders);
+	console.log(outgoingParameters);
 	return this.api.endpoint(this.mapping)({
 		headers: outgoingHeaders,
 		parameters: outgoingParameters
@@ -33,9 +30,6 @@ function call(connection, parameters, headers, results, db) {
 
 			results = results.concat(data);
 
-			dataLength = data.length;
-			lastItem = data[data.length - 1];
-
 			if (!(/^2/.test(response.statusCode))) {
 				let body = JSON.parse(response.body);
 
@@ -45,33 +39,10 @@ function call(connection, parameters, headers, results, db) {
 			return Promise.resolve();
 		})
 		.then(function() {
-			if (dataLength === perPage) {
-				return self.paginate(connection, {
-					max_id: lastItem.id_str
-				}, {}, results, db);
-			}
-			else {
-				let promise = Promise.resolve();
-
-				if (results.length > 0) {
-					promise = promise.then(function() {
-						return db.db('live').collection('connections').updateOne({
-							_id: connection._id
-						}, {
-							$set: {
-								'endpoint_data.direct_messages_sent.since_id': results[0].id_str
-							}
-						});
-					});
-				}
-
-				return promise.then(function() {
-					return Promise.resolve(results);
-				});
-			}
+			return Promise.resolve(results);
 		})
 		.catch(function(err) {
-			console.log('Error calling Twitter Direct Messages Sent:');
+			console.log('Error calling Steam Achievements:');
 			console.log(err);
 
 			return Promise.reject(err);

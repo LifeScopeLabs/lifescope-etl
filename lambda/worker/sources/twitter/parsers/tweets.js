@@ -11,6 +11,7 @@ module.exports = function(data, db) {
 
 	objectCache = {
 		contacts: {},
+		content: {},
 		events: {},
 		tags: {}
 	};
@@ -59,7 +60,11 @@ module.exports = function(data, db) {
 				url: 'https://twitter.com/' + this.connection.metadata.id_str + '/status/' + item.id_str
 			};
 
-			content.push(newMessage);
+			if (!_.has(objectCache.content, newMessage.identifier)) {
+				objectCache.content[newMessage.identifier] = newMessage;
+
+				content.push(objectCache.content[newMessage.identifier]);
+			}
 
 			let newMediaList = [];
 
@@ -93,8 +98,13 @@ module.exports = function(data, db) {
 						newMedia.embed_content = embedContent.url;
 					}
 
-					content.push(newMedia);
-					newMediaList.push(newMedia);
+					if (!_.has(objectCache.content, newMedia.identifier)) {
+						objectCache.content[newMedia.identifier] = newMedia;
+
+						content.push(objectCache.content[newMedia.identifier]);
+					}
+
+					newMediaList.push(objectCache.content[newMedia.identifier]);
 				}
 			}
 
@@ -104,7 +114,7 @@ module.exports = function(data, db) {
 				provider_name: 'twitter',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id_str,
 				datetime: moment(new Date(item.created_at)).utc().toDate(),
-				content: [newMessage].concat(newMediaList),
+				content: [objectCache.content[newMessage.identifier]].concat(newMediaList),
 				connection: this.connection._id,
 				user_id: this.connection.user_id
 			};

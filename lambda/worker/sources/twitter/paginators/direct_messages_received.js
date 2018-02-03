@@ -2,10 +2,10 @@
 
 const _ = require('lodash');
 
-const perPage = 2;
+const perPage = 100;
 
 
-function call(connection, parameters, headers, results) {
+function call(connection, parameters, headers, results, db) {
 	let dataLength, lastItem, self = this;
 
 	let outgoingHeaders = headers || {};
@@ -47,20 +47,27 @@ function call(connection, parameters, headers, results) {
 		.then(function() {
 			if (dataLength === perPage) {
 				return self.paginate(connection, {
-					maxId: lastItem.id_str
-				}, {}, results);
+					max_id: lastItem.id_str
+				}, {}, results, db);
 			}
 			else {
+				let promise = Promise.resolve();
+
 				if (results.length > 0) {
-					return db.db('live').collection('connections').updateOne({
-						_id: connection._id
-					}, {
-						$set: {
-							'endpoint_data.direct_messages_received.since_id': results[0].id_str
-						}
+					promise = promise.then(function() {
+						return db.db('live').collection('connections').updateOne({
+							_id: connection._id
+						}, {
+							$set: {
+								'endpoint_data.direct_messages_received.since_id': results[0].id_str
+							}
+						});
 					});
 				}
-				return Promise.resolve(results);
+
+				return promise.then(function() {
+					return Promise.resolve(results);
+				});
 			}
 		})
 		.catch(function(err) {
