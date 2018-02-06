@@ -51,7 +51,7 @@ module.exports = function(data, db) {
 				case 'ForkEvent':
 					newTags = [];
 
-					titleTags = item.payload.forkee.full_name.match(tagRegex);
+					titleTags = item.payload.forkee.full_name ? item.payload.forkee.full_name.match(tagRegex) : null;
 
 					if (titleTags != null) {
 						for (let j = 0; j < titleTags.length; j++) {
@@ -74,7 +74,7 @@ module.exports = function(data, db) {
 						}
 					}
 
-					descriptionTags = item.payload.forkee.description.match(tagRegex);
+					descriptionTags = item.payload.forkee.description ? item.payload.forkee.description.match(tagRegex) : null;
 
 					if (descriptionTags != null) {
 						for (let j = 0; j < descriptionTags.length; j++) {
