@@ -50,15 +50,15 @@
 	<div class="scroller">
 		<div id="provider-grid">
 			{% for provider in providers %}
-			<div class="mix {% for tag in provider.tags %}{{ tag }} {% endfor %}{% if provider.assoc_count > 0 %}associated{% endif %}" data-id="{{ provider._id | hex }}" data-assoc-count="{{ provider.assoc_count }}">
-				<div>
-					{% if provider.assoc_count > 1 %}
-						<span>{{ provider.assoc_count }}</span>
-					{% endif %}
-					<h1><i class="fa fa-{{ provider.name | lower }}"></i></h1>
-					<p>{{ provider.name }}</p>
+				<div class="mix {% for tag in provider.tags %}{{ tag }} {% endfor %}{% if provider.assoc_count > 0 %}associated{% endif %}" data-id="{{ provider._id | hex }}" data-assoc-count="{{ provider.assoc_count }}">
+					<div>
+						{% if provider.assoc_count > 1 %}
+							<span>{{ provider.assoc_count }}</span>
+						{% endif %}
+						<h1><i class="fa fa-{{ provider.name | lower }}"></i></h1>
+						<p>{{ provider.name }}</p>
+					</div>
 				</div>
-			</div>
 			{% endfor %}
 		</div>
 	</div>

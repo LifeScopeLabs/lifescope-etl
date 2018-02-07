@@ -181,6 +181,15 @@ $(document).ready(function() {
 			}).done(function(data) {
 				$('.connection[data-id="' + id + '"]').remove();
 				$.modal.close();
+			}).fail(function(err) {
+				$('#delete-modal .instructions').addClass('hidden');
+				$('#delete-modal .last-connection').removeClass('hidden');
+
+				setTimeout(function() {
+					$('#delete-modal .instructions').removeClass('hidden');
+					$('#delete-modal .last-connection').addClass('hidden');
+				}, 3000);
+
 			});
 		}
 		else {

@@ -4,7 +4,7 @@ const _ = require('lodash');
 const moment = require('moment');
 
 
-const maxResults = 100;
+const maxResults = 1000;
 
 
 function call(connection, parameters, headers, results, db) {

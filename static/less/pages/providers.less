@@ -1,12 +1,6 @@
 body.providers {
 	overflow: hidden;
 
-	&:not(.authenticated) {
-		header nav {
-			.lock-width;
-		}
-	}
-
 	@media @maxwidth768, @mobile {
 		header {
 			.mobile-selector {
@@ -197,5 +191,10 @@ body.providers {
 				margin-bottom: 1em;
 			}
 		}
+	}
+
+	.login {
+		font-weight: bold;
+		font-size: 1.4em;
 	}
 }

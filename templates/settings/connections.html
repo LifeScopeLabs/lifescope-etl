@@ -122,9 +122,15 @@
 					<div class="body">
 						<div class="paragraph" style="margin-bottom: 15px;">
 							<h3>Delete <span class="name"></span>?</h3>
-							<p>Are you sure you'd like to delete this connection?</p>
-							<p>We'll delete all stored data for this connection so if you want it back you'll have to re-add it later.</p>
-							<p>Note that deleting a connection only to add it back later will drastically decrease the accuracy of estimated event times.</p>
+							<div class="instructions">
+								<p>Are you sure you'd like to delete this connection?</p>
+								<p>We'll delete all stored data for this connection so if you want it back you'll have to re-add it later.</p>
+								<p>Note that deleting a connection only to add it back later will drastically decrease the accuracy of estimated event times.</p>
+							</div>
+							<div class="last-connection hidden">
+								<p>You cannot delete your last connection. Without any connections, you cannot access your acccount.</p>
+								<p>If you would like to delete this connection, make a connection to another provider first.</p>
+							</div>
 						</div>
 
 						<button style="margin-right: 15px;">No, Cancel</button>
