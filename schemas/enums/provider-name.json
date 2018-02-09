@@ -8,6 +8,9 @@
       "pattern": "^$"
     },
     {
+      "pattern": "^facebook$"
+    },
+    {
       "pattern": "^dropbox$"
     },
     {

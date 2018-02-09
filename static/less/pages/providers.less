@@ -196,5 +196,40 @@ body.providers {
 	.login {
 		font-weight: bold;
 		font-size: 1.4em;
+
+		& > i {
+			margin-left: 0.2em;
+			cursor: pointer;
+
+			&:hover {
+				color: @blue;
+			}
+		}
+	}
+
+	#login-modal {
+		text-align: center;
+
+		.body {
+			padding: 0.5em 1em;
+		}
+
+		h3 {
+			margin-bottom: 0.75em;
+		}
+
+		p {
+			margin-bottom: 0.5em;
+
+			&:last-of-type {
+				margin-bottom: 1.1em;
+			}
+		}
+
+		button {
+			&:first-of-type {
+				margin-right: 0.75em;
+			}
+		}
 	}
 }

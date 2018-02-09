@@ -89,4 +89,15 @@ $(document).ready(function() {
 
 		flipIcon();
 	});
+
+	$(document).on('click', '.login i', function() {
+		var $modal = $('#login-modal');
+
+		$modal.modal({
+			position: false,
+			postOpen: function() {
+				$(this).css('display', 'flex');
+			}
+		});
+	})
 });

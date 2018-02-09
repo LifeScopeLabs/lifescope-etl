@@ -4,7 +4,7 @@ const _ = require('lodash');
 const moment = require('moment');
 
 
-const maxResults = 1000;
+const maxResults = 200;
 
 
 function call(connection, parameters, headers, results, db) {
@@ -70,7 +70,7 @@ function call(connection, parameters, headers, results, db) {
 							_id: connection._id
 						}, {
 							$set: {
-								'endpoint_data.gmail_inbox.q': '"after:' + moment().utc().subtract(1, 'day').format('YYYY/MM/DD')
+								'endpoint_data.gmail_inbox.q': '"after:' + moment().utc().subtract(1, 'day').format('YYYY/MM/DD') + '"'
 							}
 						});
 					});

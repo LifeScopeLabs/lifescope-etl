@@ -20,6 +20,7 @@ module.exports = function(data, db) {
 
 	objectCache = {
 		contacts: {},
+		content: {},
 		events: {},
 		tags: {}
 	};
@@ -141,14 +142,18 @@ module.exports = function(data, db) {
 
 			newMessage['tagMasks.source'] = newTags;
 
-			content[i] = newMessage;
+			if (!_.has(objectCache.content, newMessage.identifier)) {
+				objectCache.content[newMessage.identifier] = newMessage;
+
+				content.push(objectCache.content[newMessage.identifier]);
+			}
 
 			let newEvent = {
 				type: 'messaged',
 				provider_name: 'google',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::gmail:::' + item.id,
 				datetime: moment(new Date(parseInt(item.internalDate))).utc().toDate(),
-				content: [newMessage],
+				content: [objectCache.content[newMessage.identifier]],
 				connection: this.connection._id,
 				user_id: this.connection.user_id
 			};
