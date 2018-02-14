@@ -144,7 +144,7 @@ function bulkTagUpsert(dataList, db) {
 }
 
 function mongoInsert(objects, db) {
-	var contactsUpsert, contentUpsert, locationsUpsert, tagsUpsert, thingsUpsert;
+	let contactsUpsert, contentUpsert, locationsUpsert, tagsUpsert, thingsUpsert;
 
 	if (objects.contacts && objects.contacts.length > 0) {
 		contactsUpsert = bulkUpsert('contacts', objects.contacts, db);

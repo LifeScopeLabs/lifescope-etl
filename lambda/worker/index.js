@@ -136,13 +136,46 @@ exports.handler = function(event, context, callback) {
 
 					return Promise.all(promises)
 						.then(function() {
-							return db.db('live').collection('connections').updateOne({
-								_id: connection._id
-							}, {
-								$set: {
-									last_run: moment.utc().toDate(),
-									status: 'ready'
-								}
+							let lastRun;
+							let promise = Promise.resolve();
+
+							//Google has a rate limit of about 50 email calls per second for each user.
+							//Since we have populate each message individually, that can quickly surpass this limit and lock out that user for 24 hours.
+							//The solution is to paginate with 1.2-second pauses between each page, getting 40 messages at a time.
+							//Since Lambda has a hard cap of 5 minutes, the first run through a user's mailbox could take too long.
+							//The fix for that problem, which is here, is to save the nextPageToken on endpoint_data as page_token instead of the new date query
+							//and set lastRun to something that will get run again immediately.
+							//lastRun gets set to the current datetime only when the initial backlog for Gmail has been completed.
+							if (connection.provider.name === 'Google') {
+								promise = promise.then(function() {
+									return db.db('live').collection('connections').findOne({
+										_id: connection._id
+									});
+								})
+									.then(function(connection) {
+										if (connection.endpoint_data.gmail_inbox.hasOwnProperty('page_token')) {
+											lastRun = moment().utc().subtract(1, 'day').toDate();
+										}
+										else {
+											lastRun = moment().utc().toDate();
+										}
+
+										return Promise.resolve();
+									});
+							}
+							else {
+								lastRun = moment().utc().toDate();
+							}
+
+							return promise.then(function() {
+								return db.db('live').collection('connections').updateOne({
+									_id: connection._id
+								}, {
+									$set: {
+										last_run: lastRun,
+										status: 'ready'
+									}
+								});
 							});
 						})
 						.catch(function(err) {

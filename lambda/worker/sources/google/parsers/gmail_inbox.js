@@ -26,7 +26,7 @@ module.exports = function(data, db) {
 	};
 
 	contacts = [];
-	content = new Array(data.length);
+	content = [];
 	tags = [];
 	events = new Array(data.length);
 

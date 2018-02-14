@@ -4,11 +4,12 @@ const _ = require('lodash');
 const moment = require('moment');
 
 
-const maxResults = 200;
+const maxResults = 40;
+const maxRunTime = 240000;
 
 
-function call(connection, parameters, headers, results, db) {
-	let nextPageToken, self = this;
+function call(connection, parameters, headers, results, db, startTime) {
+	let earlyCutoff, nextPageToken, self = this;
 
 	let outgoingHeaders = headers || {};
 	let outgoingParameters = parameters || {};
@@ -22,6 +23,10 @@ function call(connection, parameters, headers, results, db) {
 
 	if (_.get(connection, 'endpoint_data.gmail_inbox.q') != null) {
 		outgoingParameters.q = connection.endpoint_data.gmail_inbox.q;
+	}
+
+	if (_.get(connection, 'endpoint_data.gmail_inbox.page_token') != null && !parameters.page_token) {
+		outgoingParameters.page_token = connection.endpoint_data.gmail_inbox.page_token;
 	}
 
 	return Promise.all([
@@ -56,23 +61,54 @@ function call(connection, parameters, headers, results, db) {
 			return Promise.resolve();
 		})
 		.then(function() {
-			if (nextPageToken != null) {
-				return self.paginate(connection, {
-					page_token: nextPageToken
-				}, {}, results, db);
+			if (startTime == null) {
+				startTime = moment().utc();
+			}
+
+			let dateNow = moment().utc();
+
+			earlyCutoff = dateNow - startTime > maxRunTime;
+
+			if (nextPageToken != null && dateNow - startTime < maxRunTime) {
+				return new Promise(function(resolve, reject) {
+					setTimeout(function() {
+						resolve();
+					}, 1200);
+				})
+					.then(function() {
+						return self.paginate(connection, {
+							page_token: nextPageToken
+						}, {}, results, db, startTime);
+					})
 			}
 			else {
 				let promise = Promise.resolve();
 
 				if (results.length > 0) {
+					let $set;
+
+					if (earlyCutoff) {
+						$set = {
+							$set: {
+								'endpoint_data.gmail_inbox.page_token': nextPageToken
+							}
+						};
+					}
+					else {
+						$set = {
+							$set: {
+								'endpoint_data.gmail_inbox.q': '"after:' + moment().utc().subtract(1, 'day').format('YYYY/MM/DD') + '"'
+							},
+							$unset: {
+								'endpoint_data.gmail_inbox.page_token': true
+							}
+						};
+					}
+
 					promise = promise.then(function() {
 						return db.db('live').collection('connections').updateOne({
 							_id: connection._id
-						}, {
-							$set: {
-								'endpoint_data.gmail_inbox.q': '"after:' + moment().utc().subtract(1, 'day').format('YYYY/MM/DD') + '"'
-							}
-						});
+						}, $set);
 					});
 				}
 

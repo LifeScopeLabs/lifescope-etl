@@ -195,7 +195,6 @@ function call(connection, parameters, headers, results, db) {
 				}
 
 				return promise.then(function() {
-					console.log(results);
 					return Promise.resolve(results);
 				});
 			}
