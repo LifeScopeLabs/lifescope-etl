@@ -1,31 +1,42 @@
 'use strict';
 
+const querystring = require('querystring');
+const url = require('url');
+
 const _ = require('lodash');
+const moment = require('moment');
 
 
-const maxResults = 50;
+const fields = [
+	'id',
+	'url',
+	'created_at',
+	'note',
+	'original_link',
+	'media',
+	'attribution',
+	'image'
+];
+
+const limit = 2;
 
 
 function call(connection, parameters, headers, results, db) {
-	let nextPageToken, newStartPageToken, self = this;
+	let cursor, self = this;
 
 	let outgoingHeaders = headers || {};
 	let outgoingParameters = parameters || {};
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
-	outgoingParameters.max_results = outgoingParameters.max_results || maxResults;
+	outgoingParameters.limit = outgoingParameters.limit || limit;
 
 	if (this.population != null) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	if (_.get(connection, 'endpoint_data.drive_changes.page_token') != null && parameters.page_token == null) {
-		outgoingParameters.page_token = connection.endpoint_data.drive_changes.page_token;
-	}
+	let fieldsCopy = _.clone(fields);
 
-	if (outgoingParameters.page_token == null) {
-		outgoingParameters.page_token = 1;
-	}
+	outgoingParameters.fields = fieldsCopy.join();
 
 	return Promise.all([
 		this.api.endpoint(this.mapping)({
@@ -46,8 +57,7 @@ function call(connection, parameters, headers, results, db) {
 				results = [];
 			}
 
-			nextPageToken = pageData.nextPageToken;
-			newStartPageToken = pageData.newStartPageToken;
+			cursor = pageData.cursor;
 
 			results = results.concat(data);
 
@@ -60,33 +70,17 @@ function call(connection, parameters, headers, results, db) {
 			return Promise.resolve();
 		})
 		.then(function() {
-			if (nextPageToken != null) {
+			if (cursor != null) {
 				return self.paginate(connection, {
-					page_token: nextPageToken
+					cursor: cursor
 				}, {}, results, db);
 			}
 			else {
-				let promise = Promise.resolve();
-
-				if (results.length > 0) {
-					promise = promise.then(function() {
-						return db.db('live').collection('connections').updateOne({
-							_id: connection._id
-						}, {
-							$set: {
-								'endpoint_data.drive_changes.page_token': newStartPageToken
-							}
-						});
-					});
-				}
-
-				return promise.then(function() {
-					return Promise.resolve(results);
-				});
+				return Promise.resolve(results);
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Google Drive Changes:');
+			console.log('Error calling Facebook Posts:');
 			console.log(err);
 
 			return Promise.reject(err);
@@ -95,3 +89,4 @@ function call(connection, parameters, headers, results, db) {
 
 
 module.exports = call;
+

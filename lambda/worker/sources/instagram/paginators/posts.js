@@ -2,6 +2,8 @@
 
 const _ = require('lodash');
 
+const count = 50;
+
 
 function call(connection, parameters, headers, results, db) {
 	let next, self = this;
@@ -10,7 +12,7 @@ function call(connection, parameters, headers, results, db) {
 	let outgoingParameters = parameters || {};
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
-	outgoingParameters.count = outgoingParameters.count || 50;
+	outgoingParameters.count = outgoingParameters.count || count;
 
 	if (this.population != null) {
 		outgoingHeaders['X-Populate'] = this.population;

@@ -89,7 +89,7 @@ const subFields = {
 	]
 };
 
-const limit = 2;
+const limit = 50;
 
 
 function call(connection, parameters, headers, results, db) {
@@ -134,8 +134,6 @@ function call(connection, parameters, headers, results, db) {
 	outgoingParameters.fields = fieldsCopy.join();
 	outgoingParameters.related_photo_fields = photoFieldsCopy.join();
 	outgoingParameters.related_video_fields = videoFieldsCopy.join();
-
-	console.log(outgoingParameters);
 
 	return Promise.all([
 		this.api.endpoint(this.mapping)({

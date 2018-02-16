@@ -18,7 +18,8 @@ var translation = {
 			receipt: 'fa fa-dollar',
 			software: 'fa fa-floppy-o',
 			text: 'fa fa-file-text-o',
-			video: 'fa fa-video-camera'
+			video: 'fa fa-video-camera',
+			'web-page': 'fa fa-desktop'
 		},
 
 		event: {

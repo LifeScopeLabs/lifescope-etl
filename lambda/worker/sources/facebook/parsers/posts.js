@@ -32,7 +32,7 @@ module.exports = function(data, db) {
 				type: 'messaged',
 				context: 'Posted',
 				provider_name: 'facebook',
-				identifier: this.connection._id.toString('hex') + ':::created:::instagram:::' + item.id,
+				identifier: this.connection._id.toString('hex') + ':::created:::facebook:::' + item.id,
 				datetime: datetime,
 				content: [],
 				contacts: [],

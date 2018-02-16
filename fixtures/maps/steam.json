@@ -24,7 +24,7 @@
       "parameters": {
         "steamids": {
           "description": "Steam user ID",
-          "value": "$connection.metadata.id"
+          "value": "{{ connection.metadata.id }}"
         }
       },
       "route": {
@@ -52,11 +52,16 @@
           "value": "{{ parameters.appid }}"
         }
       },
-      "single": false,
-      "collection": {
-        "route": {
-          "data": "game.availableGameStats.achievements",
-          "path": "/ISteamUserStats/GetSchemaForGame/v0002"
+      "route": {
+        "data": "game.availableGameStats.achievements",
+        "path": "/ISteamUserStats/GetSchemaForGame/v0002"
+      },
+      "responses": {
+        "400": {
+          "recast": 204
+        },
+        "404": {
+          "recast": 204
         }
       },
       "model": {
@@ -65,8 +70,8 @@
           "identifier": {
             "type": "composite",
             "parameters": [
-              "achievement.game.appid",
-              "name"
+              "{{ parameters.appid }}",
+              "{{ model.name }}"
             ],
             "serialized": false
           },
@@ -87,7 +92,7 @@
       "parameters": {
         "steamid": {
           "description": "Steam user ID",
-          "value": "$connection.metadata.id"
+          "value": "{{ connection.metadata.id }}"
         },
         "format": {
           "description": "API data output format",
@@ -111,8 +116,8 @@
           "identifier": {
             "type": "composite",
             "parameters": [
-              "game.appid",
-              "name"
+              "{{ parameters.appid }}",
+              "{{ model.name }}"
             ],
             "serialized": false
           },
@@ -122,14 +127,13 @@
           },
           "schema": {
             "type": "related",
-            "action": "hydrate",
             "ref": "AchievementData",
             "key": "identifier",
-            "backref": "achievement",
             "reverse": {
               "parameters": {
-                "appid": "game.appid"
-              }
+                "appid": "{{ parameters.appid }}"
+              },
+              "identifier": "{{ model.identifier }}"
             }
           }
         }
