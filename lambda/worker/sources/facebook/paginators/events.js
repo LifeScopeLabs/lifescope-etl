@@ -9,27 +9,22 @@ const moment = require('moment');
 
 const fields = [
 	'id',
-	'caption',
-	'created_time',
+	'category',
+	'cover',
 	'description',
-	'from',
-	'icon',
-	'link',
-	'message',
-	'message_tags',
 	'name',
-	'object_id',
-	'parent_id',
-	'permalink_url',
-	'picture',
+	'owner',
 	'place',
-	'properties',
-	'source',
-	'status_type',
-	'to',
-	'type',
-	'updated_time',
-	'with_tags'
+	'start_time'
+];
+
+const photoFields = [
+	'id',
+	'from',
+	'images',
+	'link',
+	'name',
+	'picture'
 ];
 
 const userFields = [
@@ -54,32 +49,8 @@ const groupFields = [
 	'icon'
 ];
 
-const photoFields = [
-	'id',
-	'from',
-	'images',
-	'link',
-	'name',
-	'picture'
-];
-
-const videoFields = [
-	'id',
-	'created_time',
-	'description',
-	'embed_html',
-	'from',
-	'permalink_url',
-	'picture',
-	'source',
-	'title'
-];
-
 const subFields = {
 	from: [
-		'id'
-	],
-	to: [
 		'id',
 		'birthday',
 		'cover',
@@ -90,16 +61,16 @@ const subFields = {
 		'name',
 		'picture'
 	],
-	with_tags: [
+	owner: [
 		'id',
-		'birthday',
-		'cover',
 		'email',
 		'first_name',
 		'gender',
 		'last_name',
+		'locale',
 		'name',
-		'picture'
+		'picture',
+		'short_name'
 	]
 };
 
@@ -119,13 +90,12 @@ function call(connection, parameters, headers, results, db) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	if (_.get(connection, 'endpoint_data.posts.since') != null && outgoingParameters.since == null) {
-		outgoingParameters.since = connection.endpoint_data.posts.since;
+	if (_.get(connection, 'endpoint_data.events.since') != null && outgoingParameters.since == null) {
+		outgoingParameters.since = connection.endpoint_data.events.since;
 	}
 
 	let fieldsCopy = _.clone(fields);
 	let photoFieldsCopy = _.clone(photoFields);
-	let videoFieldsCopy = _.clone(videoFields);
 	let userFieldsCopy = _.clone(userFields);
 	let pageFieldsCopy = _.clone(pageFields);
 	let groupFieldsCopy = _.clone(groupFields);
@@ -140,7 +110,6 @@ function call(connection, parameters, headers, results, db) {
 
 	outgoingParameters.fields = fieldsCopy.join();
 	outgoingParameters.related_photo_fields = photoFieldsCopy.join();
-	outgoingParameters.related_video_fields = videoFieldsCopy.join();
 	outgoingParameters.related_user_fields = userFieldsCopy.join();
 	outgoingParameters.related_page_fields = pageFieldsCopy.join();
 	outgoingParameters.related_group_fields = groupFieldsCopy.join();
@@ -170,10 +139,6 @@ function call(connection, parameters, headers, results, db) {
 
 			if (!(/^2/.test(response.statusCode))) {
 				let body = JSON.parse(response.body);
-
-				console.log(outgoingHeaders);
-				console.log(outgoingParameters);
-				console.log(body);
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
 			}
@@ -208,7 +173,7 @@ function call(connection, parameters, headers, results, db) {
 							_id: connection._id
 						}, {
 							$set: {
-								'endpoint_data.posts.since': moment().unix()
+								'endpoint_data.events.since': moment().unix()
 							}
 						});
 					});
@@ -220,7 +185,7 @@ function call(connection, parameters, headers, results, db) {
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Facebook Posts:');
+			console.log('Error calling Facebook Events:');
 			console.log(err);
 
 			return Promise.reject(err);

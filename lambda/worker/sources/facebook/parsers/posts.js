@@ -64,7 +64,7 @@ module.exports = function(data, db) {
 
 			if (item.status_type === 'added_video' && !item.video.error) {
 				let newVideo = {
-					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.object_id,
+					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.video.id,
 					connection: this.connection._id,
 					user_id: this.connection.user_id,
 					url: 'https://facebook.com' + item.video.permalink_url,
@@ -72,7 +72,7 @@ module.exports = function(data, db) {
 					embed_thumbnail: item.video.picture,
 					embed_format: 'iframe',
 					provider_name: 'facebook',
-					remote_id: item.object_id,
+					remote_id: item.video.id,
 					type: 'video'
 				};
 
@@ -89,14 +89,16 @@ module.exports = function(data, db) {
 				newEvent.content.push(objectCache.content[newVideo.identifier]);
 
 				if (item.video.from != null && item.video.from.id !== this.connection.metadata.id) {
+					let from = item.video.from_user.id ? item.video.from_user : item.video.from_page.id ? item.video.from_page : item.video.from_group;
+
 					let newContact = {
-						identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.video.id,
+						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
 						connection: this.connection._id,
 						user_id: this.connection.user_id,
 						provider_name: 'facebook',
-						remote_id: item.video.id,
-						avatar_url: item.video.from.picture.data.url,
-						name: item.video.from.name
+						remote_id: from.id,
+						avatar_url: item.video.from_group.id ? from.icon : from.picture.data.url,
+						name: from.name
 					};
 
 					if (!_.has(objectCache.contacts, newContact.identifier)) {
@@ -111,7 +113,7 @@ module.exports = function(data, db) {
 
 			if (item.status_type === 'added_photos' && !item.photo.error) {
 				let newPhoto = {
-					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.object_id,
+					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.photo.id,
 					connection: this.connection._id,
 					user_id: this.connection.user_id,
 					text: item.message,
@@ -120,7 +122,7 @@ module.exports = function(data, db) {
 					embed_thumbnail: item.photo.picture,
 					embed_format: 'jpeg',
 					provider_name: 'facebook',
-					remote_id: item.object_id,
+					remote_id: item.photo.id,
 					type: 'image'
 				};
 
@@ -133,14 +135,16 @@ module.exports = function(data, db) {
 				newEvent.content.push(objectCache.content[newPhoto.identifier]);
 
 				if (item.photo.from != null && item.photo.from.id !== this.connection.metadata.id) {
+					let from = item.photo.from_user.id ? item.photo.from_user : item.photo.from_page.id ? item.photo.from_page : item.photo.from_group;
+
 					let newContact = {
-						identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.photo.id,
+						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
 						connection: this.connection._id,
 						user_id: this.connection.user_id,
 						provider_name: 'facebook',
-						remote_id: item.photo.id,
-						avatar_url: item.photo.from.picture.data.url,
-						name: item.photo.from.name
+						remote_id: from.id,
+						avatar_url: item.photo.from_group.id ? from.icon : from.picture.data.url,
+						name: from.name
 					};
 
 					if (!_.has(objectCache.contacts, newContact.identifier)) {
@@ -206,14 +210,16 @@ module.exports = function(data, db) {
 			}
 
 			if (item.from != null && item.from.id !== this.connection.metadata.id) {
+				let from = item.from_user.id ? item.from_user : item.from_page.id ? item.from_page : item.from_group;
+
 				let newContact = {
-					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.from.id,
+					identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
 					connection: this.connection._id,
 					user_id: this.connection.user_id,
 					provider_name: 'facebook',
-					remote_id: item.from.id,
-					avatar_url: item.from.picture.data.url,
-					name: item.from.name
+					remote_id: from.id,
+					avatar_url: from.picture.data.url,
+					name: from.name
 				};
 
 				if (!_.has(objectCache.contacts, newContact.identifier)) {
@@ -229,7 +235,7 @@ module.exports = function(data, db) {
 
 			if (item.place && item.place.location && item.place.location.longitude && item.place.location.latitude) {
 				let newLocation = {
-					identifier: this.connection._id.toString('hex') + ':::facebook:::' + datetime,
+					identifier: this.connection._id.toString('hex') + ':::' + this.connection.user_id.toString('hex') + ':::' + datetime.toString('hex') + ':::facebook:::' + datetime,
 					datetime: datetime,
 					estimated: false,
 					geo_format: 'lat_lng',

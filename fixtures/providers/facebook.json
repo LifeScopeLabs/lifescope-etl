@@ -8,6 +8,14 @@
       "enabled_by_default": true,
       "mapping": "UserFeed",
       "population": "*"
+    },
+
+    "events": {
+      "name": "Facebook Events",
+      "description": "Events you have RSVP'd for on Facebook",
+      "enabled_by_default": true,
+      "mapping": "UserEvents",
+      "population": "*"
     }
   },
 

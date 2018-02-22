@@ -278,45 +278,43 @@ function checkScrollPagination(e) {
 }
 
 $document.ready(function() {
-	$.ajax({
-		url: protocol + '://' + domain + '/api/events',
-		type: 'SEARCH',
-		dataType: 'json',
-		contentType: 'application/json',
-		data: JSON.stringify({
-			offset: 0,
-			limit: 1
-		})
-	}).done(function(data) {
-		var count;
+	// $.ajax({
+	// 	url: protocol + '://' + domain + '/api/events',
+	// 	type: 'SEARCH',
+	// 	dataType: 'json',
+	// 	contentType: 'application/json',
+	// 	data: JSON.stringify({
+	// 		offset: 0,
+	// 		limit: 1
+	// 	})
+	// }).done(function(data) {
+	// 	var count;
+	//
+	// 	count = humanize.compactInteger(data.count, 1).toUpperCase();
+	//
+	// 	$('.stats .events .count')
+	// 		.text(count)
+	// 		.removeClass('transparent');
+	// });
 
-		count = humanize.compactInteger(data.count, 1).toUpperCase();
-
-		$('.stats .events .count')
-			.text(count)
-			.removeClass('transparent');
-
-		$('.tab[name="favorites"]').trigger('click');
-	});
-
-	$.ajax({
-		url: protocol + '://' + domain + '/api/searches',
-		type: 'GET',
-		contentType: 'application/json',
-		data: {
-			type: 'recent',
-			offset: 0,
-			limit: 1
-		}
-	}).done(function(data) {
-		var count;
-
-		count = humanize.compactInteger(data.count, 1).toUpperCase();
-
-		$('.stats .searches .count')
-			.text(count)
-			.removeClass('transparent');
-	});
+	// $.ajax({
+	// 	url: protocol + '://' + domain + '/api/searches',
+	// 	type: 'GET',
+	// 	contentType: 'application/json',
+	// 	data: {
+	// 		type: 'recent',
+	// 		offset: 0,
+	// 		limit: 1
+	// 	}
+	// }).done(function(data) {
+	// 	var count;
+	//
+	// 	count = humanize.compactInteger(data.count, 1).toUpperCase();
+	//
+	// 	$('.stats .searches .count')
+	// 		.text(count)
+	// 		.removeClass('transparent');
+	// });
 
 	$document.on('click', '#favorite button', function(e) {
 		var action, icon, id, paramData, promise, $activeSearch, $favorite, $icon, $target;
@@ -513,6 +511,8 @@ $document.ready(function() {
 			compactOverflowFilters($(search).attr('data-id'));
 		});
 	});
+
+	$('.tab[name="favorites"]').trigger('click');
 });
 
 $(search).on('search', function(e, done) {
