@@ -1,0 +1,21 @@
+{
+  "_id": "0cbd7b54443545f9bc15f10c923b214a",
+
+  "sources": {
+    "games_owned": {
+      "name": "Games Owned",
+      "description": "Steam games that you own",
+      "enabled_by_default": true,
+      "mapping": "GamesOwned"
+    },
+    "achievements": {
+      "name": "Achievements",
+      "description": "Achievements in Steam games you have played",
+      "enabled_by_default": true,
+      "mapping": "GamesOwned",
+      "population": "*"
+    }
+  },
+
+  "remote_map_id": "***INSERT STEAM MAP ID HERE***"
+}
