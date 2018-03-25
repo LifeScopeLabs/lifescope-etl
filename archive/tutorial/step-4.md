@@ -1,4 +1,4 @@
-# 4. Using Bitscoop Live
+# 4. Using LIFESCOPE
 
 Sign up using a GitHub, Google, or Twitter account.
 
