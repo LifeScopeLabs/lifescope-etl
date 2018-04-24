@@ -3,6 +3,10 @@
 @import 'mixins/flexbox.less';
 @import 'mixins/generic.less';
 
+body {
+	margin: 0;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -81,7 +85,7 @@ b, strong {
 	font-weight: 700 !important;
 }
 
-body {
+div#body {
 	.flexbox;
 	.flex-column;
 
@@ -289,6 +293,7 @@ body {
 	}
 
 	& > main {
+		overflow-y: auto;
 		.flexbox;
 		.flex-grow-scrollable;
 
@@ -357,7 +362,7 @@ html.dark {
 	@red-override: saturate(@red, 15%);
 	@green-override: saturate(@green, 15%);
 
-	body {
+	div#body {
 		color: @font-color-dark;
 	}
 

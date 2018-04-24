@@ -1,4 +1,4 @@
-body.providers {
+div#body.providers {
 	overflow: hidden;
 
 	@media @maxwidth768, @mobile {
@@ -122,10 +122,6 @@ body.providers {
 					border: 3px solid lighten(@blue, 15%);
 				}
 
-				&.mix {
-					display: none;
-				}
-
 				&:hover,
 				&:active,
 				&.active {
@@ -154,42 +150,33 @@ body.providers {
 		}
 	}
 
-	.scroller .content {
-		padding: 0 !important;
+	padding: 0 !important;
 
-		#workflow {
-			border: 0;
-			width: 500px;
+	#workflow {
+		.action {
+			.flexbox;
+			.flex-center;
+
+			margin-top: 1.5em;
+		}
+
+		label {
+			font-size: 1.2em;
+		}
+
+		.tooltip {
+			margin: 0.35em 0 0 3em;
+			color: @font-color-subdue;
 
 			@media @mobile {
-				width: 100%;
+				margin-top: 0em;
 			}
+		}
 
-			.action {
-				.flexbox;
-				.flex-center;
-
-				margin-top: 1.5em;
-			}
-
-			label {
-				font-size: 1.2em;
-			}
-
-			.tooltip {
-				margin: 0.35em 0 0 3em;
-				color: @font-color-subdue;
-
-				@media @mobile {
-					margin-top: 0em;
-				}
-			}
-
-			.label {
-				font-weight: 700;
-				font-size: 1.2em;
-				margin-bottom: 1em;
-			}
+		.label {
+			font-weight: 700;
+			font-size: 1.2em;
+			margin-bottom: 1em;
 		}
 	}
 
