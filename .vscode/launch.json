@@ -1,0 +1,12 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "etl",
+            "type": "chrome",
+            "request": "launch",
+            "sourceMaps": true,
+            "url": "file:///Users/williambroza/Development/Sources/lifescope/lifescope-xr/index.html"
+        }
+    ]
+}
