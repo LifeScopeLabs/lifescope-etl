@@ -37,7 +37,7 @@ module.exports = function(data, db) {
 			};
 
 			if (item.data.thumbnail) {
-				newThread.thumbnail = item.data.thumbnail;
+				newThread.embed_thumbnail = item.data.thumbnail;
 			}
 
 

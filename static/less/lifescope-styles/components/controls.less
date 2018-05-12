@@ -247,7 +247,7 @@ div.text-box {
 	}
 }
 
-.input-group {
+#search-bar {
 	display: inline-flex;
 
 	border: 1px solid @input-border-color;
@@ -321,42 +321,40 @@ input[type='radio'], input[type='checkbox'] {
 
 
 // Bootstrap stylings
-.datetimepicker {
-	&.input-group {
+&.input-group {
+	position: relative;
+	display: table;
+	border-collapse: separate;
+
+	.form-control {
 		position: relative;
-		display: table;
-		border-collapse: separate;
+		display: table-cell;
+		z-index: 2;
+		float: left;
+		width: 100%;
+		margin-bottom: 0;
+	}
 
-		.form-control {
-			position: relative;
-			display: table-cell;
-			z-index: 2;
-			float: left;
-			width: 100%;
-			margin-bottom: 0;
-		}
+	.input-group-addon {
+		display: table-cell;
+		width: 1%;
+		vertical-align: middle;
+		padding: 6px 12px;
+		font-size: 14px;
+		font-weight: normal;
+		line-height: 1;
+		color: #555;
+		text-align: center;
+		background-color: #eee;
+	}
 
-		.input-group-addon {
-			display: table-cell;
-			width: 1%;
-			vertical-align: middle;
-			padding: 6px 12px;
-			font-size: 14px;
-			font-weight: normal;
-			line-height: 1;
-			color: #555;
-			text-align: center;
-			background-color: #eee;
-		}
+	.list-unstyled {
+		padding-left: 0;
+		list-style: none;
+	}
 
-		.list-unstyled {
-			padding-left: 0;
-			list-style: none;
-		}
-
-		a {
-			color: @blue;
-		}
+	a {
+		color: @blue;
 	}
 }
 

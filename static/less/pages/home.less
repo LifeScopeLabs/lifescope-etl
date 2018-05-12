@@ -252,6 +252,7 @@ div#body.home {
 								padding: 0.75em 0.2em;
 								border: 1px solid transparent;
 								position: relative;
+								text-decoration: none;
 
 								@media @mobile {
 									padding: 0.75em 0;
@@ -265,6 +266,12 @@ div#body.home {
 								&:active,
 								&.active {
 									background-color: @background-color;
+
+									.favorite-create,
+									.favorite-edit {
+										background-color: darken(@background-color, 10%);
+										opacity: 0.2;
+									}
 								}
 
 								& > .favorite-create,
@@ -272,6 +279,10 @@ div#body.home {
 									position: absolute;
 									top: 0; right: 0; z-index: 10;
 									width: 33%; height: 100%;
+
+									&:hover {
+										background-color: darken(@background-color, 20%);
+									}
 
 									@media @mobile {
 										width: 10%;

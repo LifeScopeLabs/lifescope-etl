@@ -2,12 +2,16 @@
 	.flexbox;
 
 	width: 100%;
-	margin-bottom: 2em;
-	border: 1px solid @background-color-dark;
+	word-break: break-all;
 	padding: 1em;
-	border-radius: 5px;
 
-	@media @mobile {
+	&:not(.modaled) {
+		margin-bottom: 2em;
+		border: 1px solid @background-color-dark;
+		border-radius: 5px;
+	}
+
+	@media @mobile, @maxwidth768 {
 		.flex-column;
 	}
 
@@ -16,7 +20,7 @@
 		margin-right: 1em;
 		border-right: 1px solid @border-color;
 
-		@media @mobile {
+		@media @mobile, @maxwidth768 {
 			padding: 0 0 1em 0;
 			margin: 0 0 1em 0;
 			border-right: none;
@@ -29,7 +33,7 @@
 		.flex-column;
 
 		text-align: left;
-		white-space: nowrap;
+		word-break: initial;
 
 		i:first-child {
 			width: 1.2em;
@@ -46,7 +50,7 @@
 			margin-bottom: 1.5em;
 			color: @font-color-subdue;
 
-			@media @mobile {
+			@media @mobile, @maxwidth768 {
 				.flex-center;
 
 				text-align: center;
@@ -56,7 +60,7 @@
 			span {
 				font-size: 0.85em;
 
-				@media @mobile {
+				@media @mobile, @maxwidth768 {
 					font-size: 1em;
 				}
 			}
@@ -106,6 +110,11 @@
 	& > .content {
 		.flexbox;
 		.flex-column;
+		.flex-grow;
+
+		@media @mobile, @maxwidth768 {
+			.flex(0);
+		}
 
 		& > *:not(:last-child) {
 			margin-bottom: 1em;

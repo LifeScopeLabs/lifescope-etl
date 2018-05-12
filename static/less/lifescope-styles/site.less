@@ -158,7 +158,6 @@ div#body {
 			.flex-x-center;
 
 			padding: 0.2em 0;
-			cursor: pointer;
 
 			@media @maxwidth768, @mobile {
 				display: none !important;
@@ -182,6 +181,9 @@ div#body {
 
 			& > .views {
 				& > a {
+					text-decoration: none;
+					cursor: pointer;
+
 					&:not(:last-child) {
 						margin-right: 0.5em;
 					}
@@ -199,8 +201,19 @@ div#body {
 					.flexbox;
 					.flex-space-around;
 
+					text-decoration: none;
+					cursor: pointer;
+
+					&:hover {
+						color: @green;
+					}
+
 					&:not(:last-child) {
 						margin-right: 0.5em;
+					}
+
+					&.active {
+						color: @orange;
 					}
 
 					& > div {
@@ -301,6 +314,8 @@ div#body {
 			.flexbox;
 			.flex-column;
 			.flex-grow;
+
+			max-width: 100%;
 		}
 	}
 

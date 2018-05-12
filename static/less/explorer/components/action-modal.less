@@ -1,4 +1,12 @@
-.modal .actions {
+.actions {
+	.flexbox;
+	.flex-grow;
+	.flex-column;
+	.flex-center;
+	.flex-x-center;
+
+	margin: 0.45em 0.35em;
+
 	.title {
 		text-align: center;
 		margin-bottom: 0.5em;
@@ -31,6 +39,19 @@
 
 			& > *:not(:last-child) {
 				margin-right: 0.35em;
+			}
+		}
+	}
+
+	.tagging {
+		.add-tag {
+			i {
+				cursor: pointer;
+				margin-left: 0.3em;
+
+				&:hover {
+					color: @blue;
+				}
 			}
 		}
 	}
