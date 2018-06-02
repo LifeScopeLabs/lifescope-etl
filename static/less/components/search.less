@@ -73,6 +73,7 @@ body {
 
 		#filter-editor {
 			margin-right: 8px;
+			width: 250px;
 
 			@media @mobile {
 				width: 100%;
@@ -155,6 +156,7 @@ body {
 
 					&[type="radio"] {
 						vertical-align: bottom;
+						display: none;
 					}
 				}
 
@@ -202,6 +204,7 @@ body {
 						& > .input-container  {
 							border: 1px solid @border-color;
 							border-radius: 3px;
+							font-size: 0.75em;
 
 							& > label {
 								width: 50%;
@@ -257,16 +260,17 @@ body {
 						& > .input-container {
 							border: 1px solid @border-color;
 							border-radius: 3px;
+							font-size: 0.75em;
 
 							& > label {
 								&:first-child {
-									width: 60%;
+									width: 50%;
 									border-right: 1px solid @border-color;
 									border-radius: 3px 0 0 3px;
 								}
 
 								&:last-child {
-									width: 40%;
+									width: 50%;
 									border-radius: 0 3px 3px 0;
 								}
 							}

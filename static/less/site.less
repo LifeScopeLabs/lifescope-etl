@@ -282,6 +282,10 @@ div#body {
 					& > .count {
 						color: @font-color;
 					}
+
+					& > .facet-select-toggle {
+						cursor: pointer;
+					}
 				}
 
 				& > .container {
@@ -304,8 +308,15 @@ div#body {
 							.flexbox;
 							.flex-x-center;
 
+							cursor: pointer;
+							text-decoration: none;
+
 							i {
 								margin-right: 0.5em;
+							}
+
+							&:hover {
+								color: @blue;
 							}
 
 							&:not(:last-child) {

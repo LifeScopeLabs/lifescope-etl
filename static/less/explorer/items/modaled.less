@@ -1,0 +1,27 @@
+.object.modaled {
+  .flexbox;
+
+  width: 100%;
+  word-break: break-word;
+  padding: 1em;
+
+  & > .content {
+    .flexbox;
+    .flex-column;
+    .flex-grow;
+
+    @media @mobile, @maxwidth768 {
+      .flex(0);
+    }
+
+    & > *:not(:last-child) {
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid @border-color;
+    }
+
+    .tagging {
+      text-align: center;
+    }
+  }
+}

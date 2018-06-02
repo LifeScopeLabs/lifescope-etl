@@ -1,0 +1,47 @@
+.object.feed {
+  .flexbox;
+
+  width: 100%;
+  word-break: break-all;
+  padding: 1em;
+
+  &:not(.modaled) {
+    margin-bottom: 2em;
+    border: 1px solid @background-color-dark;
+    border-radius: 5px;
+  }
+
+  & > .content {
+    .flexbox;
+    .flex-column;
+    .flex-grow;
+
+    & > *:not(:last-child) {
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid @border-color;
+    }
+
+    .tagging {
+      text-align: center;
+    }
+  }
+
+  & > .contact {
+    .flexbox;
+    .flex-grow;
+    .flex-column;
+
+    & > div:first-child {
+      .flex-grow;
+
+      .action-bar {
+        margin: 0 0 0 auto;
+      }
+    }
+
+    .tagging {
+      text-align: right;
+    }
+  }
+}
