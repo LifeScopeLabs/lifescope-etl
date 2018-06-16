@@ -1,6 +1,8 @@
 {
   "_id": "c3817b27324541d0b8eab46fd92b2b9d",
 
+  "login": true,
+
   "sources": {
     "tweets": {
       "name": "Tweets",
@@ -23,5 +25,5 @@
     }
   },
 
-  "remote_map_id": "***INSERT TWITTER MAP ID HERE***"
+  "remote_map_id": "3b7717ab31c946c8a58a38a78813d168"
 }

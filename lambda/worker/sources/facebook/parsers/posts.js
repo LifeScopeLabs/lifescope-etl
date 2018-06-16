@@ -235,7 +235,7 @@ module.exports = function(data, db) {
 
 			if (item.place && item.place.location && item.place.location.longitude && item.place.location.latitude) {
 				let newLocation = {
-					identifier: this.connection._id.toString('hex') + ':::' + this.connection.user_id.toString('hex') + ':::' + datetime.toString('hex') + ':::facebook:::' + datetime,
+					identifier: this.connection._id.toString('hex') + ':::facebook:::' + datetime,
 					datetime: datetime,
 					estimated: false,
 					geo_format: 'lat_lng',

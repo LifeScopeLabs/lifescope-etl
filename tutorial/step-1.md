@@ -13,14 +13,42 @@ Make sure to substitute the values for the API keys, client IDs, and client secr
 
 | API Map   | File Name       |                                                                                                                                                                                                                                    |
 |----------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dropbox | dropbox.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/dropbox.json) |
+| Facebook | facebook.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/facebook.json) |
 | GitHub | github.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/github.json) |
 | Google | google.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/google.json) |
 | Instagram | instagram.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/instagram.json) |
+| Pinterest | pinterest.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/pinterest.json) |
 | reddit | reddit.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/reddit.json) |
 | Spotify | spotify.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/spotify.json) |
 | Steam | steam.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/steam.json) |
 | Twitter | twitter.json | [![Add to BitScoop](https://assets.bitscoop.com/github/AddBitScoopXSmall.png)](https://bitscoop.com/maps/create?source=https://raw.githubusercontent.com/bitscooplabs/bitscoop-social-app-demo/master/fixtures/maps/twitter.json) |
 
+
+### Dropbox
+On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the map for Dropbox. You will be redirected to BitScoop. (Make sure you are logged in on BitScoop.) You will see the JSON for the map you just added. You do not need to add any information to this map. Click the ‘+ Create’ button in the upper right-hand corner to save the map.
+
+Create an account with Dropbox if you don't have one already.
+When you're signed in, go to [your developer apps page](https://www.dropbox.com/developers/apps).
+Create a new app; it should be for the Dropbox API (not the Business API) and should have full Dropbox access.
+Give it a name and click Create; you should be taken to the Settings page for the new app.
+On the settings page, you need to copy the Callback URL from the API Map you made into 'OAuth2 Redirect URIs'; amke sure to click the Add button.
+Copy the App key and App secret into 'auth_key' and 'auth_secret', respectively, in the 'auth' portion of the Map, then save the Map.
+
+#### Facebook
+On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the map for Facebook. You will be redirected to BitScoop. (Make sure you are logged in on BitScoop.) You will see the JSON for the map you just added. You do not need to add any information to this map. Click the ‘+ Create’ button in the upper right-hand corner to save the map.
+
+Create a developer account with Facebook if you don’t have one already.
+When you’re signed in, go to [your apps page](https://developers.facebook.com/apps).
+Click on Add a New App.
+Enter a name for this app and click Create App ID, then solve the Captcha if asked.
+You should be taken to the Add Product page for the new app.
+
+Click the ‘Get Started’ button for Facebook Login.
+This should add it to the list of Products at the bottom of the left-hand menu.
+We don’t need to go through their quickstart, so click on the Login product and then go to its Settings.
+Copy the Map’s Callback URL into ‘Valid OAuth redirect URIs’ and make sure to Save Changes.
+Now go to the app’s Basic Settings and copy the App ID and App Secret into ‘auth_key’ and ‘auth_secret’, respectively, in the auth portion of the Map, then save the Map.
 
 # GitHub
 On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the map for GitHub. You will be redirected to BitScoop. (Make sure you are logged in on BitScoop.) You will see the JSON for the map you just added. You do not need to add any information to this map. Click the ‘+ Create’ button in the upper right-hand corner to save the map.
@@ -59,15 +87,23 @@ Unlike GitHub and Twitter, Google allows for multiple callback URLs for the same
  https://console.developers.google.com/apis/api/analytics.googleapis.com/overview
 
 # Instagram
-On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the Map for reddit. You will be redirected to BitScoop. (Make sure you are logged in to BitScoop.) You will see the JSON for the map you just added. We don’t have an auth_key or auth_secret yet, so leave those fields as is. Then click the ‘+ Create’ button in the upper right-hand corner to save the map.
+On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the Map for Instagram. You will be redirected to BitScoop. (Make sure you are logged in to BitScoop.) You will see the JSON for the map you just added. We don’t have an auth_key or auth_secret yet, so leave those fields as is. Then click the ‘+ Create’ button in the upper right-hand corner to save the map.
 
 Create an account with Instagram if you don't have one already.
 Go to the [Instagram Developer Client Management](https://www.instagram.com/developer/clients/manage) and click on Register a New Client.
 Fill in the required fields, in particular copying the Callback URL from the API Map you made into 'Valid Redirect URIs', then click Register.
 When the client is created, click Manage and copy the Client ID and Client Secret into auth_key and auth_secret in the 'auth' portion of your Instagram Map. Make sure to save the Map.
 
+### Pinterest
+On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the Map for Pinterest. You will be redirected to BitScoop. (Make sure you are logged in to BitScoop.) You will see the JSON for the map you just added. We don’t have an auth_key or auth_secret yet, so leave those fields as is. Then click the ‘+ Create’ button in the upper right-hand corner to save the map.
+
+Create an account with Pinterest if you don't have one already.
+Go to [your developer apps](https://developers.pinterest.com/apps/) and create a new app; give it a name and description and click Create.
+Go to the app's settings once it's created and, under Web, enter the Callback URL from the Map under 'Redirect URIs' and make sure it's saved.
+Then, copy the App ID and App secret into 'auth_key' and 'auth_secret', respectively, in the 'auth' portion of the Map, then save the Map.
+
 # reddit
-On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the Map for Instagram. You will be redirected to BitScoop. (Make sure you are logged in to BitScoop.) You will see the JSON for the map you just added. We don’t have an auth_key or auth_secret yet, so leave those fields as is. Then click the ‘+ Create’ button in the upper right-hand corner to save the map.
+On our [GitHub page](https://github.com/bitscooplabs/bitscoop-social-app-demo/tree/master/fixtures/maps), click the ‘Add to BitScoop’ button next to the Map for reddit. You will be redirected to BitScoop. (Make sure you are logged in to BitScoop.) You will see the JSON for the map you just added. We don’t have an auth_key or auth_secret yet, so leave those fields as is. Then click the ‘+ Create’ button in the upper right-hand corner to save the map.
 
 Create an account with reddit if you don't have one already.
 Go to [your reddit app preferences](https://www.reddit.com/prefs/apps/), scroll down to 'developed applications', and click on the button to create an app.

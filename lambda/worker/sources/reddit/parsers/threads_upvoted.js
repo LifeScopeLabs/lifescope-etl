@@ -36,7 +36,7 @@ module.exports = function(data, db) {
 				title: item.data.title
 			};
 
-			if (item.data.thumbnail) {
+			if (item.data.thumbnail && (/https:\/\//.test(item.data.thumbnail)) || /http:\/\//.test(item.data.thumbnail)) {
 				newThread.embed_thumbnail = item.data.thumbnail;
 			}
 

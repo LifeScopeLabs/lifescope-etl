@@ -7,39 +7,16 @@ You'll need to whitelist the IP address(es) that will be connecting to it, or us
 You'll have to copy the Connection URI into 'databases.mongo.address' in config/default.json, making sure to fill in the password and database name.
 You can use 'admin' as the database name since our code specifies the 'live' database whenever it reads from or writes to Mongo.
 
-You will also need to upload various portions of this project to Lambda, ElasticBeanstalk, and S3, and you will create two SQS queues to facilitate communication between some of the Lambda functions.
-We'll start with creating an S3 bucket since it's a prerequisite for other parts.
-We have to wait to upload the static files until later since they require the domain of the webserver, which doesn't exist yet.
+You will also need to upload various portions of this project to Lambda, and you will create two SQS queues to facilitate communication between some of the Lambda functions.
 
-#### Create S3 bucket static files to S3
-Go to S3 and create a new bucket.
-Give it a name and select the region that’s closest to you, then click Next.
-You can leave Versioning, Logging, and Tags disabled, so click Next.
-Open the ‘Manage Group Permissions’ accordion and give Everyone Read access to Objects (NOT Object Permissions).
-Click Next, review everything, then click Create Bucket.
-
-Lastly, go to the following files and replace ***INSERT S3 BUCKET NAME HERE*** with the name of the S3 bucket you created earlier:
-- config/default.json
-- templates/home.html
-- templates/login.html
-- templates/components/header.html
-
-Also copy the IDs of the Login Maps into their respective places in 'login.<service>.id'.
-
-#### Build Lambda functions and webserver code
+#### Build Lambda functions
 From the top level of the project run
 
 ```
 gulp bundle:lambda
 ```
 
-to zip up all of the Lambda functions, then run
-
-```
-gulp bundle:ebs
-```
-
-to zip up the webserver code for deployment to ElasticBeanstalk.
+to zip up all of the Lambda functions.
 
 #### Create SQS queues
 Next we're going to create the SQS queues, as they need to be set up before some of the Lambda functions are created.
@@ -135,48 +112,3 @@ You will also need to run the migrations function to set up the Mongo instance p
 You can do this by clicking the Test button when looking at that function's page, then clicking Save and Test.
 The sample event doesn't matter since the script doesn't use any information from the event it's passed.
 This only needs to be run once, so you shouldn't set up any triggers.
-
-#### Upload webserver code to ElasticBeanstalk
-Next we're going to create the webserver using ElasticBeanstalk.
-This will run the main application that displays your data and allows you to search through it.
-
-Start [creating](https://console.aws.amazon.com/elasticbeanstalk/home#/newApplication) a new application with ElasticBeanstalk.
-Give it a name and leave Tier as 'Web Server'.
-For the Platform pick the 'Node.js' Preconfigured Platform.
-For Application Code, select 'Upload your code', click the Upload button, click 'Choose File' under Local File, and select the 'live-ebs' .zip file in the 'dist' directory and click Upload.
-Note that EBS requires you to give each new version of code you upload a version label.
-You can leave it as the default for this first time, but if you need to re-upload anything, you'll have to pick a different label.
-If you want to use a custom domain or make any other modifications to the instance you're creating, click 'Configure more options', otherwise click 'Create application'.
-It will take a few minutes for EBS to spin up the box.
-When that's finished, go to the environment that was made for this application and get its URL, as we need to use this in some static files.
-
-#### Upload static files to S3
-You need to replace ***INSERT EBS URL HERE*** with the URL of your EBS environment in six static files:
-
-- static/js/components/search.js
-- static/js/explorer/explorer.js
-- static/js/explorer/objects.js
-- static/js/pages/providers.js
-- static/js/pages/user-home.js
-- static/js/site.js
-
-Navigate to the top level of the project and run
-
-```
-gulp build
-```
-
-to compile and package all of the static files to the dist/ folder.
-This will remove all of the EBS and Lambda .zip files, so if you need to upload any of them again you'll need to re-run the appropriate gulp bundle command.
-
-Go back to the S3 bucket in AWS, then go to the Objects tab and click Upload to have a modal appear.
-Click Add Files in this modal and navigate to the ‘dist’ directory in bitscoop-social-app-demo directory, then into the directory below that (it’s a unix timestamp of when the build process was completed).
-Move the file system window so that you can see the Upload modal.
-Click and drag all four folders over the Upload modal (S3 requires that you drag-and-drop folders, and this only works in Chrome and Firefox).
-Close the file system window, then click Next.
-Open the ‘Manage Group Permissions’ accordion and give Everyone read access to Objects.
-Click Next, then Next again, then review everything and click Upload.
-
-At this point, everything should be ready to go.
-Go to the EBS environment's URL and you should be taken to the home page of the application.
-See step 4 for instructions on how to use Live.
