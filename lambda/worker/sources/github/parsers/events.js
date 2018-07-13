@@ -40,7 +40,8 @@ module.exports = function(data, db) {
 				type: 'created',
 				provider_name: 'github',
 				identifier: this.connection._id.toString('hex') + ':::created:::github:::' + item.id,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				user_id: this.connection.user_id
 			};
 
@@ -96,11 +97,14 @@ module.exports = function(data, db) {
 							}
 						}
 					}
+
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::fork:::github:::' + item.payload.forkee.id,
 						url: item.payload.forkee.html_url,
 						remote_id: item.payload.forkee.id,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						owner: item.payload.forkee.owner.login,
 						title: item.payload.forkee.full_name,
 						text: item.payload.forkee.description,
@@ -129,7 +133,9 @@ module.exports = function(data, db) {
 
 					//newContact = {
 					//	identifier: this.connection._id.toString('hex') + ':::github:::' + item.repo_info.owner.id,
-					//	connection: this.connection._id,
+					//  connection_id: this.connection._id,
+					//  provider_id: this.connection.provider_id,
+					// provider_name: 'github',
 					//	user_id: this.connection.user_id,
 					//	remote_id: item.repo_info.owner.id,
 					//	handle: item.repo_info.owner.login,
@@ -198,7 +204,9 @@ module.exports = function(data, db) {
 						identifier: this.connection.user_id.toString('hex') + ':::pull_request:::github:::' + item.payload.pull_request.id,
 						url: item.payload.pull_request.html_url,
 						remote_id: item.payload.pull_request.id,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						owner: item.payload.pull_request.user.login,
 						title: item.payload.pull_request.title,
 						text: item.payload.pull_request.body,
@@ -284,7 +292,9 @@ module.exports = function(data, db) {
 
 					//newContact = {
 					//	identifier: this.connection._id.toString('hex') + ':::github:::' + item.repo_info.owner.id,
-					//	connection: this.connection._id,
+					//  connection_id: this.connection._id,
+					//  provider_id: this.connection.provider_id,
+					// provider_name: 'github',
 					//	user_id: this.connection.user_id,
 					//	remote_id: item.repo_info.owner.id,
 					//	handle: item.repo_info.owner.login,
@@ -328,7 +338,9 @@ module.exports = function(data, db) {
 							identifier: this.connection._id.toString('hex') + ':::push:::github:::' + commit.sha,
 							url: commit.url,
 							remote_id: commit.id,
-							connection: this.connection._id,
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							provider_name: 'github',
 							owner: commit.author.name,
 							'tagMasks.source': newTags,
 							title: 'Commit ' + commit.sha,
@@ -354,7 +366,9 @@ module.exports = function(data, db) {
 
 						newContact = {
 							identifier: this.connection._id.toString('hex') + ':::github:::' + commit.author.email,
-							connection: this.connection._id,
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							provider_name: 'github',
 							user_id: this.connection.user_id,
 							remote_id: commit.author.email,
 							handle: commit.author.email,
@@ -386,7 +400,9 @@ module.exports = function(data, db) {
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::' + item.payload.ref_type + ':::github:::' + item.repo.id + '/' + item.payload.ref,
 						url: item.repo.url + '/tree/' + item.payload.ref,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						title: item.repo.name + '/' + item.payload.ref,
 						type: 'code',
 						user_id: this.connection.user_id
@@ -431,7 +447,9 @@ module.exports = function(data, db) {
 
 					//newContact = {
 					//	identifier: this.connection._id.toString('hex') + ':::github:::' + item.repo_info.owner.id,
-					//	connection: this.connection._id,
+					//  connection_id: this.connection._id,
+					//  provider_id: this.connection.provider_id,
+					// provider_name: 'github',
 					//	user_id: this.connection.user_id,
 					//	remote_id: item.repo_info.owner.id,
 					//	handle: item.repo_info.owner.login,
@@ -447,7 +465,9 @@ module.exports = function(data, db) {
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::' + item.payload.ref_type + ':::github:::' + item.repo.id + '/' + item.payload.ref,
 						url: item.repo.url + '/tree/' + item.payload.ref,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						title: item.repo.name + '/' + item.payload.ref,
 						type: 'code',
 						user_id: this.connection.user_id
@@ -474,7 +494,9 @@ module.exports = function(data, db) {
 
 					//newContact = {
 					//	identifier: this.connection._id.toString('hex') + ':::github:::' + item.repo_info.owner.id,
-					//	connection: this.connection._id,
+					//  connection_id: this.connection._id,
+					//  provider_id: this.connection.provider_id,
+					// provider_name: 'github',
 					//	user_id: this.connection.user_id,
 					//	remote_id: item.repo_info.owner.id,
 					//	handle: item.repo_info.owner.login,
@@ -538,7 +560,9 @@ module.exports = function(data, db) {
 					newFile = {
 						identifier: this.connection.user_id.toString('hex') + ':::issue:::github:::' + issue.id,
 						url: issue.html_url,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						'tagMasks.source': newTags,
 						title: issue.title,
 						type: 'code',
@@ -617,7 +641,9 @@ module.exports = function(data, db) {
 					if (issue.assignee && issue.assignee.login !== this.connection.metadata.login) {
 						newContact = {
 							identifier: this.connection._id.toString('hex') + ':::github:::' + issue.assignee.id,
-							connection: this.connection._id,
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							provider_name: 'github',
 							user_id: this.connection.user_id,
 							avatar_url: issue.assignee.avatar_url,
 							remote_id: issue.assignee.id,
@@ -643,7 +669,9 @@ module.exports = function(data, db) {
 					if (issue.user && issue.user.login !== this.connection.metadata.login) {
 						newContact = {
 							identifier: this.connection._id.toString('hex') + ':::github:::' + issue.user.id,
-							connection: this.connection._id,
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							provider_name: 'github',
 							user_id: this.connection.user_id,
 							avatar_url: issue.user.avatar_url,
 							remote_id: issue.user.id,
@@ -697,7 +725,9 @@ module.exports = function(data, db) {
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::comment:::github:::' + comment.id,
 						url: comment.html_url,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						'tagMasks.source': newTags,
 						type: 'text',
 						text: comment.body,
@@ -754,7 +784,9 @@ module.exports = function(data, db) {
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::comment:::github:::' + comment.id,
 						url: comment.html_url,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'github',
 						'tagMasks.source': newTags,
 						type: 'text',
 						text: comment.body,

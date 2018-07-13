@@ -53,7 +53,9 @@ module.exports = function(data, db) {
 				let newFile = {
 					identifier: this.connection._id.toString('hex') + ':::dropbox:::' + item.id,
 					remote_id: item.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'dropbox',
 					tagMasks: {
 						source: newTags
 					},
@@ -99,7 +101,8 @@ module.exports = function(data, db) {
 					provider_name: 'dropbox',
 					identifier: this.connection._id.toString('hex') + ':::edited:::dropbox:::' + item.id,
 					content: [newFile],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id
 				};
 

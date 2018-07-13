@@ -24,7 +24,9 @@ module.exports = function(data, db) {
 
 			let newThread = {
 				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.name,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id,
 				type: 'text',
 				text: item.data.selftext,
@@ -92,11 +94,12 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'created',
 				context: 'Created thread',
-				provider_name: 'reddit',
 				identifier: this.connection._id.toString('hex') + ':::created:::reddit:::' + item.data.name,
 				datetime: moment(item.data.created_utc * 1000).utc().toDate(),
 				content: [newThread],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id
 			};
 

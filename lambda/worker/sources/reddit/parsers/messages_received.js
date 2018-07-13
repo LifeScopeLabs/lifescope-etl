@@ -31,7 +31,9 @@ module.exports = function(data, db) {
 				text: item.data.body,
 				remote_id: item.data.name,
 				title: item.data.subject,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id
 			};
 
@@ -91,11 +93,12 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'messaged',
 				context: 'Received private message',
-				provider_name: 'reddit',
 				identifier: this.connection._id.toString('hex') + ':::received:::reddit:::' + item.data.name,
 				datetime: moment(item.data.created_utc * 1000).utc().toDate(),
 				content: [newMessage],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id
 			};
 
@@ -103,7 +106,9 @@ module.exports = function(data, db) {
 
 			newContact = {
 				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.author,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id,
 				handle: item.data.author
 			};

@@ -9,13 +9,13 @@ const gid = require('./gid');
 
 
 function MongoEvent(data) {
-	this.connection = data.connection;
+	this.connection_id = data.connection_id;
 	this.contact_interaction_type = data.contact_interaction_type;
 	this.context = data.context;
 	this.datetime = data.datetime;
 	this.identifier = data.identifier;
 	//this.places = data.places;
-	this.provider = data.provider;
+	this.provider_id = data.provider_id;
 	this.provider_name = data.provider_name;
 	this.source = data.source;
 	this.tagMasks = data.tagMasks;
@@ -59,7 +59,7 @@ function MongoEvent(data) {
 MongoEvent.prototype.toJSON = function() {
 	return {
 		id: this.id,
-		connection: this.connection,
+		connection_id: this.connection_id,
 		contact_interaction_type: this.contact_interaction_type,
 		context: this.context,
 		contacts: this.contacts,
@@ -68,6 +68,7 @@ MongoEvent.prototype.toJSON = function() {
 		datetime: this.datetime,
 		location: this.location,
 		places: this.places,
+		provider_id: this.provider_id,
 		provider_name: this.provider_name,
 		tagMasks: this.tagMasks,
 		things: this.things,
@@ -90,7 +91,8 @@ function bulkUpsert(type, dataList, db) {
 		});
 
 		bulk.find({
-			identifier: data.identifier
+			identifier: data.identifier,
+			user_id: data.user_id
 		})
 		.upsert()
 		.updateOne({
@@ -122,7 +124,8 @@ function bulkTagUpsert(dataList, db) {
 		tags[i] = data.tag;
 
 		bulk.find({
-			tag: data.tag
+			tag: data.tag,
+			user_id: data.user_id
 		})
 			.upsert()
 			.updateOne({
@@ -232,6 +235,11 @@ function mongoInsert(objects, db) {
 
 			for (let i = 0; i < objects.events.length; i++) {
 				mongoEvents[i] = new MongoEvent(objects.events[i]);
+
+				if (i === 0) {
+					console.log(objects.events[i]);
+					console.log(mongoEvents[i]);
+				}
 			}
 
 			return bulkUpsert('events', mongoEvents, db);

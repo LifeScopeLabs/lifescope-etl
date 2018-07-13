@@ -27,7 +27,9 @@ module.exports = function(data, db) {
 
 			let newMessage = {
 				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.name,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id,
 				type: 'text',
 				remote_id: item.data.name,
@@ -120,7 +122,9 @@ module.exports = function(data, db) {
 
 				newContent = {
 					identifier: this.connection._id.toString('hex') + ':::' + oembed.provider_name.toLowerCase() + ':::' + item.data.url,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'reddit',
 					user_id: this.connection.user_id,
 					remote_id: oembed.url,
 					embed_content: oembed.html.replace(/&lt;/g, '<').replace(/&gt;/g, '>'),
@@ -137,11 +141,12 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'messaged',
 				context: 'Posted',
-				provider_name: 'reddit',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::reddit:::' + item.data.name,
 				datetime: moment(item.data.created_utc * 1000).utc().toDate(),
 				content: [newMessage],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id
 			};
 

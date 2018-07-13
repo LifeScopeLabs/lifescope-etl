@@ -48,7 +48,9 @@ module.exports = function(data, db) {
 
 			let newPlaylist = {
 				identifier: this.connection._id.toString('hex') + ':::spotify:::' + item.id,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'spotify',
 				user_id: this.connection.user_id,
 				url: item.external_urls.spotify,
 				title: item.name,
@@ -65,10 +67,11 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'created',
 				context: 'Playlist',
-				provider_name: 'spotify',
 				identifier: this.connection._id.toString('hex') + ':::created:::spotify:::' + item.id,
 				content: [newPlaylist],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'spotify',
 				user_id: this.connection.user_id
 			};
 

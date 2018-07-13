@@ -27,7 +27,9 @@ module.exports = function(data, db) {
 
 			let newThread = {
 				identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.name,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id,
 				type: 'text',
 				text: item.data.selftext,
@@ -96,17 +98,20 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'commented',
 				context: 'Upvoted',
-				provider_name: 'reddit',
 				identifier: this.connection._id.toString('hex') + ':::upvoted:::reddit:::' + item.data.name,
 				content: [newThread],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'reddit',
 				user_id: this.connection.user_id
 			};
 
 			if (item.data.author !== this.connection.metadata.name) {
 				let newContact = {
 					identifier: this.connection._id.toString('hex') + ':::reddit:::' + item.data.author,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'reddit',
 					user_id: this.connection.user_id,
 					handle: item.data.author
 				};

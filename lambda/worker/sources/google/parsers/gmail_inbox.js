@@ -36,7 +36,9 @@ module.exports = function(data, db) {
 
 			let newMessage = {
 				identifier: this.connection._id.toString('hex') + ':::gmail:::' + item.id,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'google',
 				user_id: this.connection.user_id,
 				remote_id: item.id,
 				type: 'text',
@@ -150,15 +152,20 @@ module.exports = function(data, db) {
 
 			let newEvent = {
 				type: 'messaged',
-				provider_name: 'google',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::gmail:::' + item.id,
 				datetime: moment(new Date(parseInt(item.internalDate))).utc().toDate(),
 				content: [objectCache.content[newMessage.identifier]],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'google',
 				user_id: this.connection.user_id
 			};
 
 			let localContacts = [];
+
+			if (i === 0) {
+				console.log(item.payload);
+			}
 
 			let fromHeader = _.find(item.payload.headers, function(header) {
 				return header.name === 'From';
@@ -209,7 +216,9 @@ module.exports = function(data, db) {
 
 				newContact = {
 					identifier: this.connection._id.toString('hex') + ':::' + parsed.address,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'google',
 					user_id: this.connection.user_id,
 					handle: parsed.address
 				};
@@ -239,7 +248,9 @@ module.exports = function(data, db) {
 
 				newContact = {
 					identifier: this.connection._id.toString('hex') + ':::' + parsed.address,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'google',
 					user_id: this.connection.user_id,
 					handle: parsed.address
 				};

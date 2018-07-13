@@ -15,7 +15,9 @@ module.exports = function(data, db) {
 
 			let newGame = {
 				identifier: this.connection._id.toString('hex') + ':::steam:::' + item.appid,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'steam',
 				user_id: this.connection.user_id,
 				type: 'game',
 				embed_thumbnail: item.logo,
@@ -28,10 +30,11 @@ module.exports = function(data, db) {
 
 			let newEvent = {
 				type: 'purchased',
-				provider_name: 'steam',
 				identifier: this.connection._id.toString('hex') + ':::purchased:::steam:::' + item.appid,
 				content: [newGame],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'steam',
 				user_id: this.connection.user_id
 			};
 

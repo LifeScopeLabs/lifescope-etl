@@ -48,7 +48,9 @@ module.exports = function(data, db) {
 
 			let newMedia = {
 				identifier: this.connection._id.toString('hex') + ':::instagram:::' + item.id,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'instagram',
 				user_id: this.connection.user_id,
 				url: item.link,
 				remote_id: item.id,
@@ -79,12 +81,13 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'created',
 				context: 'Shared',
-				provider_name: 'instagram',
 				identifier: this.connection._id.toString('hex') + ':::created:::instagram:::' + item.id,
 				datetime: datetime,
 				content: [newMedia],
 				contacts: [],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'instagram',
 				user_id: this.connection.user_id
 			};
 
@@ -95,7 +98,9 @@ module.exports = function(data, db) {
 			//		if (comment != null) {
 			//			let newContact = {
 			//				identifier: this.connection._id.toString('hex') + ':::instagram:::' + comment.from.id,
-			//				connection: this.connection._id,
+			// connection_id: this.connection._id,
+			// 	provider_id: this.connection.provider_id,
+			// 	provider_name: 'instagram',
 			//				user_id: this.connection.user_id,
 			//				avatar_url: comment.from.profile_picture,
 			//				remote_id: comment.from.id,
@@ -119,7 +124,9 @@ module.exports = function(data, db) {
 					estimated: false,
 					geo_format: 'lat_lng',
 					geolocation: [item.location.longitude, item.location.latitude],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'instagram',
 					user_id: this.connection.user_id
 				};
 

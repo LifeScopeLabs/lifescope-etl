@@ -36,14 +36,16 @@ module.exports = function(data, db) {
 				datetime: datetime,
 				content: [],
 				contacts: [],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				user_id: this.connection.user_id
 			};
 
 			if (!item.photo.error) {
 				let newPhoto = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.photo.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					text: item.message,
 					url: item.photo.link,
@@ -68,7 +70,8 @@ module.exports = function(data, db) {
 
 					let newContact = {
 						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
 						user_id: this.connection.user_id,
 						provider_name: 'facebook',
 						remote_id: from.id,
@@ -89,7 +92,8 @@ module.exports = function(data, db) {
 			if (item.owner != null && item.owner.id !== this.connection.metadata.id) {
 				let newContact = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.owner.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					provider_name: 'facebook',
 					remote_id: item.owner.id,
@@ -115,7 +119,8 @@ module.exports = function(data, db) {
 					estimated: false,
 					geo_format: 'lat_lng',
 					geolocation: [item.place.location.longitude, item.place.location.latitude],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id
 				};
 

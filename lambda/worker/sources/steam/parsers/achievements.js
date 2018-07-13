@@ -25,7 +25,9 @@ module.exports = function(data, db) {
 
 				let newAchievement = {
 					identifier: this.connection._id.toString('hex') + ':::steam:::' + item.appid + ':::' + achievement.schema.name,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'steam',
 					user_id: this.connection.user_id,
 					type: 'achievement',
 					embed_thumbnail: achievement.schema.icon,
@@ -42,7 +44,9 @@ module.exports = function(data, db) {
 
 				let newGame = {
 					identifier: this.connection._id.toString('hex') + ':::steam:::' + item.appid,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'steam',
 					user_id: this.connection.user_id,
 					type: 'game',
 					embed_thumbnail: item.logo,
@@ -60,10 +64,11 @@ module.exports = function(data, db) {
 				let newEvent = {
 					type: 'played',
 					context: 'Earned achievement',
-					provider_name: 'steam',
 					identifier: this.connection._id.toString('hex') + ':::played:::steam:::' + item.appid + ':::' + achievement.schema.name,
 					content: [objectCache.content[newAchievement.identifier], objectCache.content[newGame.identifier]],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'steam',
 					user_id: this.connection.user_id
 				};
 

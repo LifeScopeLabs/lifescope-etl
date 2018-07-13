@@ -17,7 +17,9 @@ module.exports = function(data, db) {
 
 			let newAlbum = {
 				identifier: this.connection._id.toString('hex') + ':::spotify:::' + item.album.id,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'spotify',
 				user_id: this.connection.user_id,
 				url: item.album.external_urls.spotify,
 				title: item.album.name,
@@ -33,11 +35,12 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'played',
 				context: 'Saved album',
-				provider_name: 'spotify',
 				identifier: this.connection._id.toString('hex') + ':::played:::spotify:::' + item.album.id,
 				datetime: moment(new Date(item.added_at)).utc().toDate(),
 				content: [newAlbum],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'spotify',
 				user_id: this.connection.user_id
 			};
 

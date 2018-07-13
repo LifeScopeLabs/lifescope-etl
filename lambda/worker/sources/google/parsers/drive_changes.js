@@ -37,7 +37,9 @@ module.exports = function(data, db) {
 			if (item.removed) {
 				newFile = {
 					identifier: this.connection._id.toString('hex') + ':::drive:::' + item.fileId,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'google',
 					user_id: this.connection.user_id,
 					remote_id: item.fileId,
 					type: 'file'
@@ -65,7 +67,8 @@ module.exports = function(data, db) {
 					identifier: this.connection._id.toString('hex') + ':::deleted:::google:::drive:::' + item.fileId,
 					datetime: moment(item.time).utc().toDate(),
 					content: [objectCache.content[newFile.identifier]],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id
 				};
 
@@ -99,7 +102,9 @@ module.exports = function(data, db) {
 
 					newFile = {
 						identifier: this.connection._id.toString('hex') + ':::drive:::' + item.fileId,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'google',
 						user_id: this.connection.user_id,
 						url: item.file.webViewLink,
 						remote_id: item.fileId,
@@ -130,7 +135,8 @@ module.exports = function(data, db) {
 						provider_name: 'google',
 						identifier: this.connection._id.toString('hex') + ':::edited:::google:::drive:::' + item.fileId,
 						content: [objectCache.content[newFile.identifier]],
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
 						user_id: this.connection.user_id
 					};
 
@@ -148,7 +154,9 @@ module.exports = function(data, db) {
 							if (filePermission.type === 'user' && !filePermission.me && filePermission.emailAddress) {
 								newContact = {
 									identifier: this.connection._id.toString('hex') + ':::' + filePermission.emailAddress,
-									connection: this.connection._id,
+									connection_id: this.connection._id,
+									provider_id: this.connection.provider_id,
+									provider_name: 'google',
 									user_id: this.connection.user_id,
 									handle: filePermission.emailAddress,
 									name: filePermission.displayName,

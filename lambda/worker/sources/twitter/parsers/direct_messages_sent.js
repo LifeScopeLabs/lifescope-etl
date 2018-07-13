@@ -49,7 +49,9 @@ module.exports = function(data, db) {
 
 			let newMessage = {
 				identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.id_str,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'twitter',
 				user_id: this.connection.user_id,
 				remote_id: item.id_str,
 				'tagMasks.source': newTags,
@@ -67,7 +69,9 @@ module.exports = function(data, db) {
 
 					let newMedia = {
 						identifier: this.connection._id.toString('hex') + ':::twitter:::' + mediaItem.id_str,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'twitter',
 						user_id: this.connection.user_id,
 						remote_id: mediaItem.id_str,
 						'tagMasks.source': newTags,
@@ -99,17 +103,20 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'messaged',
 				context: 'Sent direct message',
-				provider_name: 'twitter',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id_str,
 				datetime: moment(new Date(item.created_at)).utc().toDate(),
 				content: [newMessage].concat(newMediaList),
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'twitter',
 				user_id: this.connection.user_id
 			};
 
 			let newContact = {
 				identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.recipient.id_str,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'twitter',
 				user_id: this.connection.user_id,
 				avatar_url: item.recipient.profile_image_url_https,
 				remote_id: item.recipient.id_str,

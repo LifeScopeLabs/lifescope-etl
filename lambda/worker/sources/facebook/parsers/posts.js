@@ -36,14 +36,16 @@ module.exports = function(data, db) {
 				datetime: datetime,
 				content: [],
 				contacts: [],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				user_id: this.connection.user_id
 			};
 
 			if (item.message != null) {
 				let newMessage = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					provider_name: 'facebook',
 					url: item.permalink_url,
@@ -65,7 +67,8 @@ module.exports = function(data, db) {
 			if (item.status_type === 'added_video' && !item.video.error) {
 				let newVideo = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.video.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					url: 'https://facebook.com' + item.video.permalink_url,
 					embed_content: item.video.embed_html,
@@ -93,7 +96,8 @@ module.exports = function(data, db) {
 
 					let newContact = {
 						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
 						user_id: this.connection.user_id,
 						provider_name: 'facebook',
 						remote_id: from.id,
@@ -114,7 +118,8 @@ module.exports = function(data, db) {
 			if (item.status_type === 'added_photos' && !item.photo.error) {
 				let newPhoto = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.photo.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					text: item.message,
 					url: item.photo.link,
@@ -139,7 +144,8 @@ module.exports = function(data, db) {
 
 					let newContact = {
 						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
 						user_id: this.connection.user_id,
 						provider_name: 'facebook',
 						remote_id: from.id,
@@ -162,7 +168,8 @@ module.exports = function(data, db) {
 					if (contact.id !== self.connection.metadata.id) {
 						let newContact = {
 							identifier: self.connection._id.toString('hex') + ':::facebook:::' + contact.id,
-							connection: self.connection._id,
+							connection_id: self.connection._id,
+							provider_id: self.connection.provider_id,
 							user_id: self.connection.user_id,
 							provider_name: 'facebook',
 							remote_id: contact.id,
@@ -188,7 +195,8 @@ module.exports = function(data, db) {
 					if (contact.id !== self.connection.metadata.id) {
 						let newContact = {
 							identifier: self.connection._id.toString('hex') + ':::facebook:::' + contact.id,
-							connection: self.connection._id,
+							connection_id: self.connection._id,
+							provider_id: self.connection.provider_id,
 							user_id: self.connection.user_id,
 							provider_name: 'facebook',
 							remote_id: contact.id,
@@ -214,7 +222,8 @@ module.exports = function(data, db) {
 
 				let newContact = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id,
 					provider_name: 'facebook',
 					remote_id: from.id,
@@ -240,7 +249,8 @@ module.exports = function(data, db) {
 					estimated: false,
 					geo_format: 'lat_lng',
 					geolocation: [item.place.location.longitude, item.place.location.latitude],
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					user_id: this.connection.user_id
 				};
 

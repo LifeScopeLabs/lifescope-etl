@@ -37,20 +37,22 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'commented',
 				context: 'Pinned',
-				provider_name: 'pinterest',
 				identifier: this.connection._id.toString('hex') + ':::created:::pinterest:::' + item.id,
 				datetime: datetime,
 				content: [],
 				contacts: [],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'pinterest',
 				user_id: this.connection.user_id
 			};
 
 			let newImage = {
 				identifier: this.connection._id.toString('hex') + ':::pinterest:::' + item.id,
-				connection: this.connection._id,
-				user_id: this.connection.user_id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				provider_name: 'pinterest',
+				user_id: this.connection.user_id,
 				url: item.url,
 				text: item.note,
 				remote_id: item.id,
@@ -81,9 +83,10 @@ module.exports = function(data, db) {
 
 				let newVideo = {
 					identifier: this.connection._id.toString('hex') + ':::youtube:::' + videoId,
-					connection: this.connection._id,
-					user_id: this.connection.user_id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
 					provider_name: 'youtube',
+					user_id: this.connection.user_id,
 					url: item.link,
 					remote_id: videoId,
 					embed_content: item.youtube_oembed.html,
@@ -103,9 +106,10 @@ module.exports = function(data, db) {
 
 			let newPage = {
 				identifier: this.connection._id.toString('hex') + ':::pinterest:::source:::' + item.id,
-				connection: this.connection._id,
-				user_id: this.connection.user_id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				provider_name: 'pinterest',
+				user_id: this.connection.user_id,
 				url: item.link,
 				title: item.note,
 				remote_id: item.link,

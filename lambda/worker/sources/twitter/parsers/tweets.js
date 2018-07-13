@@ -51,7 +51,9 @@ module.exports = function(data, db) {
 
 			let newMessage = {
 				identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.id_str,
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'twitter',
 				user_id: this.connection.user_id,
 				remote_id: item.id_str,
 				'tagMasks.source': newTags,
@@ -74,7 +76,9 @@ module.exports = function(data, db) {
 
 					let newMedia = {
 						identifier: this.connection._id.toString('hex') + ':::twitter:::' + mediaItem.id_str,
-						connection: this.connection._id,
+						connection_id: this.connection._id,
+						provider_id: this.connection.provider_id,
+						provider_name: 'twitter',
 						remote_id: mediaItem.id_str,
 						'tagMasks.source': newTags,
 						url: mediaItem.expanded_url,
@@ -111,11 +115,12 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'messaged',
 				context: 'Tweeted',
-				provider_name: 'twitter',
 				identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id_str,
 				datetime: moment(new Date(item.created_at)).utc().toDate(),
 				content: [objectCache.content[newMessage.identifier]].concat(newMediaList),
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'twitter',
 				user_id: this.connection.user_id
 			};
 
@@ -123,7 +128,9 @@ module.exports = function(data, db) {
 				let newContact = {
 					avatar_url: item.user[0].profile_image_url_https,
 					identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.in_reply_to_user_id_str,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'twitter',
 					user_id: this.connection.user_id,
 					remote_id: item.in_reply_to_user_id_str,
 					handle: item.in_reply_to_screen_name
@@ -149,7 +156,9 @@ module.exports = function(data, db) {
 					estimated: false,
 					geo_format: 'lat_lng',
 					geolocation: item.coordinates.coordinates,
-					connection: this.connection._id,
+					connection_id: this.connection._id,
+					provider_id: this.connection.provider_id,
+					provider_name: 'twitter',
 					user_id: this.connection.user_id
 				};
 

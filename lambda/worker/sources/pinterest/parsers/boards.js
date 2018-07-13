@@ -34,20 +34,22 @@ module.exports = function(data, db) {
 			let newEvent = {
 				type: 'created',
 				context: 'Created Board',
-				provider_name: 'pinterest',
 				identifier: this.connection._id.toString('hex') + ':::created:::pinterest:::' + item.id,
 				datetime: datetime,
 				content: [],
 				contacts: [],
-				connection: this.connection._id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
+				provider_name: 'pinterest',
 				user_id: this.connection.user_id
 			};
 
 			let newBoard = {
 				identifier: this.connection._id.toString('hex') + ':::pinterest:::board:::' + item.id,
-				connection: this.connection._id,
-				user_id: this.connection.user_id,
+				connection_id: this.connection._id,
+				provider_id: this.connection.provider_id,
 				provider_name: 'pinterest',
+				user_id: this.connection.user_id,
 				url: item.url,
 				text: item.description,
 				title: item.name,
