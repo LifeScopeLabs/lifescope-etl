@@ -9,11 +9,9 @@ const moment = require('moment');
 
 const fields = [
 	'id',
-	'category',
 	'cover',
 	'description',
 	'name',
-	'owner',
 	'place',
 	'start_time'
 ];
@@ -60,17 +58,6 @@ const subFields = {
 		'last_name',
 		'name',
 		'picture'
-	],
-	owner: [
-		'id',
-		'email',
-		'first_name',
-		'gender',
-		'last_name',
-		'locale',
-		'name',
-		'picture',
-		'short_name'
 	]
 };
 

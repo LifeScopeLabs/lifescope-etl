@@ -171,10 +171,6 @@ function call(connection, parameters, headers, results, db) {
 			if (!(/^2/.test(response.statusCode))) {
 				let body = JSON.parse(response.body);
 
-				console.log(outgoingHeaders);
-				console.log(outgoingParameters);
-				console.log(body);
-
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
 			}
 

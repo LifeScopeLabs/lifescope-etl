@@ -87,7 +87,7 @@ gulp.task('bundle:ebs', function() {
 
 
 gulp.task('bundle:lambda', function(done) {
-	sequence(['bundle:consumer', 'bundle:generator', 'bundle:migrations', 'bundle:worker'], done);
+	sequence(['bundle:consumer', 'bundle:generator', 'bundle:migrations', 'bundle:worker', 'bundle:location-consumer', 'bundle:location-generator', 'bundle:location-worker'], done);
 });
 
 
@@ -187,6 +187,81 @@ gulp.task('bundle:worker', function() {
 			return path;
 		}))
 		.pipe(zip(pkg.name + '-worker-' + pkg.version + '.zip'))
+		.pipe(gulp.dest('dist'));
+});
+
+
+gulp.task('bundle:location-consumer', function() {
+	const path = require('path');
+
+	const zip = require('gulp-zip');
+	const rename = require('gulp-rename');
+
+	let basename = path.basename(process.cwd());
+	let renameExpression = new RegExp('^' + basename);
+
+	return gulp.src([
+		'lambda/location-estimation-consumer/**'
+	], {
+		nodir: true,
+		base: 'lambda/location-estimation-consumer'
+	})
+		.pipe(rename(function(path) {
+			path.dirname = path.dirname.replace(renameExpression, pkg.name);
+
+			return path;
+		}))
+		.pipe(zip(pkg.name + '-location-consumer-' + pkg.version + '.zip'))
+		.pipe(gulp.dest('dist'));
+});
+
+
+gulp.task('bundle:location-generator', function() {
+	const path = require('path');
+
+	const zip = require('gulp-zip');
+	const rename = require('gulp-rename');
+
+	let basename = path.basename(process.cwd());
+	let renameExpression = new RegExp('^' + basename);
+
+	return gulp.src([
+		'lambda/location-estimation-generator/**'
+	], {
+		nodir: true,
+		base: 'lambda/location-estimation-generator'
+	})
+		.pipe(rename(function(path) {
+			path.dirname = path.dirname.replace(renameExpression, pkg.name);
+
+			return path;
+		}))
+		.pipe(zip(pkg.name + '-location-generator-' + pkg.version + '.zip'))
+		.pipe(gulp.dest('dist'));
+});
+
+
+gulp.task('bundle:location-worker', function() {
+	const path = require('path');
+
+	const zip = require('gulp-zip');
+	const rename = require('gulp-rename');
+
+	let basename = path.basename(process.cwd());
+	let renameExpression = new RegExp('^' + basename);
+
+	return gulp.src([
+		'lambda/location-estimation-worker/**'
+	], {
+		nodir: true,
+		base: 'lambda/location-estimation-worker'
+	})
+		.pipe(rename(function(path) {
+			path.dirname = path.dirname.replace(renameExpression, pkg.name);
+
+			return path;
+		}))
+		.pipe(zip(pkg.name + '-location-worker-' + pkg.version + '.zip'))
 		.pipe(gulp.dest('dist'));
 });
 

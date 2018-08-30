@@ -7,5 +7,3 @@ fixtures/mongo/explorer/providers/keys/
 config/production.*
 config/local.*
 static/lib/lifescope-styles
-
-

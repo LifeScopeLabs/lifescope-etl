@@ -66,26 +66,28 @@ module.exports = function(data, db) {
 				newEvent.content.push(objectCache.content[newPhoto.identifier]);
 
 				if (item.photo.from != null && item.photo.from.id !== this.connection.metadata.id) {
-					let from = item.photo.from_user.id ? item.photo.from_user : item.photo.from_page.id ? item.photo.from_page : item.photo.from_group;
+					let from = item.photo.from_user.id ? item.photo.from_user : item.photo.from_page.id ? item.photo.from_page : item.photo.from_page.id ? item.photo.from_group : {};
 
-					let newContact = {
-						identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
-						connection_id: this.connection._id,
-						provider_id: this.connection.provider_id,
-						user_id: this.connection.user_id,
-						provider_name: 'facebook',
-						remote_id: from.id,
-						avatar_url: item.video.from_group.id ? from.icon : from.picture.data.url,
-						name: from.name
-					};
+					if (from.id) {
+						let newContact = {
+							identifier: this.connection._id.toString('hex') + ':::facebook:::' + from.id,
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							user_id: this.connection.user_id,
+							provider_name: 'facebook',
+							remote_id: from.id,
+							avatar_url: item.photo.from_group.id ? from.icon : from.picture.data.url,
+							name: from.name
+						};
 
-					if (!_.has(objectCache.contacts, newContact.identifier)) {
-						objectCache.contacts[newContact.identifier] = newContact;
+						if (!_.has(objectCache.contacts, newContact.identifier)) {
+							objectCache.contacts[newContact.identifier] = newContact;
 
-						contacts.push(objectCache.contacts[newContact.identifier]);
+							contacts.push(objectCache.contacts[newContact.identifier]);
+						}
+
+						newEvent.contacts.push(objectCache.contacts[newContact.identifier]);
 					}
-
-					newEvent.contacts.push(objectCache.contacts[newContact.identifier]);
 				}
 			}
 

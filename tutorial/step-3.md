@@ -1,13 +1,13 @@
 # 3. Setup Mongo Atlas and AWS services
 
-This demo requires a MongoDB instance to run.
+This service requires a MongoDB instance to run.
 We suggest creating a free instance of [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) to test things out.
 When the free instance is created, click the 'Connect' button.
 You'll need to whitelist the IP address(es) that will be connecting to it, or use 0.0.0.0/0 to allow all incoming traffic.
 You'll have to copy the Connection URI into 'databases.mongo.address' in config/default.json, making sure to fill in the password and database name.
 You can use 'admin' as the database name since our code specifies the 'live' database whenever it reads from or writes to Mongo.
 
-You will also need to upload various portions of this project to Lambda, and you will create two SQS queues to facilitate communication between some of the Lambda functions.
+You will also need to upload various portions of this project to Lambda, and you will create three SQS queues to facilitate communication between some of the Lambda functions.
 
 #### Build Lambda functions
 From the top level of the project run
@@ -35,6 +35,10 @@ What this does is create a regular queue for scheduled jobs.
 If a job fails 5 times, it gets sent to the dead letter queue.
 If we wanted to do some analysis on failed jobs to figure out why they failed, we'd have a record of them in the dead letter queue.
 
+Create a third queue called 'location-estimation', which should also be a Standard Queue.
+You can use 'Quick Create Queue' for this one.
+This queue will be used for estimating the Locations of Events for users from non-estimated Locations.
+
 #### Create IAM role
 Go to [IAM roles](https://console.aws.amazon.com/iam/home#/roles).
 Create a new role and click the Select button next to AWS Lambda.
@@ -59,15 +63,15 @@ Go back to the 'Live' role and under the Permissions tab select Attach Policy.
 Search for the LambdaInvoke policy you just made, check it, then click Attach Policy.
 
 #### Create Lambda functions
-Next we're going to creating four lambda functions for some recurring tasks that will be run, as well as a migration script.
+Next we're going to creating six lambda functions for some recurring tasks that will be run, as well as a migration script.
 Follow this general flow for each of them, paying attention to instructions specific to a given function.
-You must create the 'worker' function before the 'live-consumer' function, as the latter needs the ARN of the former as an Environment Variable.
+You must create a 'worker' function before the corresponding 'consumer' function, as the latter needs the ARN of the former as an Environment Variable.
 
 Go to https://console.aws.amazon.com/lambda/home and click ‘Create a Lambda function’. Make sure you are in the eu-west-1, us-east-1, or us-west-2 regions.
 
 For the blueprint select ‘Blank Function’.
 
-For live-generator and live-consumer, you will want to create a Trigger of type 'CloudWatch Events'.
+For generator and consumer functions, you will want to create a Trigger of type 'CloudWatch Events'.
 The Rule type should be 'Schedule expression'.
 We suggest that the expression for these triggers be 'rate(1 minute)', though you can go higher if you want.
 When you create a rule for the first function, it will be saved under the name you gave it; for the second function, you can just select that rule instead of creating a new one.
@@ -97,6 +101,19 @@ You will need to add Environment Variables specific to each function:
 - DEAD_LETTER_QUEUE_URL (obtained from SQS dead letter queue)
 
 ##### live-consumer
+- MONGO_ADDRESS (obtained from Mongo Atlas instance)
+- QUEUE_URL (obtained from SQS queue)
+- WORKER_FUNCTION_ARN (ARN of the worker function, found in the top right corner of its details page)
+
+##### location-estimation-generator
+- MONGO_ADDRESS (obtained from Mongo Atlas instance)
+- QUEUE_URL (obtained from SQS queue)
+
+##### location-estimation-worker
+- MONGO_ADDRESS (obtained from Mongo Atlas instance)
+- QUEUE_URL (obtained from SQS queue)
+
+##### location-estimation-consumer
 - MONGO_ADDRESS (obtained from Mongo Atlas instance)
 - QUEUE_URL (obtained from SQS queue)
 - WORKER_FUNCTION_ARN (ARN of the worker function, found in the top right corner of its details page)

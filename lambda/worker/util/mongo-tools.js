@@ -235,11 +235,6 @@ function mongoInsert(objects, db) {
 
 			for (let i = 0; i < objects.events.length; i++) {
 				mongoEvents[i] = new MongoEvent(objects.events[i]);
-
-				if (i === 0) {
-					console.log(objects.events[i]);
-					console.log(mongoEvents[i]);
-				}
 			}
 
 			return bulkUpsert('events', mongoEvents, db);

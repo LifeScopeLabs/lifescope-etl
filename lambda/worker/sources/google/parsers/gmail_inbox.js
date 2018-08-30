@@ -163,10 +163,6 @@ module.exports = function(data, db) {
 
 			let localContacts = [];
 
-			if (i === 0) {
-				console.log(item.payload);
-			}
-
 			let fromHeader = _.find(item.payload.headers, function(header) {
 				return header.name === 'From';
 			});

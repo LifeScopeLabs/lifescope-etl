@@ -17,8 +17,6 @@ function call(connection, parameters, headers, results, db) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	console.log(outgoingHeaders);
-	console.log(outgoingParameters);
 	return this.api.endpoint(this.mapping)({
 		headers: outgoingHeaders,
 		parameters: outgoingParameters

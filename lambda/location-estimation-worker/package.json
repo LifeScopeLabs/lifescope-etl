@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.68.0",
+    "bitscoop-sdk": "^0.2.0",
+    "email-addresses": "^2.0.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "mongodb": "^3.1.4",
+    "uuid": "^2.0.3"
+  }
+}

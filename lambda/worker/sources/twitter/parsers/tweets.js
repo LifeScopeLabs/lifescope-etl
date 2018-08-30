@@ -147,6 +147,8 @@ module.exports = function(data, db) {
 				newEvent.contacts = [objectCache.contacts[newContact.identifier]];
 			}
 
+			console.log(item);
+
 			if (item.coordinates && item.coordinates.coordinates) {
 				let datetime = moment(new Date(item.created_at)).utc().toDate();
 
@@ -165,6 +167,8 @@ module.exports = function(data, db) {
 				locations.push(newLocation);
 
 				newEvent.location = newLocation;
+
+				console.log(newEvent);
 			}
 
 			events[i] = newEvent;

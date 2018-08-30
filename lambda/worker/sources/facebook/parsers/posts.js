@@ -115,7 +115,7 @@ module.exports = function(data, db) {
 				}
 			}
 
-			if (item.status_type === 'added_photos' && !item.photo.error) {
+			if (item.status_type === 'added_photos' && item.photo.id != null) {
 				let newPhoto = {
 					identifier: this.connection._id.toString('hex') + ':::facebook:::' + item.photo.id,
 					connection_id: this.connection._id,
