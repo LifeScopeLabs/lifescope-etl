@@ -48,9 +48,7 @@ exports.handler = async function(event, context, callback) {
 			_id: userId
 		});
 
-		console.log(user);
-
-		let promise;
+		let promises = [];
 
 		if (user && (user.last_location_estimation == null || moment().utc().toDate() > moment(user.last_location_estimation).add(1, 'day').utc().toDate())) {
 			let eventResult = await db.db('live').collection('events').find({
@@ -128,8 +126,6 @@ exports.handler = async function(event, context, callback) {
 					}
 				});
 
-				let promises = [];
-
 				if (bulkLocations.s.currentIndex > 0) {
 					promises.push(bulkLocations.execute());
 				}
@@ -138,38 +134,30 @@ exports.handler = async function(event, context, callback) {
 					promises.push(bulkEvents.execute());
 				}
 
-				promise = new Promise(async function(resolve, reject) {
-					try {
-						await Promise.all(promises);
+			}
+		}
 
-						console.log('Updating user last_location_estimation');
+		await new Promise(async function(resolve, reject) {
+			try {
+				await Promise.all(promises);
 
-						await db.db('live').collection('users').update({
-							_id: userId
-						}, {
-							$set: {
-								last_location_estimation: moment().utc().toDate()
-							}
-						});
+				console.log('Updating user last_location_estimation');
 
-						resolve();
-					} catch(err) {
-						console.log(err);
-
-						reject(err);
+				await db.db('live').collection('users').update({
+					_id: userId
+				}, {
+					$set: {
+						last_location_estimation: moment().utc().toDate()
 					}
-				})
+				});
 
-			}
-			else {
-				promise = Promise.resolve();
-			}
-		}
-		else {
-			promise = Promise.resolve();
-		}
+				resolve();
+			} catch(err) {
+				console.log(err);
 
-		await promise;
+				reject(err);
+			}
+		});
 
 		let params = {
 			QueueUrl: process.env.QUEUE_URL,

@@ -88,25 +88,6 @@ exports.handler = function(event, context, callback) {
 					user_id: 1
 				}),
 
-				// `users` Collection
-				db.db('live').collection('users').createIndex({
-					_upper_email: 1
-				}, {
-					unique: true,
-					sparse: true
-				}),
-
-				db.db('live').collection('users').createIndex({
-					_upper_handle: 1
-				}, {
-					unique: true,
-					sparse: true
-				}),
-
-				db.db('live').collection('users').createIndex({
-					social_accounts: 1
-				}),
-
 				// `connections` collection
 				db.db('live').collection('connections').createIndex({
 					connection_id: 1
@@ -154,7 +135,11 @@ exports.handler = function(event, context, callback) {
 				// `tags` collection
 				db.db('live').collection('tags').createIndex({
 					user_id: 1
-				})
+				}),
+
+				db.db('live').collection('users').createIndex({
+					last_location_estimation: 1
+				}),
 			])
 				.then(function() {
 					return Promise.resolve(files);
