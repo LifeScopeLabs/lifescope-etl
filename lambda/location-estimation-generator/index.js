@@ -29,16 +29,32 @@ exports.handler = async function(event, context, callback) {
 		});
 
 		let users = await db.db('live').collection('users').find({
-			$or: [
+			$and: [
 				{
-					last_location_estimation: {
-						$lt: new Date(new Date() - 86400000)
-					}
+					$or: [
+						{
+							last_location_estimation: {
+								$lt: new Date(new Date() - 86400000)
+							}
+						},
+						{
+							last_location_estimation: {
+								$exists: false
+							}
+						}
+					]
 				},
 				{
-					last_location_estimation: {
-						$exists: false
-					}
+					$or: [
+						{
+							location_estimation_status: 'ready'
+						},
+						{
+							location_estimation_status: {
+								$exists: false
+							}
+						}
+					]
 				}
 			]
 		}, {
@@ -46,13 +62,6 @@ exports.handler = async function(event, context, callback) {
 		}).toArray();
 
 		console.log('Number of jobs to create: ' + users.length);
-
-		// The connections parameter is an empty array if
-		// there are no connections returned from the db.
-		// So checking for length to provide the correct response
-		if (users.length === 0) {
-			return Promise.resolve([]);
-		}
 
 		let jobs = _.map(users, function(user) {
 			let attr = {
@@ -68,16 +77,26 @@ exports.handler = async function(event, context, callback) {
 				MessageAttributes: attr
 			};
 
-			return new Promise(function(resolve, reject) {
-				sqs.sendMessage(params, function(err, data) {
-					if (err) {
-						reject(err);
+			return Promise.all([
+				new Promise(function(resolve, reject) {
+					sqs.sendMessage(params, function(err, data) {
+						if (err) {
+							reject(err);
+						}
+						else {
+							resolve();
+						}
+					});
+				}),
+
+				db.db('live').collection('users').update({
+					_id: user._id
+				}, {
+					$set: {
+						location_estimation_status: 'queued'
 					}
-					else {
-						resolve();
-					}
-				});
-			});
+				})
+			])
 		});
 
 		await Promise.all(jobs);

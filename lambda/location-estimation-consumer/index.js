@@ -54,6 +54,12 @@ exports.handler = async function(event, context, callback) {
 		let messages = result.Messages;
 
 		if (messages == null) {
+			console.log('No messages');
+
+			db.close();
+
+			callback(null, null);
+
 			return Promise.resolve([]);
 		}
 
@@ -62,7 +68,6 @@ exports.handler = async function(event, context, callback) {
 
 			receiptHandleMap[attr.userId.StringValue] = message.ReceiptHandle;
 
-			console.log(attr.userId.StringValue);
 			return gid(attr.userId.StringValue);
 		});
 
@@ -72,12 +77,9 @@ exports.handler = async function(event, context, callback) {
 			}
 		}).toArray();
 
-		if (users.length === 0) {
-			return Promise.resolve();
-		}
-
 		console.log('Users to run: ');
 		console.log(users);
+
 		let jobs = _.map(users, function(user) {
 			let stringId = user._id.toString('hex');
 

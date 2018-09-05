@@ -51,6 +51,14 @@ exports.handler = async function(event, context, callback) {
 		let promises = [];
 
 		if (user && (user.last_location_estimation == null || moment().utc().toDate() > moment(user.last_location_estimation).add(1, 'day').utc().toDate())) {
+			await db.db('live').collection('users').update({
+				_id: userId
+			}, {
+				$set: {
+					location_estimation_status: 'running'
+				}
+			});
+
 			let eventResult = await db.db('live').collection('events').find({
 				user_id: userId
 			}).toArray();
@@ -147,6 +155,7 @@ exports.handler = async function(event, context, callback) {
 					_id: userId
 				}, {
 					$set: {
+						location_estimation_status: 'ready',
 						last_location_estimation: moment().utc().toDate()
 					}
 				});
@@ -184,6 +193,30 @@ exports.handler = async function(event, context, callback) {
 		return Promise.resolve();
 	} catch(err) {
 		console.log('UNSUCCESSFUL');
+
+		let params = {
+			QueueUrl: process.env.QUEUE_URL,
+			ReceiptHandle: receiptHandle
+		};
+
+		await new Promise(function(resolve, reject) {
+			sqs.deleteMessage(params, function(err, data) {
+				if (err) {
+					reject(err);
+				}
+				else {
+					resolve(data);
+				}
+			});
+		});
+
+		await db.db('live').collection('users').update({
+			_id: userId
+		}, {
+			$set: {
+				location_estimation_status: 'ready'
+			}
+		});
 
 		if (db) {
 			db.close();
