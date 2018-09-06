@@ -140,6 +140,11 @@ exports.handler = function(event, context, callback) {
 				db.db('live').collection('users').createIndex({
 					last_location_estimation: 1
 				}),
+
+				// `users` Collection
+				db.db('live').collection('users').createIndex({
+					location_estimation_status: 1
+				}),
 			])
 				.then(function() {
 					return Promise.resolve(files);

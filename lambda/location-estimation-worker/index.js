@@ -51,7 +51,7 @@ exports.handler = async function(event, context, callback) {
 		let promises = [];
 
 		if (user && (user.last_location_estimation == null || moment().utc().toDate() > moment(user.last_location_estimation).add(1, 'day').utc().toDate())) {
-			await db.db('live').collection('users').update({
+			await db.db('live').collection('users').updateOne({
 				_id: userId
 			}, {
 				$set: {
@@ -107,7 +107,14 @@ exports.handler = async function(event, context, callback) {
 						};
 
 						bulkLocations.find({
-							identifier: dataMap[eventId].identifier,
+							$or: [
+								{
+									_id: _id
+								},
+								{
+									identifier: dataMap[eventId].identifier
+								},
+							],
 							user_id: userId
 						})
 							.upsert()
@@ -118,6 +125,12 @@ exports.handler = async function(event, context, callback) {
 									created: moment().utc().toDate()
 								}
 							});
+
+						if (bulkLocations.s.currentIndex >= 500) {
+							promises.push(bulkLocations.execute());
+
+							bulkLocations = db.db('live').collection('locations').initializeUnorderedBulkOp();
+						}
 
 						if (event.location == null) {
 							bulkEvents.find({
@@ -130,6 +143,12 @@ exports.handler = async function(event, context, callback) {
 										location: _id
 									}
 								});
+
+							if (bulkEvents.s.currentIndex >= 500) {
+								promises.push(bulkEvents.execute());
+
+								bulkEvents = db.db('live').collection('events').initializeUnorderedBulkOp();
+							}
 						}
 					}
 				});
@@ -151,7 +170,7 @@ exports.handler = async function(event, context, callback) {
 
 				console.log('Updating user last_location_estimation');
 
-				await db.db('live').collection('users').update({
+				await db.db('live').collection('users').updateOne({
 					_id: userId
 				}, {
 					$set: {
@@ -210,7 +229,7 @@ exports.handler = async function(event, context, callback) {
 			});
 		});
 
-		await db.db('live').collection('users').update({
+		await db.db('live').collection('users').updateOne({
 			_id: userId
 		}, {
 			$set: {
