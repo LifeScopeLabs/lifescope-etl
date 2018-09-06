@@ -1,14 +1,14 @@
-# [LIFESCOPE-ETL](https://github.com/LifeScopeLabs/lifescope-etl)
+# [LifeScope-ETL](https://github.com/LifeScopeLabs/lifescope-etl)
 
 ## [Repository](https://github.com/LifeScopeLabs/lifescope-etl)
 
 (production phase, high priority)
 
-This is the LIFESCOPE automated data collection system for connected services. The serverless ETL functions are built for Lambda and pull user data data from APIs on a scheduled basis into MongoDB.
+This is the LifeScope automated data collection system for connected services. The serverless ETL functions are built for Lambda and pull user data data from APIs on a scheduled basis into MongoDB.
 
 * Pull data from source apis through BitScoop SDK
 * Syncs on a scheduled basis.
-* Transform data into LIFESCOPE schema.
+* Transform data into LifeScope schema.
 * Provider scripts keep a copy of original data.
 
 # Requirements
@@ -39,11 +39,11 @@ This is the LIFESCOPE automated data collection system for connected services. T
 | FitBit | planned | events, things |
 | TV Time | planned | events, content |
 
-# LIFESCOPE Archive App
+# LifeScope Archive App
 
 **Note: DEPRICATED**
 
-The old front end LIFESCOPE app is in the LIFESCOPE-etl /archive folder.
+The old front end LifeScope app is in the LifeScope-etl /archive folder.
 
 ### Old Frontend App Architecture
 ![arche]
@@ -93,12 +93,12 @@ to zip up the webserver code for deployment to ElasticBeanstalk.
 Next we're going to create the SQS queues, as they need to be set up before some of the Lambda functions are created.
 
 Go to [SQS](https://console.aws.amazon.com/sqs/home) and click on Create New Queue.
-Name it 'LIFESCOPE-jobs-dead-letter' and make sure it's a Standard Queue.
+Name it 'LifeScope-jobs-dead-letter' and make sure it's a Standard Queue.
 Click Quick Create Queue at the bottom of the page.
 You should be taken back to the home page for SQS.
-Create another queue, name this one 'LIFESCOPE-jobs', and make sure it's also a Standard Queue.
+Create another queue, name this one 'LifeScope-jobs', and make sure it's also a Standard Queue.
 Click on the Configure Queue button at the bottom instead of Quick Create.
-Check 'Use Redrive Policy', set the Dead Letter Queue to 'LIFESCOPE-jobs-dead-letter' and Maximum Receives to 5, then click Create Queue.
+Check 'Use Redrive Policy', set the Dead Letter Queue to 'LifeScope-jobs-dead-letter' and Maximum Receives to 5, then click Create Queue.
 Finally, click on one of the queues and, under the Details tab, take note of its URL.
 Get the URL for the other queue as well.
 
