@@ -1,4 +1,4 @@
-# 4. Using LIFESCOPE
+# 4. Using LifeScope
 
 Sign up using a GitHub, Google, or Twitter account.
 
