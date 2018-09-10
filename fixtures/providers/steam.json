@@ -1,6 +1,8 @@
 {
   "_id": "0cbd7b54443545f9bc15f10c923b214a",
 
+  "login": true,
+
   "sources": {
     "games_owned": {
       "name": "Games Owned",
@@ -10,12 +12,14 @@
     },
     "achievements": {
       "name": "Achievements",
-      "description": "Achievements in Steam games you have played",
+      "description": "Achievements in Steam games you have played (must make game details public in your Steam profile's privacy settings)",
       "enabled_by_default": true,
       "mapping": "GamesOwned",
       "population": "*"
     }
   },
+
+  "enabled": true,
 
   "remote_map_id": "fb432ff9d95c49f4a0f299ab1f19c9c4"
 }

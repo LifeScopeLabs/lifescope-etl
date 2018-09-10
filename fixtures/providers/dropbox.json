@@ -1,6 +1,8 @@
 {
   "_id": "05784d1890b74f16a5f3d0eb9084f1f1",
 
+  "login": true,
+
   "sources": {
 	"edits": {
 	  "name": "Edits",
@@ -9,6 +11,8 @@
 	  "mapping": "ListFolder"
 	}
   },
+
+  "enabled": true,
 
   "remote_map_id": "dc59f48c37fe42c0b2c8f11113b8e5e7"
 }

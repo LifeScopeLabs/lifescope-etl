@@ -1,6 +1,8 @@
 {
   "_id": "0f7a86aad3214134ad134250f1a09510",
 
+  "login": true,
+
   "sources": {
     "gmail_inbox": {
       "name": "Gmail",
@@ -17,6 +19,8 @@
       "population": "*"
     }
   },
+
+  "enabled": true,
 
   "remote_map_id": "07b0e45a8147424596f01627e29f7e86"
 }

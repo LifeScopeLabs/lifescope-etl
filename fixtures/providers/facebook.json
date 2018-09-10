@@ -1,6 +1,8 @@
 {
   "_id": "e4bbdc7addbf4cbbb2878de2a4c6e959",
 
+  "login": true,
+
   "sources": {
     "posts": {
       "name": "Facebook Posts",
@@ -18,6 +20,8 @@
       "population": "*"
     }
   },
+
+  "enabled": true,
 
   "remote_map_id": "fe95813c37d04534b8bb221466b41e65"
 }
