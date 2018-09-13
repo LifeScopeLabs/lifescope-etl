@@ -153,7 +153,7 @@ exports.handler = function(event, context, callback) {
 									});
 								})
 									.then(function(connection) {
-										if (connection.endpoint_data.gmail_inbox.hasOwnProperty('page_token')) {
+										if (connection.endpoint_data.gmail_inbox && connection.endpoint_data.gmail_inbox.hasOwnProperty('page_token')) {
 											lastRun = moment().utc().subtract(1, 'day').toDate();
 										}
 										else {

@@ -237,9 +237,22 @@
                   "many": true,
                   "fields": {
                     "type": "string",
-                    "me": "boolean",
                     "emailAddress": "string",
                     "displayName": "string"
+                  }
+                },
+                "imageMediaMetadata": {
+                  "type": "embedded",
+                  "fields": {
+                    "time": "date",
+                    "location": {
+                      "type": "embedded",
+                      "fields": {
+                        "latitude": "number",
+                        "longitude": "number",
+                        "altitude": "number"
+                      }
+                    }
                   }
                 }
               }

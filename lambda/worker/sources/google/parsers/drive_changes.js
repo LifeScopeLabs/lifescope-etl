@@ -10,7 +10,7 @@ let tagRegex = /#[^#\s]+/g;
 
 
 module.exports = function(data, db) {
-	var contacts, content, events, objectCache, tags;
+	var contacts, content, events, locations, objectCache, tags;
 
 	objectCache = {
 		contacts: {},
@@ -21,6 +21,7 @@ module.exports = function(data, db) {
 	contacts = [];
 	content = [];
 	tags = [];
+	locations = [];
 	events = [];
 
 	if (data && data.length > 0) {
@@ -133,19 +134,14 @@ module.exports = function(data, db) {
 					let newEvent = {
 						type: 'edited',
 						provider_name: 'google',
-						identifier: this.connection._id.toString('hex') + ':::edited:::google:::drive:::' + item.fileId,
+						identifier: this.connection._id.toString('hex') + ':::edited:::google:::drive:::' + item.fileId + ':::' + item.time,
 						content: [objectCache.content[newFile.identifier]],
 						connection_id: this.connection._id,
 						provider_id: this.connection.provider_id,
 						user_id: this.connection.user_id
 					};
 
-					if (item.file.viewedByMeTime) {
-						newEvent.datetime = moment(item.file.viewedByMeTime).utc().toDate();
-					}
-					else {
-						newEvent.datetime = moment(item.file.createdTime).utc().toDate();
-					}
+					newEvent.datetime = moment(item.time).utc().toDate();
 
 					if (item.file.permissions) {
 						for (let j = 0; j < item.file.permissions.length; j++) {
@@ -183,6 +179,28 @@ module.exports = function(data, db) {
 						}
 					}
 
+					if (item.imageMediaMetadata && item.imageMediaMetadata.location) {
+						let media = item.imageMediaMetadata;
+
+						let datetime = moment(new Date(media.time)).utc().toDate();
+
+						let newLocation = {
+							identifier: this.connection._id.toString('hex') + ':::google:::drive:::' + datetime,
+							datetime: datetime,
+							estimated: false,
+							geo_format: 'lat_lng',
+							geolocation: [media.location.longitude, media.location.latitude],
+							connection_id: this.connection._id,
+							provider_id: this.connection.provider_id,
+							provider_name: 'google',
+							user_id: this.connection.user_id
+						};
+
+						locations.push(newLocation);
+
+						newEvent.location = newLocation;
+					}
+
 					events.push(newEvent);
 				}
 			}
@@ -193,6 +211,7 @@ module.exports = function(data, db) {
 				contacts: contacts,
 				content: content,
 				events: events,
+				locations: locations,
 				tags: tags
 			}, db);
 		}
