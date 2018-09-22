@@ -3,7 +3,7 @@
 const _ = require('lodash');
 
 
-const maxResults = 1;
+const maxResults = 100;
 
 
 function call(connection, parameters, headers, results, db) {

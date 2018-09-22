@@ -1,28 +1,30 @@
 'use strict';
 
-const _ = require('lodash');
+const querystring = require('querystring');
+const url = require('url');
 
-const calendarEventList = require('./calendar_event_list');
+const _ = require('lodash');
+const moment = require('moment');
+
+const calendarEventInstances = require('./calendar_event_instances');
 
 
 const maxResults = 100;
+const select = 'id,subject,bodyPreview,webLink,body,start,location,recurrence';
 
 
 function call(connection, parameters, headers, results, db) {
-	let nextPageToken, nextSyncToken, self = this;
+	let nextLink, self = this;
 
 	let outgoingHeaders = headers || {};
 	let outgoingParameters = parameters || {};
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
-	outgoingParameters.max_results = outgoingParameters.max_results || maxResults;
+	outgoingParameters.top = outgoingParameters.top || maxResults;
+	outgoingParameters.select = select;
 
-	if (this.population != null) {
-		outgoingHeaders['X-Populate'] = this.population;
-	}
-
-	if (_.get(connection, 'endpoint_data.calendar_list.sync_token') != null && parameters.sync_token == null) {
-		outgoingParameters.sync_token = connection.endpoint_data.calendar_events.calendar_list.sync_token;
+	if (_.get(connection, 'endpoint_data.calendar.filter') != null) {
+		outgoingParameters.filter = connection.endpoint_data.calendar.filter;
 	}
 
 	return Promise.all([
@@ -44,8 +46,7 @@ function call(connection, parameters, headers, results, db) {
 				results = [];
 			}
 
-			nextPageToken = pageData.nextPageToken;
-			nextSyncToken = pageData.nextSyncToken;
+			nextLink = pageData.nextLink;
 
 			if (!(/^2/.test(response.statusCode))) {
 				console.log(response);
@@ -56,19 +57,21 @@ function call(connection, parameters, headers, results, db) {
 			}
 
 			if (!self.subPaginate) {
-				self.subPaginate = calendarEventList;
+				self.subPaginate = calendarEventInstances;
 			}
 
 			let pagePromises = _.map(data, function(item) {
-				if (/holiday@group.v.calendar.google.com/.test(item.id) === false) {
+				if (item.recurrence != null) {
 					let parameters = {
-						calendar_id: item.id
+						event_id: item.id,
+						start_time: '1980-01-01T00:00:00.000Z',
+						end_time: moment().utc().toJSON()
 					};
 
 					return self.subPaginate(connection, parameters, {}, [], db);
 				}
 				else {
-					return Promise.resolve([]);
+					return Promise.resolve([item]);
 				}
 			});
 
@@ -83,34 +86,37 @@ function call(connection, parameters, headers, results, db) {
 				results = results.concat(individualResult);
 			});
 
-			if (nextPageToken != null) {
-				return self.paginate(connection, {
-					page_token: nextPageToken
-				}, {}, results, db);
-			}
-			else {
-				let promise = Promise.resolve();
+			if (nextLink != null) {
+				let parsed = url.parse(nextLink);
+				let params = querystring.parse(parsed.query);
 
-				if (results.length > 0) {
-					promise = promise.then(function() {
-						return db.db('live').collection('connections').updateOne({
-							_id: connection._id
-						}, {
-							$set: {
-								'endpoint_data.calendar_list.sync_token': nextSyncToken
-							}
-						});
-					});
+				let forwardParams = {
+					top: params.$top,
+					select: params.$select,
+					skip: params.$skip
+				};
+
+				if (params.$filter) {
+					forwardParams.filter = params.$filter;
 				}
 
-				return promise.then(function() {
-
-					return Promise.resolve(results);
-				});
+				return self.paginate(connection, forwardParams, {}, results, db);
+			}
+			else {
+				return db.db('live').collection('connections').updateOne({
+					_id: connection._id
+				}, {
+					$set: {
+						'endpoint_data.calendar.filter': 'start/dateTime ge \'' + moment().utc().toJSON() + '\''
+					}
+				})
+					.then(function() {
+						return Promise.resolve(results);
+					});
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Google Calendar List:');
+			console.log('Error calling Microsoft Calendar Events:');
 			console.log(err);
 
 			return Promise.reject(err);
