@@ -9,7 +9,7 @@ const moment = require('moment');
 const calendarEventInstances = require('./calendar_event_instances');
 
 
-const maxResults = 100;
+const maxResults = 1000;
 const select = 'id,subject,bodyPreview,webLink,body,start,location,recurrence';
 
 

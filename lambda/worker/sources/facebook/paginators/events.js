@@ -125,6 +125,8 @@ function call(connection, parameters, headers, results, db) {
 			results = results.concat(data);
 
 			if (!(/^2/.test(response.statusCode))) {
+				console.log(response);
+
 				let body = JSON.parse(response.body);
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));

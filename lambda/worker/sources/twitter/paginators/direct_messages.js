@@ -47,6 +47,8 @@ function call(connection, parameters, headers, results, db) {
 			cursor = pageData.next_cursor;
 
 			if (!(/^2/.test(response.statusCode))) {
+				console.log(response);
+
 				let body = JSON.parse(response.body);
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));

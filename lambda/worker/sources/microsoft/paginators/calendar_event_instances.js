@@ -25,8 +25,6 @@ function call(connection, parameters, headers, results, db) {
 		outgoingParameters.filter = connection.endpoint_data.mailbox.filter;
 	}
 
-	console.log('Event Instances outgoing params: ');
-	console.log(outgoingParameters);
 	return Promise.all([
 		this.api.endpoint('CalendarEventInstances')({
 			headers: outgoingHeaders,
@@ -47,9 +45,6 @@ function call(connection, parameters, headers, results, db) {
 			}
 
 			results = results.concat(data);
-
-			console.log('Event instances pageData:');
-			console.log(pageData);
 
 			nextLink = pageData.nextLink;
 
@@ -92,7 +87,7 @@ function call(connection, parameters, headers, results, db) {
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Google Calendar List:');
+			console.log('Error calling Microsoft Event Instances:');
 			console.log(err);
 
 			return Promise.reject(err);

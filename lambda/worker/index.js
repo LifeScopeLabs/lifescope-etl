@@ -206,7 +206,7 @@ exports.handler = function(event, context, callback) {
 									_id: connection._id
 								}, {
 									$set: {
-										status: 'failed'
+										status: 'ready'
 									}
 								})
 							])

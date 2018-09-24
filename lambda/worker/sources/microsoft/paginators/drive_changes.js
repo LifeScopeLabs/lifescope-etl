@@ -4,11 +4,11 @@ const querystring = require('querystring');
 const url = require('url');
 
 const _ = require('lodash');
-const moment = require('moment');
 
 
-const maxResults = 100;
-const select = 'id,sentDateTime,subject,bodyPreview,webLink,body,from,toRecipients,ccRecipients,bccRecipients';
+const maxResults = 50;
+
+const select = 'id,createdDateTime,lastModifiedDateTime,name,webUrl,createdBy,lastModifiedBy,folder,file,deleted,audio,video,image';
 
 
 function call(connection, parameters, headers, results, db) {
@@ -18,11 +18,15 @@ function call(connection, parameters, headers, results, db) {
 	let outgoingParameters = parameters || {};
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
-	outgoingParameters.top = outgoingParameters.top || maxResults;
+	outgoingParameters.max_results = outgoingParameters.max_results || maxResults;
 	outgoingParameters.select = select;
 
-	if (_.get(connection, 'endpoint_data.mailbox.filter') != null) {
-		outgoingParameters.filter = connection.endpoint_data.mailbox.filter;
+	if (this.population != null) {
+		outgoingHeaders['X-Populate'] = this.population;
+	}
+
+	if (_.get(connection, 'endpoint_data.drive_changes.token') != null && parameters.token == null) {
+		outgoingParameters.token = connection.endpoint_data.drive_changes.token;
 	}
 
 	return Promise.all([
@@ -64,6 +68,7 @@ function call(connection, parameters, headers, results, db) {
 				let params = querystring.parse(parsed.query);
 
 				let forwardParams = {
+					token: params.token,
 					top: params.$top,
 					select: params.$select,
 					skip: params.$skip
@@ -76,20 +81,27 @@ function call(connection, parameters, headers, results, db) {
 				return self.paginate(connection, forwardParams, {}, results, db);
 			}
 			else {
-				return db.db('live').collection('connections').updateOne({
-					_id: connection._id
-				}, {
-					$set: {
-						'endpoint_data.mailbox.filter': 'SentDateTime ge ' + moment().utc().toJSON()
-					}
-				})
-					.then(function() {
-						return Promise.resolve(results);
+				let promise = Promise.resolve();
+
+				if (results.length > 0) {
+					promise = promise.then(function() {
+						return db.db('live').collection('connections').updateOne({
+							_id: connection._id
+						}, {
+							$set: {
+								'endpoint_data.drive_changes.token': outgoingParameters.token
+							}
+						});
 					});
+				}
+
+				return promise.then(function() {
+					return Promise.resolve(results);
+				});
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Microsoft Mailbox:');
+			console.log('Error calling Microsoft Drive Changes:');
 			console.log(err);
 
 			return Promise.reject(err);
