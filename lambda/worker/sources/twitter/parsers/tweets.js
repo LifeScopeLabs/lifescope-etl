@@ -126,7 +126,6 @@ module.exports = function(data, db) {
 
 			if (item.in_reply_to_user_id_str) {
 				let newContact = {
-					avatar_url: item.user[0].profile_image_url_https,
 					identifier: this.connection._id.toString('hex') + ':::twitter:::' + item.in_reply_to_user_id_str,
 					connection_id: this.connection._id,
 					provider_id: this.connection.provider_id,
@@ -135,6 +134,10 @@ module.exports = function(data, db) {
 					remote_id: item.in_reply_to_user_id_str,
 					handle: item.in_reply_to_screen_name
 				};
+
+				if (item.user[0] != null) {
+					newContact.avatar_url = item.user[0].profile_image_url_https;
+				}
 
 				newEvent.contact_interaction_type = 'to';
 

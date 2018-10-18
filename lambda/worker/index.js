@@ -214,23 +214,6 @@ exports.handler = function(event, context, callback) {
 									return Promise.reject(err);
 								});
 						});
-				})
-				.then(function() {
-					let params = {
-						QueueUrl: process.env.QUEUE_URL,
-						ReceiptHandle: receiptHandle
-					};
-
-					return new Promise(function(resolve, reject) {
-						sqs.deleteMessage(params, function(err, data) {
-							if (err) {
-								reject(err);
-							}
-							else {
-								resolve(data);
-							}
-						});
-					});
 				});
 		})
 		.then(function() {

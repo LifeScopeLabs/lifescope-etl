@@ -69,7 +69,7 @@ module.exports = function(data, db) {
 					remote_id: item.id,
 					'tagMasks.source': newTags,
 					title: item.name,
-					mimeType: item.file.mimeType,
+					mimeType: item.mimeType,
 					type: item.image != null ? 'image' : item.video != null ? 'video' : item.audio != null ? 'audio' : 'file'
 				};
 

@@ -17,7 +17,7 @@ exports.handler = async function(event, context, callback) {
 
 	let address = process.env.MONGO_ADDRESS;
 	let options = {
-		poolSize: 5
+		poolSize: 100
 	};
 
 	if (userId == null) {
@@ -29,6 +29,22 @@ exports.handler = async function(event, context, callback) {
 	userId = gid(userId);
 
 	try {
+		let params = {
+			QueueUrl: process.env.QUEUE_URL,
+			ReceiptHandle: receiptHandle
+		};
+
+		await new Promise(function(resolve, reject) {
+			sqs.deleteMessage(params, function(err, data) {
+				if (err) {
+					reject(err);
+				}
+				else {
+					resolve(data);
+				}
+			});
+		});
+
 		db = await new Promise(function(resolve, reject) {
 			mongodb.MongoClient.connect(address, options, function(err, database) {
 				if (err) {
@@ -59,44 +75,75 @@ exports.handler = async function(event, context, callback) {
 				}
 			});
 
-			let eventResult = await db.db('live').collection('events').find({
-				user_id: userId
-			}).toArray();
+			let eventResult = await db.db('live').collection('events').aggregate([
+				{
+					$match: {
+						user_id: userId
+					}
+				},
+				{
+					$lookup: {
+						from: 'locations',
+						localField: 'location',
+						foreignField: '_id',
+						as: 'hydratedLocation'
+					}
+				},
+				{
+					$unwind: {
+						path: '$hydratedLocation',
+						preserveNullAndEmptyArrays: true
+					}
+				}
+			]).toArray();
 
-			let locationResult = await db.db('live').collection('locations').find({
-				estimated: false,
-				user_id: userId
-			})
-				.sort({ datetime: 1 })
-				.toArray();
+			console.log('Events: ' + eventResult.length);
 
-			if (locationResult.length > 0) {
-				let dataMap = {};
+			_.each(eventResult, async function(event) {
+				if (event.hydratedLocation == null || event.hydratedLocation.estimated === true) {
+					let eventId = event._id.toString('hex');
+					let _id = event.location ? event.location : gid();
 
-				_.each(eventResult, function(event) {
-					if (event.location == null || _.find(locationResult, function(location) {
-						return location._id.toString('hex') === event.location.toString('hex');
-					}) == null) {
-						let eventId = event._id.toString('hex');
-						let _id = event.location ? event.location : gid();
+					let promise = Promise.all([
+						db.db('live').collection('locations').findOne({
+							estimated: false,
+							datetime: {
+								$lte: event.datetime
+							},
+							user_id: userId
+						}, {
+							sort: {
+								datetime: -1
+							}
+						}),
 
-						let priorLocation = _.findLast(locationResult, function(location) {
-							return location.datetime < event.datetime;
-						});
+						db.db('live').collection('locations').findOne({
+							estimated: false,
+							datetime: {
+								$gte: event.datetime
+							},
+							user_id: userId
+						}, {
+							sort: {
+								datetime: 1
+							}
+						}),
+					]);
 
-						let nextLocation = _.find(locationResult, function(location) {
-							return location.datetime > event.datetime;
-						});
+					promises.push(promise);
 
-						let priorMoment = moment(priorLocation).utc();
-						let nextMoment = moment(nextLocation).utc();
-						let eventMoment = moment(event.datetime);
-						let priorDiff = Math.abs(priorMoment - eventMoment);
-						let nextDiff = Math.abs(nextMoment - eventMoment);
+					let [priorLocation, nextLocation] = await promise;
 
-						let estimatedLocation = priorLocation == null ? nextLocation : nextLocation == null ? priorLocation : priorDiff < nextDiff ? priorLocation : nextLocation;
+					let priorMoment = moment(priorLocation).utc();
+					let nextMoment = moment(nextLocation).utc();
+					let eventMoment = moment(event.datetime);
+					let priorDiff = Math.abs(priorMoment - eventMoment);
+					let nextDiff = Math.abs(nextMoment - eventMoment);
 
-						dataMap[eventId] = {
+					let estimatedLocation = priorLocation == null ? nextLocation : nextLocation == null ? priorLocation : priorDiff < nextDiff ? priorLocation : nextLocation;
+
+					if (estimatedLocation != null) {
+						let newLocation = {
 							identifier: 'estimated:::' + event._id.toString('hex') + ':::' + moment(event.datetime).utc().toJSON(),
 							estimated: true,
 							datetime: moment(event.datetime).utc().toDate(),
@@ -112,14 +159,14 @@ exports.handler = async function(event, context, callback) {
 									_id: _id
 								},
 								{
-									identifier: dataMap[eventId].identifier
+									identifier: newLocation.identifier
 								},
 							],
 							user_id: userId
 						})
 							.upsert()
 							.updateOne({
-								$set: dataMap[eventId],
+								$set: newLocation,
 								$setOnInsert: {
 									_id: _id,
 									created: moment().utc().toDate()
@@ -127,7 +174,11 @@ exports.handler = async function(event, context, callback) {
 							});
 
 						if (bulkLocations.s.currentIndex >= 500) {
-							promises.push(bulkLocations.execute());
+							promises.push(bulkLocations.execute()
+								.then(function() {
+									console.log('Finished bulk location execution');
+									return Promise.resolve();
+								}));
 
 							bulkLocations = db.db('live').collection('locations').initializeUnorderedBulkOp();
 						}
@@ -151,17 +202,20 @@ exports.handler = async function(event, context, callback) {
 							}
 						}
 					}
-				});
-
-				if (bulkLocations.s.currentIndex > 0) {
-					promises.push(bulkLocations.execute());
+					else {
+						console.log('No location for event with datetime ' + event.datetime.toString());
+					}
 				}
+			});
 
-				if (bulkEvents.s.currentIndex > 0) {
-					promises.push(bulkEvents.execute());
-				}
-
+			if (bulkLocations.s.currentIndex > 0) {
+				promises.push(bulkLocations.execute());
 			}
+
+			if (bulkEvents.s.currentIndex > 0) {
+				promises.push(bulkEvents.execute());
+			}
+
 		}
 
 		await new Promise(async function(resolve, reject) {
@@ -185,22 +239,6 @@ exports.handler = async function(event, context, callback) {
 
 				reject(err);
 			}
-		});
-
-		let params = {
-			QueueUrl: process.env.QUEUE_URL,
-			ReceiptHandle: receiptHandle
-		};
-
-		await new Promise(function(resolve, reject) {
-			sqs.deleteMessage(params, function(err, data) {
-				if (err) {
-					reject(err);
-				}
-				else {
-					resolve(data);
-				}
-			});
 		});
 
 		console.log('SUCCESSFUL');

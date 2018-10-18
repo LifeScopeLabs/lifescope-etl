@@ -50,6 +50,12 @@ exports.handler = function(event, context, callback) {
 								'auth.status.complete': true,
 								'auth.status.authorized': true,
 								enabled: true,
+								browser: {
+									$exists: false
+								},
+								$runnable: {
+									$ne: false
+								},
 								provider_id: {
 									$in: ids
 								},

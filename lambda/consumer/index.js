@@ -63,6 +63,32 @@ exports.handler = function(event, context, callback) {
 						return Promise.resolve([]);
 					}
 
+					let promises = [];
+
+					_.each(messages, function(message) {
+						let params = {
+							QueueUrl: process.env.QUEUE_URL,
+							ReceiptHandle: message.ReceiptHandle
+						};
+
+						promises.push(new Promise(function(resolve, reject) {
+							sqs.deleteMessage(params, function(err, data) {
+								if (err) {
+									reject(err);
+								}
+								else {
+									resolve(data);
+								}
+							});
+						}));
+					});
+
+					return Promise.all(promises)
+						.then(function() {
+							return Promise.resolve(messages)
+						});
+				})
+				.then(function(messages) {
 					let ids = _.map(messages, function(message) {
 						let attr = message.MessageAttributes;
 
