@@ -3,47 +3,35 @@
 const _ = require('lodash');
 
 
-function call(connection, parameters, headers, results, db, body) {
-	let cursor, hasMore, mapping, self = this;
+const maxResults = 200;
+
+function call(connection, parameters, headers, results, db) {
+	let hasMore, nextCursor, self = this;
 
 	let outgoingHeaders = headers || {};
 	let outgoingParameters = parameters || {};
-	let outgoingBody = body || {};
-
-	outgoingHeaders['Content-Type'] = 'application/json';
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
+	outgoingParameters.limit = outgoingParameters.limit || maxResults;
 
 	if (this.population != null) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	if (_.get(connection, 'endpoint_data.edits.cursor') != null && outgoingBody.cursor != null) {
-		outgoingBody.cursor = connection.endpoint_data.edits.cursor;
-	}
-
-	let options = {
-		headers: outgoingHeaders,
-		parameters: outgoingParameters
-	};
-
-	if (outgoingBody.hasOwnProperty('cursor')) {
-		mapping = this.mapping + 'Continue';
-		options.body = outgoingBody;
-	}
-	else {
-		mapping = this.mapping;
-		options.body = {
-			path: '',
-			recursive: true,
-			include_media_info: true
-		};
+	if (_.get(connection, 'endpoint_data.conversation_history.' + outgoingParameters.channel + '.oldest') != null) {
+		outgoingParameters.oldest = connection.endpoint_data.conversation_history[outgoingParameters.channel].oldest;
 	}
 
 	return Promise.all([
-		this.api.endpoint(mapping).method('POST')(options),
+		this.api.endpoint('ConversationHistory')({
+			headers: outgoingHeaders,
+			parameters: outgoingParameters
+		}),
 
-		this.api.endpoint(mapping + 'Page').method('POST')(options)
+		this.api.endpoint('ConversationHistoryPage')({
+			headers: outgoingHeaders,
+			parameters: outgoingParameters
+		})
 	])
 		.then(function([dataResult, pageResult]) {
 			let [data, response] = dataResult;
@@ -53,12 +41,12 @@ function call(connection, parameters, headers, results, db, body) {
 				results = [];
 			}
 
-			cursor = pageData.cursor;
-			hasMore = pageData.has_more;
-
 			results = results.concat(data);
 
-			if (!(/^2/.test(response.statusCode))) {
+			hasMore = pageData.has_more;
+			nextCursor = _.get(pageData, 'response_metadata.next_cursor');
+
+			if (!(/^2/.test(response.statusCode)) || (pageData.code)) {
 				console.log(response);
 
 				let body = JSON.parse(response.body);
@@ -70,20 +58,26 @@ function call(connection, parameters, headers, results, db, body) {
 		})
 		.then(function() {
 			if (hasMore === true) {
-				return self.paginate(connection, {}, {}, results, db, {
-					cursor: cursor
-				});
+				let forwardParams = {
+					channel: outgoingParameters.channel,
+					oldest: outgoingParameters.oldest,
+					cursor: nextCursor
+				};
+
+				return self.subPaginate(connection, forwardParams, {}, results, db);
 			}
 			else {
 				let promise = Promise.resolve();
 
 				if (results.length > 0) {
 					promise = promise.then(function() {
+						let name = 'endpoint_data.conversation_history.' + outgoingParameters.channel + '.oldest';
+
 						return db.db('live').collection('connections').updateOne({
 							_id: connection._id
 						}, {
 							$set: {
-								'endpoint_data.edits.cursor': cursor
+								[name]: results[0].ts
 							}
 						});
 					});
@@ -95,7 +89,7 @@ function call(connection, parameters, headers, results, db, body) {
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Dropbox Edits:');
+			console.log('Error calling Slack Conversation History:');
 			console.log(err);
 
 			return Promise.reject(err);

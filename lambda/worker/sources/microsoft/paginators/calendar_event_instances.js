@@ -63,9 +63,6 @@ function call(connection, parameters, headers, results, db) {
 				let parsed = url.parse(nextLink);
 				let params = querystring.parse(parsed.query);
 
-				console.log('Next page params: ');
-				console.log(params);
-
 				let forwardParams = {
 					top: params.$top,
 					select: params.$select,
@@ -82,7 +79,6 @@ function call(connection, parameters, headers, results, db) {
 				return self.subPaginate(connection, forwardParams, {}, results, db);
 			}
 			else {
-				console.log('Event Instance result count:' + results.length);
 				return Promise.resolve(results);
 			}
 		})

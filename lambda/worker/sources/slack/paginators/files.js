@@ -1,49 +1,40 @@
 'use strict';
 
+const moment = require('moment');
+
 const _ = require('lodash');
 
 
-function call(connection, parameters, headers, results, db, body) {
-	let cursor, hasMore, mapping, self = this;
+const maxResults = 200;
+
+
+function call(connection, parameters, headers, results, db) {
+	let nextPaging, self = this;
 
 	let outgoingHeaders = headers || {};
 	let outgoingParameters = parameters || {};
-	let outgoingBody = body || {};
-
-	outgoingHeaders['Content-Type'] = 'application/json';
 
 	outgoingHeaders['X-Connection-Id'] = connection.remote_connection_id.toString('hex');
+	outgoingParameters.count = outgoingParameters.count || maxResults;
 
 	if (this.population != null) {
 		outgoingHeaders['X-Populate'] = this.population;
 	}
 
-	if (_.get(connection, 'endpoint_data.edits.cursor') != null && outgoingBody.cursor != null) {
-		outgoingBody.cursor = connection.endpoint_data.edits.cursor;
-	}
-
-	let options = {
-		headers: outgoingHeaders,
-		parameters: outgoingParameters
-	};
-
-	if (outgoingBody.hasOwnProperty('cursor')) {
-		mapping = this.mapping + 'Continue';
-		options.body = outgoingBody;
-	}
-	else {
-		mapping = this.mapping;
-		options.body = {
-			path: '',
-			recursive: true,
-			include_media_info: true
-		};
+	if (_.get(connection, 'endpoint_data.files.ts_from') != null && parameters.ts_from == null) {
+		outgoingParameters.ts_from = connection.endpoint_data.files.ts_from;
 	}
 
 	return Promise.all([
-		this.api.endpoint(mapping).method('POST')(options),
+		this.api.endpoint(this.mapping)({
+			headers: outgoingHeaders,
+			parameters: outgoingParameters
+		}),
 
-		this.api.endpoint(mapping + 'Page').method('POST')(options)
+		this.api.endpoint(this.mapping + 'Page')({
+			headers: outgoingHeaders,
+			parameters: outgoingParameters
+		})
 	])
 		.then(function([dataResult, pageResult]) {
 			let [data, response] = dataResult;
@@ -53,8 +44,7 @@ function call(connection, parameters, headers, results, db, body) {
 				results = [];
 			}
 
-			cursor = pageData.cursor;
-			hasMore = pageData.has_more;
+			nextPaging = pageData;
 
 			results = results.concat(data);
 
@@ -69,10 +59,12 @@ function call(connection, parameters, headers, results, db, body) {
 			return Promise.resolve();
 		})
 		.then(function() {
-			if (hasMore === true) {
-				return self.paginate(connection, {}, {}, results, db, {
-					cursor: cursor
-				});
+			if (parseInt(nextPaging.total) > 0 && (nextPaging.page !== nextPaging.pages)) {
+				let forwardParams = {
+					page: parseInt(nextPaging.page) + 1
+				};
+
+				return self.paginate(connection, forwardParams, {}, results, db);
 			}
 			else {
 				let promise = Promise.resolve();
@@ -83,7 +75,7 @@ function call(connection, parameters, headers, results, db, body) {
 							_id: connection._id
 						}, {
 							$set: {
-								'endpoint_data.edits.cursor': cursor
+								'endpoint_data.files.ts_from': moment().unix()
 							}
 						});
 					});
@@ -95,7 +87,7 @@ function call(connection, parameters, headers, results, db, body) {
 			}
 		})
 		.catch(function(err) {
-			console.log('Error calling Dropbox Edits:');
+			console.log('Error calling Slack Files:');
 			console.log(err);
 
 			return Promise.reject(err);
