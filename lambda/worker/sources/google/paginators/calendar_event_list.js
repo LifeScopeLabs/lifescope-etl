@@ -40,6 +40,14 @@ function call(connection, parameters, headers, results, db) {
 			let [data, response] = dataResult;
 			let [pageData, pageResponse] = pageResult;
 
+			if (!(/^2/.test(response.statusCode))) {
+				console.log(response);
+
+				let body = JSON.parse(response.body);
+
+				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
+			}
+
 			if (results == null) {
 				results = [];
 			}
@@ -48,14 +56,6 @@ function call(connection, parameters, headers, results, db) {
 
 			nextPageToken = pageData.nextPageToken;
 			nextSyncToken = pageData.nextSyncToken;
-
-			if (!(/^2/.test(response.statusCode))) {
-				console.log(response);
-
-				let body = JSON.parse(response.body);
-
-				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
-			}
 
 			return Promise.resolve();
 		})

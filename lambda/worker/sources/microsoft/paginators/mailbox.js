@@ -40,14 +40,6 @@ function call(connection, parameters, headers, results, db) {
 			let [data, response] = dataResult;
 			let [pageData, pageResponse] = pageResult;
 
-			if (results == null) {
-				results = [];
-			}
-
-			nextLink = pageData.nextLink;
-
-			results = results.concat(data);
-
 			if (!(/^2/.test(response.statusCode))) {
 				console.log(response);
 
@@ -55,6 +47,14 @@ function call(connection, parameters, headers, results, db) {
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
 			}
+
+			if (results == null) {
+				results = [];
+			}
+
+			nextLink = pageData.nextLink;
+
+			results = results.concat(data);
 
 			return Promise.resolve();
 		})

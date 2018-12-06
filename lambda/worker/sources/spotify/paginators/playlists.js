@@ -34,14 +34,6 @@ function call(connection, parameters, headers, results) {
 			let [data, response] = dataResult;
 			let [pageData, pageResponse] = pageResult;
 
-			if (results == null) {
-				results = [];
-			}
-
-			next = pageData.next ? pageData.next : null;
-
-			results = results.concat(data);
-
 			if (!(/^2/.test(response.statusCode))) {
 				console.log(response);
 
@@ -49,6 +41,14 @@ function call(connection, parameters, headers, results) {
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
 			}
+
+			if (results == null) {
+				results = [];
+			}
+
+			next = pageData.next ? pageData.next : null;
+
+			results = results.concat(data);
 
 			return Promise.resolve();
 		})

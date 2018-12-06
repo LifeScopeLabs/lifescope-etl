@@ -28,6 +28,14 @@ function call(connection, parameters, headers, results, db) {
 		parameters: outgoingParameters
 	})
 		.then(function([data, response]) {
+			if (!(/^2/.test(response.statusCode))) {
+				console.log(response);
+
+				let body = JSON.parse(response.body);
+
+				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
+			}
+
 			if (results == null) {
 				results = [];
 			}
@@ -47,14 +55,6 @@ function call(connection, parameters, headers, results, db) {
 			}
 
 			results = results.concat(data);
-
-			if (!(/^2/.test(response.statusCode))) {
-				console.log(response);
-
-				let body = JSON.parse(response.body);
-
-				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
-			}
 
 			return Promise.resolve();
 		})

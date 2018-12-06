@@ -37,6 +37,14 @@ function call(connection, parameters, headers, results, db) {
 			let [data, response] = dataResult;
 			let [pageData, pageResponse] = pageResult;
 
+			if (!(/^2/.test(response.statusCode)) || (pageData.code)) {
+				console.log(response);
+
+				let body = JSON.parse(response.body);
+
+				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
+			}
+
 			if (results == null) {
 				results = [];
 			}
@@ -45,14 +53,6 @@ function call(connection, parameters, headers, results, db) {
 
 			hasMore = pageData.has_more;
 			nextCursor = _.get(pageData, 'response_metadata.next_cursor');
-
-			if (!(/^2/.test(response.statusCode)) || (pageData.code)) {
-				console.log(response);
-
-				let body = JSON.parse(response.body);
-
-				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
-			}
 
 			return Promise.resolve();
 		})

@@ -53,7 +53,7 @@ exports.handler = function(event, context, callback) {
 								browser: {
 									$exists: false
 								},
-								$runnable: {
+								runnable: {
 									$ne: false
 								},
 								provider_id: {
@@ -98,14 +98,44 @@ exports.handler = function(event, context, callback) {
 						_id: true
 					}).toArray()
 						.then(function(connections) {
-							console.log('Number of jobs to create: ' + connections.length);
 
 							// The connections parameter is an empty array if
 							// there are no connections returned from the db.
-							// So checking for length to provide the correct response
-							if (connections.length == 0) {
-								return Promise.resolve([]);
+							// In that situation, retry some failed Connections.
+							if (connections.length === 0) {
+								console.log('No ready jobs, running failed jobs');
+
+								return db.db('live').collection('connections').find({
+									$and: [
+										{
+											status: 'failed',
+										},
+										{
+											$or: [
+												{
+													last_run: {
+														gt: new Date(new Date() - 172800000)
+													}
+												},
+												{
+													last_run: {
+														$exists: false
+													}
+												}
+											]
+										}
+									]
+								}, {
+									_id: true
+								}).toArray();
 							}
+							else {
+
+								return Promise.resolve(connections);
+							}
+
+						}).then(function(connections) {
+							console.log('Number of jobs to create: ' + connections.length);
 
 							let jobs = _.map(connections, function(connection) {
 								let attr = {

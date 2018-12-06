@@ -34,13 +34,6 @@ function call(connection, parameters, headers, results, db) {
 			let [data, response] = dataResult;
 			let [pageData, pageResponse] = pageResult;
 
-			if (results == null) {
-				results = [];
-			}
-
-			hasMore = pageData.has_more;
-			nextCursor = _.get(pageData, 'response_metadata.next_cursor');
-
 			if (!(/^2/.test(response.statusCode))) {
 				console.log(response);
 
@@ -48,6 +41,13 @@ function call(connection, parameters, headers, results, db) {
 
 				return Promise.reject(new Error('Error calling ' + self.name + ': ' + body.message));
 			}
+
+			if (results == null) {
+				results = [];
+			}
+
+			hasMore = pageData.has_more;
+			nextCursor = _.get(pageData, 'response_metadata.next_cursor');
 
 			if (!self.subPaginate) {
 				self.subPaginate = conversationHistory;

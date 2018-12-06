@@ -24,31 +24,31 @@ function MongoEvent(data) {
 	this.user_id = data.user_id;
 
 	if (data.contacts) {
-		this.contacts = new Array(data.contacts.length);
+		this.contact_ids = new Array(data.contacts.length);
 
 		for (let i = 0; i < data.contacts.length; i++) {
-			this.contacts[i] = data.contacts[i]._id;
+			this.contact_ids[i] = data.contacts[i]._id;
 		}
 	}
 
 	if (data.content) {
-		this.content = new Array(data.content.length);
+		this.content_ids = new Array(data.content.length);
 
 		for (let i = 0; i < data.content.length; i++) {
-			this.content[i] = data.content[i]._id;
+			this.content_ids[i] = data.content[i]._id;
 		}
 	}
 
 	if (data.things) {
-		this.things = new Array(data.things.length);
+		this.thing_ids = new Array(data.things.length);
 
 		for (let i = 0; i < data.things.length; i++) {
-			this.things[i] = data.things[i]._id;
+			this.thing_ids[i] = data.things[i]._id;
 		}
 	}
 
 	if (data.location) {
-		this.location = data.location._id;
+		this.location_id = data.location._id;
 	}
 
 	if (this.tagMasks == null) {
@@ -62,11 +62,11 @@ MongoEvent.prototype.toJSON = function() {
 		connection_id: this.connection_id,
 		contact_interaction_type: this.contact_interaction_type,
 		context: this.context,
-		contacts: this.contacts,
-		content: this.content,
+		contact_ids: this.contact_ids,
+		content_ids: this.content_ids,
 		created: this.created,
 		datetime: this.datetime,
-		location: this.location,
+		location_id: this.location_id,
 		places: this.places,
 		provider_id: this.provider_id,
 		provider_name: this.provider_name,
