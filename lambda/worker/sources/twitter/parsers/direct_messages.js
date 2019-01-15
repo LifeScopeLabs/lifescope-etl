@@ -112,6 +112,7 @@ module.exports = function(data, db) {
 				newEvent = {
 					type: 'messaged',
 					context: 'Recieved direct message',
+					contact_interaction_type: 'from',
 					identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id,
 					datetime: moment(new Date(item.datetime)).utc().toDate(),
 					content: [newMessage].concat(newMediaList),
@@ -137,6 +138,7 @@ module.exports = function(data, db) {
 				newEvent = {
 					type: 'messaged',
 					context: 'Sent direct message',
+					contact_interaction_type: 'to',
 					identifier: this.connection._id.toString('hex') + ':::messaged:::twitter:::' + item.id,
 					datetime: moment(new Date(item.datetime)).utc().toDate(),
 					content: [newMessage].concat(newMediaList),
