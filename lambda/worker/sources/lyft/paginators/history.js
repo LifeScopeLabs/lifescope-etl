@@ -60,7 +60,7 @@ function call(connection, parameters, headers, results, db) {
 							_id: connection._id
 						}, {
 							$set: {
-								'endpoint_data.history.start_time': results[results.length - 1].pickup.time
+								'endpoint_data.history.start_time': results[results.length - 1].pickup ? results[results.length - 1].pickup.time : results[results.length - 1].requested_at
 							}
 						});
 					});

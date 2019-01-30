@@ -375,6 +375,10 @@ module.exports = function(data, db) {
 							name: commit.author.name
 						};
 
+						if (commit.author.avatar_url) {
+							newContact.avatar_url = commit.author.avatar_url;
+						}
+
 						if (!_.has(objectCache.contacts, newContact.identifier)) {
 							objectCache.contacts[newContact.identifier] = newContact;
 
