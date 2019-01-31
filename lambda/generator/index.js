@@ -88,6 +88,9 @@ exports.handler = function(event, context, callback) {
 										last_run: {
 											$exists: false
 										}
+									},
+									{
+										last_run: null
 									}
 								]
 							}
@@ -98,7 +101,6 @@ exports.handler = function(event, context, callback) {
 						_id: true
 					}).toArray()
 						.then(function(connections) {
-
 							// The connections parameter is an empty array if
 							// there are no connections returned from the db.
 							// In that situation, retry some failed Connections.
@@ -106,31 +108,15 @@ exports.handler = function(event, context, callback) {
 								console.log('No ready jobs, running failed jobs');
 
 								return db.db('live').collection('connections').find({
-									$and: [
-										{
-											status: 'failed',
-										},
-										{
-											$or: [
-												{
-													last_run: {
-														gt: new Date(new Date() - 172800000)
-													}
-												},
-												{
-													last_run: {
-														$exists: false
-													}
-												}
-											]
-										}
-									]
+									status: 'failed',
+									last_run: {
+										$gt: new Date(new Date() - 172800000)
+									}
 								}, {
 									_id: true
 								}).toArray();
 							}
 							else {
-
 								return Promise.resolve(connections);
 							}
 

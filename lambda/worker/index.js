@@ -190,6 +190,14 @@ exports.handler = function(event, context, callback) {
 								}
 							};
 
+							let $set = {
+								status: 'failed'
+							};
+
+							if (connection.last_run == null) {
+								$set.last_run = new Date();
+							}
+
 							return Promise.all([
 								new Promise(function(resolve, reject) {
 									sqs.sendMessage(params, function(err, data) {
@@ -205,9 +213,7 @@ exports.handler = function(event, context, callback) {
 								db.db('live').collection('connections').update({
 									_id: connection._id
 								}, {
-									$set: {
-										status: 'failed'
-									}
+									$set: $set
 								})
 							])
 								.then(function() {
