@@ -1,5 +1,7 @@
 # [LifeScope-ETL](https://github.com/LifeScopeLabs/lifescope-etl)
 
+[![Join the chat at https://gitter.im/lifescope-etl/community](https://badges.gitter.im/lifescope-etl/community.svg)](https://gitter.im/lifescope-etl/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## [Repository](https://github.com/LifeScopeLabs/lifescope-etl)
 
 (production phase, high priority)
