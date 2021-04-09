@@ -96,7 +96,7 @@
     "graphql-playground-middleware-express": "^1.7.12",
     "graphql-subscriptions": "^0.5.8",
     "graphql-tag": "^2.8.0",
-    "graphql-type-json": "^0.2.1",
+    "graphql-type-json": "^0.3.2",
     "http-errors": "^1.6.2",
     "idempotent-babel-polyfill": "^0.1.1",
     "json-schema-ref-parser": "^5.0.0",
