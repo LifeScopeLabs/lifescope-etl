@@ -1,0 +1,931 @@
+{
+  "version": "1.0",
+  "name": "Google",
+  "description": "Internet-related services and products.",
+  "url": "https://www.googleapis.com",
+  "tags": [
+    "collaboration",
+    "media",
+    "productivity",
+    "social",
+    "video"
+  ],
+  "auth": {
+    "type": "oauth2",
+    "redirect_url": "https://app.lifescope.io/connections/complete",
+    "authorization_url": "https://accounts.google.com/o/oauth2/auth?access_type=offline&approval_prompt=force",
+    "access_token": "https://accounts.google.com/o/oauth2/token",
+    "signature": "parameter",
+    "auth_key": "***INSERT AUTH KEY HERE***",
+    "auth_secret": "***INSERT AUTH SECRET HERE***"
+  },
+  "meta": {
+    "uniqueness_location": "id",
+    "default_name_location": "names[0].displayName",
+    "endpoint": {
+      "method": "GET",
+      "scopes": [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email"
+      ],
+      "route": {
+        "data": "",
+        "path": "https://people.googleapis.com/v1/people/me?personFields=emailAddresses,names,coverPhotos"
+      },
+      "model": {
+        "key": "id",
+        "fields": {
+          "id": {
+            "type": "string",
+            "source": "resourceName"
+          },
+          "names": {
+            "type": "embedded",
+            "many": true,
+            "fields": {
+              "displayName": "string"
+            }
+          },
+          "coverPhotos": {
+            "type": "embedded",
+            "many": true,
+            "fields": {
+              "url": "string",
+              "default": "boolean"
+            }
+          },
+          "emailAddresses": {
+            "type": "embedded",
+            "many": true,
+            "fields": {
+              "value": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "endpoints": {
+    "GmailInbox": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/gmail.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "Token for the next page in the results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "q": {
+            "description": "QueryString",
+            "value": "{{ parameters.q }}"
+          },
+          "maxResults": "{{ parameters.max_results }}"
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "messages",
+            "path": "gmail/v1/users/me/messages"
+          }
+        },
+        "model": {
+          "key": "id",
+          "fields": {
+            "id": "string",
+            "message": {
+              "type": "related",
+              "ref": "GmailMessage",
+              "many": false,
+              "reverse": {
+                "identifier": "{{ model.id }}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "GmailInboxPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/gmail.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "Token for the next page in the results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "q": {
+            "description": "QueryString",
+            "value": "{{ parameters.q }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "path": "gmail/v1/users/me/messages"
+          }
+        },
+        "model": {
+          "key": "nextPageToken",
+          "fields": {
+            "nextPageToken": "string"
+          }
+        }
+      }
+    },
+    "GmailMessage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/gmail.readonly"
+        ],
+        "single": {
+          "route": {
+            "data": "",
+            "path": "gmail/v1/users/me/messages/{{ identifier }}"
+          }
+        },
+        "collection": false,
+        "model": {
+          "key": "id",
+          "fields": {
+            "id": "string",
+            "internalDate": "string",
+            "payload": {
+              "type": "embedded",
+              "fields": {
+                "mimeType": "string",
+                "body": {
+                  "type": "embedded",
+                  "fields": {
+                    "data": "string"
+                  }
+                },
+                "headers": {
+                  "type": "embedded",
+                  "many": true,
+                  "fields": {
+                    "name": "string",
+                    "value": "string"
+                  }
+                },
+                "parts": {
+                  "type": "embedded",
+                  "many": true,
+                  "fields": {
+                    "mimeType": "string",
+                    "body": {
+                      "type": "embedded",
+                      "fields": {
+                        "data": "string"
+                      }
+                    },
+                    "parts": {
+                      "type": "embedded",
+                      "many": true,
+                      "fields": {
+                        "mimeType": "string",
+                        "body": {
+                          "type": "embedded",
+                          "fields": {
+                            "data": "string"
+                          }
+                        },
+                        "parts": {
+                          "type": "embedded",
+                          "many": true,
+                          "fields": {
+                            "mimeType": "string",
+                            "body": {
+                              "type": "embedded",
+                              "fields": {
+                                "data": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "profile": {
+              "type": "related",
+              "ref": "GmailProfile",
+              "many": false
+            }
+          }
+        }
+      }
+    },
+    "GmailProfile": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/gmail.readonly"
+        ],
+        "collection": {
+          "route": {
+            "data": "",
+            "path": "gmail/v1/users/me/profile"
+          }
+        },
+        "single": false,
+        "model": {
+          "key": "emailAddress",
+          "fields": {
+            "emailAddress": "string"
+          }
+        }
+      }
+    },
+    "DriveChanges": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "A token indicating which page of results to retrieve",
+            "value": "{{ parameters.page_token }}"
+          },
+          "includeRemoved": {
+            "description": "Whether to include file deletions or files to which the user has lost access",
+            "value": "{{ parameters.include_removed }}"
+          },
+          "pageSize": {
+            "description": "Number of results returned in a page",
+            "value": "{{ parameters.page_size }}"
+          },
+          "fields": {
+            "description": "Which fields to include in the response",
+            "value": "changes,newStartPageToken,nextPageToken"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "changes",
+            "path": "drive/v3/changes"
+          }
+        },
+        "model": {
+          "key": "id",
+          "fields": {
+            "fileId": "string",
+            "time": "string",
+            "removed": "boolean",
+            "file": {
+              "type": "embedded",
+              "fields": {
+                "mimeType": "string",
+                "name": "string",
+                "webViewLink": "string",
+                "thumbnailLink": "string",
+                "fullFileExtension": "string",
+                "viewedByMeTime": "date",
+                "createdTime": "date",
+                "permissions": {
+                  "type": "embedded",
+                  "many": true,
+                  "fields": {
+                    "id": "string",
+                    "emailAddress": "string",
+                    "displayName": "string"
+                  }
+                },
+                "imageMediaMetadata": {
+                  "type": "embedded",
+                  "fields": {
+                    "time": "date",
+                    "location": {
+                      "type": "embedded",
+                      "fields": {
+                        "latitude": "number",
+                        "longitude": "number",
+                        "altitude": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "DriveChangesPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/drive.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "A token indicating which page of results to retrieve",
+            "value": "{{ parameters.page_token }}"
+          },
+          "includeRemoved": {
+            "description": "Whether to include file deletions or files to which the user has lost access",
+            "value": true
+          },
+          "pageSize": {
+            "description": "Number of results returned in a page",
+            "value": "{{ parameters.page_size }}"
+          },
+          "fields": {
+            "description": "Which fields to include in the response",
+            "value": "changes,newStartPageToken,nextPageToken"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "path": "drive/v3/changes"
+          }
+        },
+        "model": {
+          "key": "selfLink",
+          "fields": {
+            "nextPageToken": "string",
+            "selfLink": "string",
+            "newStartPageToken": "string"
+          }
+        }
+      }
+    },
+    "Photos": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/photoslibrary.readonly"
+        ],
+        "parameters": {
+          "pageSize": {
+            "description": "Number of items to retrieve per page",
+            "value": "{{ parameters.page_size }}"
+          },
+          "pageToken": {
+            "description": "A token indicating which page of results to retrieve",
+            "value": "{{ parameters.page_token }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "mediaItems",
+            "path": "https://photoslibrary.googleapis.com/v1/mediaItems"
+          }
+        },
+        "model": {
+          "key": "id",
+          "fields": {
+            "id": "string",
+            "productUrl": "string",
+            "baseUrl": "string",
+            "mimeType": "string",
+            "mediaMetadata": {
+              "type": "object",
+              "fields": {
+                "creationTime": "date",
+                "photo": "base",
+                "video": "base"
+              }
+            },
+            "contributorInfo": {
+              "type": "object",
+              "fields": {
+                "profilePictureBaseUrl": "string",
+                "displayName": "string"
+              }
+            },
+            "filename": "string"
+          }
+        }
+      }
+    },
+    "PhotosPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/photoslibrary.readonly"
+        ],
+        "parameters": {
+          "pageSize": {
+            "description": "Number of items to retrieve per page",
+            "value": "{{ parameters.page_size }}"
+          },
+          "pageToken": {
+            "description": "A token indicating which page of results to retrieve",
+            "value": "{{ parameters.page_token }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "path": "https://photoslibrary.googleapis.com/v1/mediaItems"
+          }
+        },
+        "model": {
+          "key": "nextPageToken",
+          "fields": {
+            "nextPageToken": "string"
+          }
+        }
+      }
+    },
+    "CalendarList": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/calendar.readonly"
+        ],
+        "parameters": {
+          "maxResults": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.max_results }}"
+          },
+          "pageToken": {
+            "description": "Token for next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "showDeleted": false,
+          "showHidden": false,
+          "syncToken": "{{ parameters.sync_token }}"
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "items",
+            "path": "/calendar/v3/users/me/calendarList"
+          }
+        },
+        "model": {
+          "key": "id",
+          "fields": {
+            "id": "string"
+          }
+        }
+      }
+    },
+    "CalendarListPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/calendar.readonly"
+        ],
+        "parameters": {
+          "maxResults": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.max_results }}"
+          },
+          "pageToken": {
+            "description": "Token for next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "showDeleted": false,
+          "showHidden": false,
+          "syncToken": "{{ parameters.sync_token }}"
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "path": "/calendar/v3/users/me/calendarList"
+          }
+        },
+        "model": {
+          "key": "etag",
+          "fields": {
+            "nextPageToken": "string",
+            "nextsyncToken": "string"
+          }
+        }
+      }
+    },
+    "CalendarEventList": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/calendar.readonly"
+        ],
+        "parameters": {
+          "maxResults": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.max_results }}"
+          },
+          "pageToken": {
+            "description": "Token for next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "showDeleted": false,
+          "showHiddenInvitations": false,
+          "syncToken": "{{ parameters.sync_token }}"
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "items",
+            "path": "/calendar/v3/calendars/{{ parameters.calendar_id }}/events"
+          }
+        },
+        "model": {
+          "key": "id",
+          "fields": {
+            "id": "string",
+            "htmlLink": "string",
+            "created": "date",
+            "updated": "date",
+            "summary": "string",
+            "description": "string",
+            "creator": {
+              "type": "object",
+              "fields": {
+                "email": "string",
+                "displayName": "string",
+                "self": "boolean"
+              }
+            },
+            "organizer": {
+              "type": "object",
+              "fields": {
+                "email": "string",
+                "displayName": "string",
+                "self": "boolean"
+              }
+            },
+            "start": {
+              "type": "object",
+              "fields": {
+                "date": "date",
+                "dateTime": "date"
+              }
+            },
+            "attendees": {
+              "type": "object",
+              "many": true,
+              "fields": {
+                "email": "string",
+                "displayName": "string",
+                "self": "boolean"
+              }
+            },
+            "attachments": {
+              "type": "object",
+              "many": true,
+              "fields": {
+                "fileId": "string",
+                "fileUrl": "string",
+                "title": "string",
+                "mimeType": "string",
+                "iconLink": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CalendarEventListPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/calendar.readonly"
+        ],
+        "parameters": {
+          "maxResults": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.max_results }}"
+          },
+          "pageToken": {
+            "description": "Token for next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "showDeleted": false,
+          "showHiddenInvitations": false,
+          "syncToken": "{{ parameters.sync_token }}"
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "path": "/calendar/v3/calendars/{{ parameters.calendar_id }}/events"
+          }
+        },
+        "model": {
+          "key": "etag",
+          "fields": {
+            "items": "base",
+            "nextPageToken": "string",
+            "nextSyncToken": "string"
+          }
+        }
+      }
+    },
+    "FitDataSources": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/fitness.activity.read"
+        ],
+        "parameters": {
+          "dataTypeName": {
+            "description": "Names of data types to return",
+            "value": "{{ parameters.data_type_name }}"
+          },
+          "fields": {
+            "description": "The fields to return",
+            "value": "{{ parameters.fields }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "dataSource",
+            "path": "/fitness/vs/users/me/dataSources"
+          }
+        },
+        "model": {
+          "key": "dataStreamId",
+          "fields": {
+            "dataStreamId": "string",
+            "dataStreamName": "string"
+          }
+        }
+      }
+    },
+    "FitDataSets": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/fitness.activity.read"
+        ],
+        "parameters": {
+          "dataSourceId": {
+            "description": "ID of the data source from which to get the dataset",
+            "value": "{{ parameters.data_source_id }}"
+          },
+          "datasetId": {
+            "description": "Start and end times in 19-digit numbers representing nanoseconds since epoch, separated by a dash with no spacing",
+            "value": "{{ parameters.start_time }}-{{ parameters.end_time }}"
+          },
+          "limit": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.limit }}"
+          },
+          "pageToken": {
+            "description": "Token for the next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "fields": {
+            "description": "The fields to return",
+            "value": "{{ parameters.fields }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "point",
+            "path": "/fitness/v1/users/me/dataSources/{{ parameters.dataSourceId }}/datasets/{{ parameters.datasetId }}"
+          }
+        },
+        "model": {
+          "key": "startTimeNanos",
+          "fields": {
+            "startTimeNanos": "string",
+            "endTimeNanos": "string",
+            "value": {
+              "type": "embedded",
+              "many": true,
+              "fields": {
+                "intVal": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "FitDataSetsPage": {
+        "GET": {
+            "method": "GET",
+            "scopes": [
+                "https://www.googleapis.com/auth/fitness.activity.read"
+            ],
+            "parameters": {
+                "dataSourceId": {
+                    "description": "ID of the data source from which to get the dataset",
+                    "value": "{{ parameters.data_source_id }}"
+                },
+                "datasetId": {
+                    "description": "Start and end times in 19-digit numbers representing nanoseconds since epoch, separated by a dash with no spacing",
+                    "value": "{{ parameters.start_time }}-{{ parameters.end_time }}"
+                },
+                "limit": {
+                    "description": "Maximum returned items",
+                    "value": "{{ parameters.limit }}"
+                },
+                "pageToken": {
+                    "description": "Token for the next page of results",
+                    "value": "{{ parameters.page_token }}"
+                },
+                "fields": {
+                    "description": "The fields to return",
+                    "value": "{{ parameters.fields }}"
+                }
+            },
+            "single": false,
+            "collection": {
+                "route": {
+                    "data": "",
+                    "path": "/fitness/v1/users/me/dataSources/{{ parameters.dataSourceId }}/datasets/{{ parameters.datasetId }}"
+                }
+            },
+            "model": {
+                "key": "nextPageToken",
+                "fields": {
+                    "nextPageToken": "string"
+                }
+            }
+        }
+    },
+    "ContactGroupsList": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/contacts.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "Token for the next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "pageSize": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.page_size }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "contactGroups",
+            "path": "https://people.googleapis.com/v1/contactGroups"
+          }
+        },
+        "model": {
+          "key": "resourceName",
+          "fields": {
+            "resourceName": "string",
+            "name": "string",
+            "formattedName": "string"
+          }
+        }
+      }
+    },
+    "ContactGroupsListPage": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/contacts.readonly"
+        ],
+        "parameters": {
+          "pageToken": {
+            "description": "Token for the next page of results",
+            "value": "{{ parameters.page_token }}"
+          },
+          "pageSize": {
+            "description": "Maximum returned items",
+            "value": "{{ parameters.page_size }}"
+          },
+          "syncToken": {
+            "description": "Token returned by previous call to this endpoint",
+            "value": "{{ parameters.sync_token }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "",
+            "path": "https://people.googleapis.com/v1/contactGroups"
+          }
+        },
+        "model": {
+          "key": "nextSyncToken",
+          "fields": {
+            "nextSyncToken": "string",
+            "nextPageToken": "string"
+          }
+        }
+      }
+    },
+    "ContactGroupsBatch": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/contacts.readonly"
+        ],
+        "parameters": {
+          "maxMembers": {
+            "description": "Number of results to get",
+            "value": "{{ parameters.max_members }}"
+          },
+          "resourceNames": {
+            "description": "Identifiers of contact groups to retrieve",
+            "value": "{{ parameters.resource_names }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "responses",
+            "path": "https://people.googleapis.com/v1/contactGroups:batchGet"
+          }
+        },
+        "model": {
+          "key": "requestedResourceName",
+          "fields": {
+            "requestedResourceName": "string",
+            "contactGroup": {
+              "type": "object",
+              "fields": {
+                "memberResourceNames": {
+                  "many": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ContactsBatch": {
+      "GET": {
+        "method": "GET",
+        "scopes": [
+          "https://www.googleapis.com/auth/contacts.readonly"
+        ],
+        "parameters": {
+          "personFields": {
+            "description": "Fields to return with each call",
+            "value": "{{ parameters.person_fields }}"
+          },
+          "resourceNames": {
+            "description": "Identifiers of contact groups to retrieve",
+            "value": "{{ parameters.resource_names }}"
+          }
+        },
+        "single": false,
+        "collection": {
+          "route": {
+            "data": "responses",
+            "path": "https://people.googleapis.com/v1/people:batchGet"
+          }
+        },
+        "model": {
+          "key": "requestedResourceName",
+          "fields": {
+            "requestedResourceName": "string",
+            "httpStatusCode": "number",
+            "person": {
+              "type": "object",
+              "fields": {
+                "resourceName": "string",
+                "names": {
+                  "many": true,
+                  "type": "object",
+                  "fields": {
+                    "displayName": "string"
+                  }
+                },
+                "coverPhotos": {
+                  "many": true,
+                  "type": "object",
+                  "fields": {
+                    "url": "string"
+                  }
+                },
+                "emailAddresses": {
+                  "many": true,
+                  "type": "object",
+                  "fields": {
+                    "value": "string"
+                  }
+                },
+                "phoneNumbers": {
+                  "many": true,
+                  "type": "object",
+                  "fields": {
+                    "canonicalForm": "string",
+                    "formatttedType": "string",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
